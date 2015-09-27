@@ -14,9 +14,9 @@ jobs:
         tarball: true
   - task: generate-product
     file: tile/ci/tasks/generate-product.yml
-  # - put: generated-example-product
-  #   params:
-  #     from: ops-manager-example/example-product/generated-example-product.pivotal
+  - put: generated-tile
+    params:
+      from: generate-product/tile/postgresql-docker.pivotal
 
 resources:
 - name: tile
@@ -33,10 +33,10 @@ resources:
   type: bosh-io-release
   source:
     repository: cloudfoundry-community/postgresql-docker-boshrelease
-# - name: generated-tile
-#   type: s3
-#   source:
-#     versioned_file: postgresql-docker.pivotal
-#     access_key_id: {{concourse-artifacts-access-key}}
-#     secret_access_key: {{concourse-artifacts-secret-access-key}}
-#     bucket: {{pivotal-files-bucket}}
+- name: generated-tile
+  type: s3
+  source:
+    versioned_file: postgresql-docker.pivotal
+    access_key_id: {{concourse-artifacts-access-key}}
+    secret_access_key: {{concourse-artifacts-secret-access-key}}
+    bucket: {{pivotal-files-bucket}}

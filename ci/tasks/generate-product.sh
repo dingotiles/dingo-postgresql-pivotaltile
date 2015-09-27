@@ -8,3 +8,7 @@ cp -r postgresql-docker-boshrelease/release.tgz tile/releases/postgresql-docker-
 
 cd tile
 ls -al releases/
+
+echo "creating .pivotal file"
+
+zip -r postgresql-docker.pivotal content_migrations metadata releases
