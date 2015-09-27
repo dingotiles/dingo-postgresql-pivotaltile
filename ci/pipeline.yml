@@ -1,14 +1,19 @@
 jobs:
 - name: create-product
   plan:
-  - get: tile
-    trigger: true
-  # - task: generate-example-product
-  #   privileged: true
-  #   file: ops-manager-example/ci/tasks/generate-example-product.yml
-  #   config:
-  #     params:
-  #       REPO_DIR: ops-manager-example
+  - aggregate:
+    - get: tile
+      trigger: true
+    - get: docker-boshrelease
+      trigger: true
+      params:
+        tarball: true
+    - get: postgresql-docker-boshrelease
+      trigger: true
+      params:
+        tarball: true
+  - task: generate-product
+    file: tile/ci/tasks/generate-product.yml
   # - put: generated-example-product
   #   params:
   #     from: ops-manager-example/example-product/generated-example-product.pivotal
@@ -20,6 +25,14 @@ resources:
     private_key: {{github-key}}
     branch: master
     uri: git@github.com:drnic/postgresql-docker-pivotal.git
+- name: docker-boshrelease
+  type: bosh-io-release
+  source:
+    repository: cf-platform-eng/docker-boshrelease
+- name: postgresql-docker-boshrelease
+  type: bosh-io-release
+  source:
+    repository: cloudfoundry-community/postgresql-docker-boshrelease
 # - name: generated-tile
 #   type: s3
 #   source:

@@ -1,0 +1,11 @@
+---
+platform: linux
+image: docker:///concourse/concourse-ci
+
+inputs:
+- name: tile
+- name: docker-boshrelease
+- name: postgresql-docker-boshrelease
+
+run:
+  path: tile/ci/tasks/generate-product.sh
