@@ -19,15 +19,25 @@ installation_guid=$(curl -f ${skip_ssl} -u ${opsmgr_username}:${opsmgr_password}
   jq -r '.[].installation_name | scan("^postgresql-docker-.*")')
 echo
 
-curl ${skip_ssl} -u ${opsmgr_username}:${opsmgr_password} \
-  ${opsmgr_url}/api/installation_settings/products/${installation_guid} \
-  -d '' -X DELETE
+if [[ "${installation_guid}X" != "X" ]]; then
+  curl ${skip_ssl} -u ${opsmgr_username}:${opsmgr_password} \
+    ${opsmgr_url}/api/installation_settings/products/${installation_guid} \
+    -d '' -X DELETE
+  echo
+fi
+
+curl -f ${skip_ssl} -u ${opsmgr_username}:${opsmgr_password} \
+  "${opsmgr_url}/api/products"
 echo
 
 # there is no way to delete a specific product (the one being uploaded)
 # so delete all products and hope for the best
 curl -f ${skip_ssl} -u ${opsmgr_username}:${opsmgr_password} \
   "${opsmgr_url}/api/products" -d '' -X DELETE
+echo
+
+curl -f ${skip_ssl} -u ${opsmgr_username}:${opsmgr_password} \
+  "${opsmgr_url}/api/products"
 echo
 
 curl -f -v ${skip_ssl} -u ${opsmgr_username}:${opsmgr_password} \
