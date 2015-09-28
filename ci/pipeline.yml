@@ -35,6 +35,16 @@ jobs:
         opsmgr_username: {{opsmgr-username}}
         opsmgr_password: {{opsmgr-password}}
 
+- name: build-task-image
+  public: true
+  serial: true
+  plan:
+  - get: docker-image-tile
+    trigger: true
+  - put: docker-image
+    params:
+      build: tile-docker-image/ci/ci_image
+
 resources:
 - name: tile
   type: git
@@ -49,6 +59,20 @@ resources:
     branch: master
     uri: git@github.com:drnic/postgresql-docker-pivotal.git
     paths: [metadata, content_migrations]
+- name: docker-image-tile
+  type: git
+  source:
+    uri: git@github.com:drnic/postgresql-docker-pivotal.git
+    branch: master
+    paths: [ci/ci_image/*]
+- name: docker-image
+  type: docker-image
+  source:
+    email: {{docker-hub-email}}
+    username: {{docker-hub-username}}
+    password: {{docker-hub-password}}
+    repository: {{docker-create-hub-task-image}}
+
 - name: docker-boshrelease
   type: bosh-io-release
   source:
