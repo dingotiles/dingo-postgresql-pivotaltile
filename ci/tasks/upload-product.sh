@@ -14,7 +14,7 @@ curl -f ${skip_ssl} -u ${opsmgr_username}:${opsmgr_password} \
   "${opsmgr_url}/api/api_version"
 echo
 
-installation_guid=$(curl -f ${skip_ssl} -u ${opsmgr_username}:${opsmgr_password} \
+installation_guid=$(curl -sf ${skip_ssl} -u ${opsmgr_username}:${opsmgr_password} \
   ${opsmgr_url}/api/installation_settings/products | \
   jq -r '.[].installation_name | scan("^postgresql-docker-.*")')
 echo
@@ -27,7 +27,7 @@ if [[ "${installation_guid}X" != "X" ]]; then
   echo
 
   echo "Running installation to complete the deletion"
-  response=$(curl -f -v ${skip_ssl} -u ${opsmgr_username}:${opsmgr_password} \
+  response=$(curl -sf -v ${skip_ssl} -u ${opsmgr_username}:${opsmgr_password} \
     "${opsmgr_url}/api/installation?ignore_warnings=1" -d '' -X POST)
   installation_id=$(echo $response | jq -r .install.id)
 
@@ -35,7 +35,7 @@ if [[ "${installation_guid}X" != "X" ]]; then
   status=running
   until [[ "${status}" != "running" ]]; do
     sleep 10
-    status_json=$(curl -f ${skip_ssl} -u ${opsmgr_username}:${opsmgr_password} \
+    status_json=$(curl -sf ${skip_ssl} -u ${opsmgr_username}:${opsmgr_password} \
       "${opsmgr_url}/api/installation/${installation_id}")
     echo $status_json
     status=$(echo $status_json | jq -r .status)
@@ -50,17 +50,17 @@ fi
 # poll for status installation /api/installation -X GET
 # fail if deletion failed (not {"status": "success"})
 
-curl -f ${skip_ssl} -u ${opsmgr_username}:${opsmgr_password} \
+curl -sf ${skip_ssl} -u ${opsmgr_username}:${opsmgr_password} \
   "${opsmgr_url}/api/products"
 echo
 
 # there is no way to delete a specific product (the one being uploaded)
 # so delete all products and hope for the best
-curl -f ${skip_ssl} -u ${opsmgr_username}:${opsmgr_password} \
+curl -sf ${skip_ssl} -u ${opsmgr_username}:${opsmgr_password} \
   "${opsmgr_url}/api/products" -d '' -X DELETE
 echo
 
-curl -f ${skip_ssl} -u ${opsmgr_username}:${opsmgr_password} \
+curl -sf ${skip_ssl} -u ${opsmgr_username}:${opsmgr_password} \
   "${opsmgr_url}/api/products"
 echo
 
@@ -69,11 +69,11 @@ curl -f -v ${skip_ssl} -u ${opsmgr_username}:${opsmgr_password} \
   "${opsmgr_url}/api/products" -X POST -F "product[file]=@${tile_path}"
 echo
 
-curl -f ${skip_ssl} -u ${opsmgr_username}:${opsmgr_password} \
+curl -sf ${skip_ssl} -u ${opsmgr_username}:${opsmgr_password} \
   "${opsmgr_url}/api/products"
 echo
 
-product_version=$(curl -f ${skip_ssl} -u ${opsmgr_username}:${opsmgr_password} \
+product_version=$(curl -sf ${skip_ssl} -u ${opsmgr_username}:${opsmgr_password} \
   "${opsmgr_url}/api/products" | jq -r ".[] | select(.name == \"postgresql-docker\") | .product_version")
 echo
 
