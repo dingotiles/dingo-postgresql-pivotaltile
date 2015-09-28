@@ -40,6 +40,16 @@ curl -f ${skip_ssl} -u ${opsmgr_username}:${opsmgr_password} \
   "${opsmgr_url}/api/products"
 echo
 
+product_version=$(curl -f ${skip_ssl} -u ${opsmgr_username}:${opsmgr_password} \
+  "${opsmgr_url}/api/products" | jq -r ".[] | select(.name == \"postgresql-docker\") | .product_version")
+echo
+
+echo Uploading the product
 curl -f -v ${skip_ssl} -u ${opsmgr_username}:${opsmgr_password} \
   "${opsmgr_url}/api/products" -X POST -F "product[file]=@${tile_path}"
 echo
+
+echo Adding the product to the installation
+curl -f -v ${skip_ssl} -u ${opsmgr_username}:${opsmgr_password} \
+  ${opsmgr_url}/api/installation_settings/products -X POST \
+    -d "name=postgresql-docker&product_version=${product_version}"
