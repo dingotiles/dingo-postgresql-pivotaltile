@@ -1,3 +1,13 @@
+---
+groups:
+- name: pipeline
+  jobs:
+  - create-product
+  - upload-product
+- name: image
+  jobs:
+  - build-task-image
+
 jobs:
 - name: create-product
   plan:
