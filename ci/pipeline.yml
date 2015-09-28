@@ -18,6 +18,20 @@ jobs:
     params:
       from: generate-product/tile/postgresql-docker.pivotal
 
+- name: upload-product
+  plan:
+  - aggregate:
+    - get: generated-tile
+      passed: [create-product]
+  - task: upload-product
+    file: tile/ci/tasks/upload-product.yml
+    config:
+      params:
+        opsmgr_url: {{opsmgr-url}}
+        opsmgr_skip_ssl_verification: {{opsmgr-skip-ssl-verification}}
+        opsmgr_username: {{opsmgr-username}}
+        opsmgr_password: {{opsmgr-password}}
+
 resources:
 - name: tile
   type: git
