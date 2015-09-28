@@ -10,7 +10,7 @@ if [[ -x "$(command -v apt-get)" ]]; then
 fi
 
 ls -la generated-tile/*
-tile_path=generated-tile/*.pivotal
+tile_path=generated-tile/postgresql-docker.pivotal
 
 if [[ "${opsmgr_skip_ssl_verification}X" != "X" ]]; then
   skip_ssl="-k "
