@@ -3,6 +3,7 @@ platform: linux
 image: docker:///concourse/concourse-ci
 
 inputs:
+- name: tile
 - name: generated-tile
 
 run:
