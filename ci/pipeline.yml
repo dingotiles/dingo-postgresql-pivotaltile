@@ -3,6 +3,8 @@ jobs:
   plan:
   - aggregate:
     - get: tile
+      trigger: false
+    - get: product-tile
       trigger: true
     - get: docker-boshrelease
       trigger: true
@@ -40,6 +42,13 @@ resources:
     private_key: {{github-key}}
     branch: master
     uri: git@github.com:drnic/postgresql-docker-pivotal.git
+- name: product-tile
+  type: git
+  source:
+    private_key: {{github-key}}
+    branch: master
+    uri: git@github.com:drnic/postgresql-docker-pivotal.git
+    paths: [metadata, content_migrations]
 - name: docker-boshrelease
   type: bosh-io-release
   source:
