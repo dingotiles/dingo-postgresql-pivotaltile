@@ -16,16 +16,16 @@ if [[ "${opsmgr_skip_ssl_verification}X" != "X" ]]; then
   skip_ssl="-k "
 fi
 
-curl ${skip_ssl} -u ${opsmgr_username}:${opsmgr_password} \
+curl -f ${skip_ssl} -u ${opsmgr_username}:${opsmgr_password} \
   "${opsmgr_url}/api/api_version"
 echo
 
 # there is no way to delete a specific product (the one being uploaded)
 # so delete all products and hope for the best
-curl ${skip_ssl} -u ${opsmgr_username}:${opsmgr_password} \
+curl -f ${skip_ssl} -u ${opsmgr_username}:${opsmgr_password} \
   "${opsmgr_url}/api/products" -d '' -X DELETE
 echo
 
-curl ${skip_ssl} -u ${opsmgr_username}:${opsmgr_password} \
+curl -f ${skip_ssl} -u ${opsmgr_username}:${opsmgr_password} \
   "${opsmgr_url}/api/products" -X POST -F "product[file]=@${tile_path}"
 echo
