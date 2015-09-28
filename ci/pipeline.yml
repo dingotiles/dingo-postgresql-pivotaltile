@@ -21,6 +21,7 @@ jobs:
 - name: upload-product
   plan:
   - aggregate:
+    - get: tile
     - get: generated-tile
       passed: [create-product]
   - task: upload-product
