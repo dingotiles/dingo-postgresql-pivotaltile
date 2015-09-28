@@ -3,6 +3,12 @@
 set -x # print commands
 set -e # fail fast
 
+# install dependencies
+if [[ -x "$(command -v apt-get)" ]]; then
+  sudo apt-get update
+  sudo apt-get install -y curl
+fi
+
 ls -la generated-tile/*
 tile_path=generated-tile/*.pivotal
 
