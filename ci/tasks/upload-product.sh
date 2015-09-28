@@ -32,14 +32,14 @@ if [[ "${installation_guid}X" != "X" ]]; then
   installation_id=$(echo $response | jq -r .install.id)
 
   set +x # silence print commands
-  status=
-  until [[ "${status}" == "success" ]]; do
+  status=running
+  until [[ "${status}" != "running" ]]; do
     sleep 10
-    status_json=$(curl -f -v ${skip_ssl} -u ${opsmgr_username}:${opsmgr_password} \
+    status_json=$(curl -f ${skip_ssl} -u ${opsmgr_username}:${opsmgr_password} \
       "${opsmgr_url}/api/installation/${installation_id}")
+    echo $status_json
     status=$(echo $status_json | jq -r .status)
     if [[ "${status}X" == "X" ]]; then
-      echo $status_json
       exit 1
     fi
   done
