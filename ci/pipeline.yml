@@ -49,21 +49,22 @@ resources:
 - name: tile
   type: git
   source:
-    private_key: {{github-key}}
-    branch: master
     uri: git@github.com:drnic/postgresql-docker-pivotal.git
+    branch: master
+    private_key: {{github-key}}
 - name: product-tile
   type: git
   source:
-    private_key: {{github-key}}
-    branch: master
     uri: git@github.com:drnic/postgresql-docker-pivotal.git
+    branch: master
+    private_key: {{github-key}}
     paths: [metadata, content_migrations]
 - name: docker-image-tile
   type: git
   source:
     uri: git@github.com:drnic/postgresql-docker-pivotal.git
     branch: master
+    private_key: {{github-key}}
     paths: [ci/ci_image/*]
 - name: docker-image
   type: docker-image
