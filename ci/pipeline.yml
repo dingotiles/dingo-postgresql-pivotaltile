@@ -43,7 +43,7 @@ jobs:
     trigger: true
   - put: docker-image
     params:
-      build: tile-docker-image/ci/ci_image
+      build: docker-image-tile/ci/ci_image
 
 resources:
 - name: tile
