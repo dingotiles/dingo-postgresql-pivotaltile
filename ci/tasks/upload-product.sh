@@ -20,10 +20,30 @@ installation_guid=$(curl -f ${skip_ssl} -u ${opsmgr_username}:${opsmgr_password}
 echo
 
 if [[ "${installation_guid}X" != "X" ]]; then
-  curl ${skip_ssl} -u ${opsmgr_username}:${opsmgr_password} \
+  echo "Product already installed, requesting it be deleted"
+  curl -f ${skip_ssl} -u ${opsmgr_username}:${opsmgr_password} \
     ${opsmgr_url}/api/installation_settings/products/${installation_guid} \
     -d '' -X DELETE
   echo
+
+  echo "Running installation to complete the deletion"
+  response=$(curl -f -v ${skip_ssl} -u ${opsmgr_username}:${opsmgr_password} \
+    "${opsmgr_url}/api/installation?ignore_warnings=1" -d '' -X POST)
+  installation_id=$(echo $response | jq -r .install.id)
+
+  set +x # silence print commands
+  status=
+  until [[ "${status}" == "success" ]]; do
+    sleep 10
+    status_json=$(curl -f -v ${skip_ssl} -u ${opsmgr_username}:${opsmgr_password} \
+      "${opsmgr_url}/api/installation/${installation_id}")
+    status=$(echo $status_json | jq -r .status)
+    if [[ "${status}X" == "X" ]]; then
+      echo $status_json
+      exit 1
+    fi
+  done
+  set -x # print commands
 fi
 
 # start installation to delete /api/installation -X POST
