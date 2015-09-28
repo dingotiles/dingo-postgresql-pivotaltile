@@ -26,6 +26,10 @@ if [[ "${installation_guid}X" != "X" ]]; then
   echo
 fi
 
+# start installation to delete /api/installation -X POST
+# poll for status installation /api/installation -X GET
+# fail if deletion failed (not {"status": "success"})
+
 curl -f ${skip_ssl} -u ${opsmgr_username}:${opsmgr_password} \
   "${opsmgr_url}/api/products"
 echo
@@ -57,3 +61,13 @@ echo Adding the product to the installation
 curl -f -v ${skip_ssl} -u ${opsmgr_username}:${opsmgr_password} \
   ${opsmgr_url}/api/installation_settings/products -X POST \
     -d "name=postgresql-docker&product_version=${product_version}"
+
+# add following to installation_settings (from microbosh)
+# "singleton_availability_zone_reference": "ed202632256aa04465de",
+# "network_reference": "a6691bc59528f242b122",
+# "availability_zone_references": [
+#   "ed202632256aa04465de"
+# ],
+
+# start installation /api/installation -X POST
+# poll for status installation /api/installation -X GET
