@@ -62,17 +62,16 @@ job_types:
         type: integer
         configurable: true
         default: 1
-    property_blueprints:
-      - name: vm_credentials
-        type: salted_credentials
-        default:
-          identity: vcap
     instance_definitions:
       - name: instances
         type: integer
         configurable: true
         default: 1
-    property_blueprints: {}
+    property_blueprints:
+      - name: vm_credentials
+        type: salted_credentials
+        default:
+          identity: vcap
     manifest: |
       subway_broker:
         backends:
