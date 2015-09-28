@@ -26,6 +26,6 @@ curl -f ${skip_ssl} -u ${opsmgr_username}:${opsmgr_password} \
   "${opsmgr_url}/api/products" -d '' -X DELETE
 echo
 
-curl -f ${skip_ssl} -u ${opsmgr_username}:${opsmgr_password} \
+curl -f -v ${skip_ssl} -u ${opsmgr_username}:${opsmgr_password} \
   "${opsmgr_url}/api/products" -X POST -F "product[file]=@${tile_path}"
 echo
