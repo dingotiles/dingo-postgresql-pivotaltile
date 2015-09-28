@@ -13,7 +13,6 @@ jobs:
   plan:
   - aggregate:
     - get: tile
-      trigger: false
     - get: product-tile
       trigger: true
     - get: docker-boshrelease
