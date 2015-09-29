@@ -61,7 +61,7 @@ echo
 
 echo "Installing product"
 
-echo "Running installation to complete the deletion"
+echo "Running installation process"
 response=$(curl -sf ${skip_ssl} -u ${opsmgr_username}:${opsmgr_password} \
   "${opsmgr_url}/api/installation?ignore_warnings=1" -d '' -X POST)
 installation_id=$(echo $response | jq -r .install.id)
