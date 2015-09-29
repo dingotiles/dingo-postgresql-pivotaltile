@@ -91,5 +91,11 @@ microbosh_az_id=$(curl -sf ${skip_ssl} -u ${opsmgr_username}:${opsmgr_password} 
 #   "ed202632256aa04465de"
 # ],
 
+curl -sf ${skip_ssl} -u ${opsmgr_username}:${opsmgr_password} \
+  ${opsmgr_url}/api/installation_settings | \
+  jq ".products[1].singleton_availability_zone_reference = \"${microbosh_az_id}\" | .products[1].availability_zone_references = [\"${microbosh_az_id}\"]" \
+  > installation_settings.json
+
+cat installation_settings.json
 # start installation /api/installation -X POST
 # poll for status installation /api/installation -X GET
