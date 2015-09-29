@@ -74,7 +74,7 @@ until [[ "${status}" != "running" ]]; do
     "${opsmgr_url}/api/installation/${installation_id}")
   echo $status_json
   status=$(echo $status_json | jq -r .status)
-  if [[ "${status}X" == "X" ]]; then
+  if [[ "${status}X" == "X" || "${status}" == "failed" ]]; then
     exit 1
   fi
 done
