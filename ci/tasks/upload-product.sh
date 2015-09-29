@@ -10,24 +10,6 @@ fi
 
 tile_path=generated-tile/postgresql-docker.pivotal
 
-# start installation to delete /api/installation -X POST
-# poll for status installation /api/installation -X GET
-# fail if deletion failed (not {"status": "success"})
-
-curl -sf ${skip_ssl} -u ${opsmgr_username}:${opsmgr_password} \
-  "${opsmgr_url}/api/products"
-echo
-
-# there is no way to delete a specific product (the one being uploaded)
-# so delete all products and hope for the best
-curl -sf ${skip_ssl} -u ${opsmgr_username}:${opsmgr_password} \
-  "${opsmgr_url}/api/products" -d '' -X DELETE
-echo
-
-curl -sf ${skip_ssl} -u ${opsmgr_username}:${opsmgr_password} \
-  "${opsmgr_url}/api/products"
-echo
-
 echo Uploading the product
 curl -f -v ${skip_ssl} -u ${opsmgr_username}:${opsmgr_password} \
   "${opsmgr_url}/api/products" -X POST -F "product[file]=@${tile_path}"

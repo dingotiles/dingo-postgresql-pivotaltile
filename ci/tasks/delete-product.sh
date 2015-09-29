@@ -47,3 +47,17 @@ if [[ "${installation_guid}X" != "X" ]]; then
   done
   set -x # print commands
 fi
+
+curl -sf ${skip_ssl} -u ${opsmgr_username}:${opsmgr_password} \
+  "${opsmgr_url}/api/products"
+echo
+
+# there is no way to delete a specific product (the one being uploaded)
+# so delete all products and hope for the best
+curl -sf ${skip_ssl} -u ${opsmgr_username}:${opsmgr_password} \
+  "${opsmgr_url}/api/products" -d '' -X DELETE
+echo
+
+curl -sf ${skip_ssl} -u ${opsmgr_username}:${opsmgr_password} \
+  "${opsmgr_url}/api/products"
+echo

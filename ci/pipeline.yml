@@ -4,6 +4,7 @@ groups:
   jobs:
   - create-product
   - upload-product
+  - delete-product
 - name: image
   jobs:
   - build-task-image
