@@ -93,9 +93,14 @@ microbosh_az_id=$(curl -sf ${skip_ssl} -u ${opsmgr_username}:${opsmgr_password} 
 #   "ed202632256aa04465de"
 # ],
 
+products_count=$(curl -sf ${skip_ssl} -u ${opsmgr_username}:${opsmgr_password} \
+  ${opsmgr_url}/api/installation_settings | \
+  jq -r ".products | length")
+product_index=$(expr $products_count - 1)
+
 curl -sf ${skip_ssl} -u ${opsmgr_username}:${opsmgr_password} \
   ${opsmgr_url}/api/installation_settings | \
-  jq ".products[1].singleton_availability_zone_reference = \"${microbosh_az_id}\" | .products[1].availability_zone_references = [\"${microbosh_az_id}\"]" \
+  jq ".products[${product_index}].singleton_availability_zone_reference = \"${microbosh_az_id}\" | .products[${product_index}].availability_zone_references = [\"${microbosh_az_id}\"]" \
   > installation_settings.json
 echo
 
