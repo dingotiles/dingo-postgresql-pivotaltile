@@ -104,5 +104,23 @@ curl -sf -v ${skip_ssl} -u ${opsmgr_username}:${opsmgr_password} \
     -F 'installation[file]=@installation_settings.json'
 echo
 
-# start installation /api/installation -X POST
-# poll for status installation /api/installation -X GET
+echo "Installing product"
+
+echo "Running installation to complete the deletion"
+response=$(curl -sf ${skip_ssl} -u ${opsmgr_username}:${opsmgr_password} \
+  "${opsmgr_url}/api/installation?ignore_warnings=1" -d '' -X POST)
+installation_id=$(echo $response | jq -r .install.id)
+
+set +x # silence print commands
+status=running
+until [[ "${status}" != "running" ]]; do
+  sleep 10
+  status_json=$(curl -sf ${skip_ssl} -u ${opsmgr_username}:${opsmgr_password} \
+    "${opsmgr_url}/api/installation/${installation_id}")
+  echo $status_json
+  status=$(echo $status_json | jq -r .status)
+  if [[ "${status}X" == "X" ]]; then
+    exit 1
+  fi
+done
+set -x # print commands
