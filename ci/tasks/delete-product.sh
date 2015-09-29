@@ -3,6 +3,11 @@
 set -x # print commands
 set -e # fail fast
 
+if [[ "${opsmgr_url}X" == "X" ]]; then
+  echo "delete-product.sh requires \$opsmgr_url, \$opsmgr_username, \$opsmgr_password"
+  exit
+fi
+
 if [[ "${opsmgr_skip_ssl_verification}X" != "X" ]]; then
   skip_ssl="-k "
 fi

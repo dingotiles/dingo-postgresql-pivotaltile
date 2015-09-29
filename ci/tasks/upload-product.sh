@@ -3,6 +3,11 @@
 set -x # print commands
 set -e # fail fast
 
+if [[ "${opsmgr_url}X" == "X" ]]; then
+  echo "upload-product.sh requires \$opsmgr_url, \$opsmgr_username, \$opsmgr_password"
+  exit
+fi
+
 tile_path=generated-tile/postgresql-docker.pivotal
 
 # start installation to delete /api/installation -X POST

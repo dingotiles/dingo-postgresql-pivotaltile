@@ -37,8 +37,28 @@ jobs:
       passed: [create-product]
   - task: delete-product
     file: tile/ci/tasks/delete-product.yml
+    config:
+      params:
+        opsmgr_url: {{opsmgr-url}}
+        opsmgr_skip_ssl_verification: {{opsmgr-skip-ssl-verification}}
+        opsmgr_username: {{opsmgr-username}}
+        opsmgr_password: {{opsmgr-password}}
   - task: upload-product
     file: tile/ci/tasks/upload-product.yml
+    config:
+      params:
+        opsmgr_url: {{opsmgr-url}}
+        opsmgr_skip_ssl_verification: {{opsmgr-skip-ssl-verification}}
+        opsmgr_username: {{opsmgr-username}}
+        opsmgr_password: {{opsmgr-password}}
+
+
+- name: delete-product
+  plan:
+  - aggregate:
+    - get: tile
+  - task: delete-product
+    file: tile/ci/tasks/delete-product.yml
     config:
       params:
         opsmgr_url: {{opsmgr-url}}
