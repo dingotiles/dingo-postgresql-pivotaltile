@@ -10,6 +10,10 @@ fi
 
 tile_path=generated-tile/postgresql-docker.pivotal
 
+if [[ "${opsmgr_skip_ssl_verification}X" != "X" ]]; then
+  skip_ssl="-k "
+fi
+
 echo Uploading the product
 curl -f -v ${skip_ssl} -u ${opsmgr_username}:${opsmgr_password} \
   "${opsmgr_url}/api/products" -X POST -F "product[file]=@${tile_path}"
