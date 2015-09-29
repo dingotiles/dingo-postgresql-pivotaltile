@@ -82,7 +82,7 @@ curl -f -v ${skip_ssl} -u ${opsmgr_username}:${opsmgr_password} \
   ${opsmgr_url}/api/installation_settings/products -X POST \
     -d "name=postgresql-docker&product_version=${product_version}"
 
-microbosh_az_id=$(curl -f -v ${skip_ssl} -u ${opsmgr_username}:${opsmgr_password} \
+microbosh_az_id=$(curl -sf ${skip_ssl} -u ${opsmgr_username}:${opsmgr_password} \
   ${opsmgr_url}/api/installation_settings | jq -r ".products[0].singleton_availability_zone_reference")
 # add following to installation_settings (from microbosh)
 # "singleton_availability_zone_reference": "ed202632256aa04465de",
