@@ -4,6 +4,7 @@ image: docker:///starkandwayne/postgresql-docker-pivotal-pipeline
 
 inputs:
 - name: tile
+- name: cf-subway-boshrelease
 - name: docker-boshrelease
 - name: postgresql-docker-boshrelease
 

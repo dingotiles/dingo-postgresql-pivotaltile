@@ -1,5 +1,8 @@
 #!/bin/bash
 
+subway_version=$(cat cf-subway-boshrelease/version)
+cp -r cf-subway-boshrelease/release.tgz tile/releases/cf-subway-boshrelease-${subway_version}.tgz
+
 docker_version=$(cat docker-boshrelease/version)
 cp -r docker-boshrelease/release.tgz tile/releases/docker-boshrelease-${docker_version}.tgz
 

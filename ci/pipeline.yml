@@ -16,6 +16,10 @@ jobs:
     - get: tile
     - get: product-tile
       trigger: true
+    - get: cf-subway-boshrelease
+      trigger: true
+      params:
+        tarball: true
     - get: docker-boshrelease
       trigger: true
       params:
@@ -114,6 +118,10 @@ resources:
   type: bosh-io-release
   source:
     repository: cloudfoundry-community/postgresql-docker-boshrelease
+- name: cf-subway-boshrelease
+  type: bosh-io-release
+  source:
+    repository: cloudfoundry-community/cf-subway-boshrelease
 - name: generated-tile
   type: s3
   source:
