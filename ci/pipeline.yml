@@ -23,8 +23,6 @@ jobs:
       trigger: true
       params:
         tarball: true
-  - task: delete-product
-    file: tile/ci/tasks/delete-product.yml
   - task: generate-product
     file: tile/ci/tasks/generate-product.yml
   - put: generated-tile
@@ -37,6 +35,8 @@ jobs:
     - get: tile
     - get: generated-tile
       passed: [create-product]
+  - task: delete-product
+    file: tile/ci/tasks/delete-product.yml
   - task: upload-product
     file: tile/ci/tasks/upload-product.yml
     config:
