@@ -47,7 +47,7 @@ if [[ "${installation_guid}X" != "X" ]]; then
     logs=$(curl -sf ${skip_ssl} -u ${opsmgr_username}:${opsmgr_password} \
       ${opsmgr_url}/api/installation/${installation_id}/logs | jq -r .logs)
     if [[ "${logs:${prevlogslength}}" != "" ]]; then
-      echo -e ${logs:${prevlogslength}}
+      echo "${logs:${prevlogslength}}"
       prevlogslength=${#logs}
     fi
   done
