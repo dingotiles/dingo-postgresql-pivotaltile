@@ -81,7 +81,7 @@ until [[ "${status}" != "running" ]]; do
   logs=$(curl -sf ${skip_ssl} -u ${opsmgr_username}:${opsmgr_password} \
     ${opsmgr_url}/api/installation/${installation_id}/logs | jq -r .logs)
   if [[ "${logs:${prevlogslength}}" != "" ]]; then
-    echo -n ${logs:${prevlogslength}}
+    echo -e ${logs:${prevlogslength}}
     prevlogslength=${#logs}
   fi
 done
