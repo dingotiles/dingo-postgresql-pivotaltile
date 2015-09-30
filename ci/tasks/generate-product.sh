@@ -2,6 +2,9 @@
 
 set -e
 
+ls -al /usr/bin
+spruce -v
+
 DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 
 # this script is run assuming repo stored in folder 'tile'
