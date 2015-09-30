@@ -68,6 +68,7 @@ installation_id=$(echo $response | jq -r .install.id)
 
 set +x # silence print commands
 status=running
+prevlogslength=0
 until [[ "${status}" != "running" ]]; do
   sleep 10
   status_json=$(curl -sf ${skip_ssl} -u ${opsmgr_username}:${opsmgr_password} \
@@ -77,12 +78,12 @@ until [[ "${status}" != "running" ]]; do
   if [[ "${status}X" == "X" || "${status}" == "failed" ]]; then
     installation_exit=1
   fi
-done
-set -x # print commands
 
-# TODO: progressively show installation logs in until loop
-curl -sf ${skip_ssl} -u ${opsmgr_username}:${opsmgr_password} \
-  ${opsmgr_url}/api/installation/${installation_id}/logs | jq -r .logs
+  logs=$(curl -sf ${skip_ssl} -u ${opsmgr_username}:${opsmgr_password} \
+    ${opsmgr_url}/api/installation/${installation_id}/logs | jq -r .logs)
+  echo ${logs:${prevlogslength}}
+  prevlogslength=${#logs}
+done
 
 if [[ "${installation_exit}X" != "X" ]]; then
   exit ${installation_exit}
