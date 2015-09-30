@@ -1,17 +1,27 @@
 #!/bin/bash
 
+DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
+
+# this script is run assuming repo stored in folder 'tile'
+
 subway_version=$(cat cf-subway-boshrelease/version)
-cp -r cf-subway-boshrelease/release.tgz tile/releases/cf-subway-boshrelease-${subway_version}.tgz
+cp -r cf-subway-boshrelease/release.tgz tile/generated/releases/cf-subway-boshrelease-${subway_version}.tgz
 
 docker_version=$(cat docker-boshrelease/version)
-cp -r docker-boshrelease/release.tgz tile/releases/docker-boshrelease-${docker_version}.tgz
+cp -r docker-boshrelease/release.tgz tile/generated/releases/docker-boshrelease-${docker_version}.tgz
 
 pg_docker_version=$(cat postgresql-docker-boshrelease/version)
-cp -r postgresql-docker-boshrelease/release.tgz tile/releases/postgresql-docker-boshrelease-${pg_docker_version}.tgz
+cp -r postgresql-docker-boshrelease/release.tgz tile/generated/releases/postgresql-docker-boshrelease-${pg_docker_version}.tgz
 
-cd tile
-ls -al releases/
+cat tile/templates/metadata/releases.yml
+
+# all remaining references are relative to root of this repo
+cd $DIR/../..
+spruce merge \
+  templates/metadata/releases.yml \
+  templates/metadata/base.yml > generated/metadata/postgresql-docker.yml
+
+cd generated
 
 echo "creating .pivotal file"
-
 zip -r postgresql-docker.pivotal content_migrations metadata releases

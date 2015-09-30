@@ -32,7 +32,7 @@ jobs:
     file: tile/ci/tasks/generate-product.yml
   - put: generated-tile
     params:
-      from: generate-product/tile/postgresql-docker.pivotal
+      from: generate-product/tile/generated/postgresql-docker.pivotal
 
 - name: upload-product
   plan:
@@ -86,13 +86,13 @@ resources:
   type: git
   source:
     uri: git@github.com:drnic/postgresql-docker-pivotal.git
-    branch: master
+    branch: {{tile-branch}}
     private_key: {{github-key}}
 - name: product-tile
   type: git
   source:
     uri: git@github.com:drnic/postgresql-docker-pivotal.git
-    branch: master
+    branch: {{tile-branch}}
     private_key: {{github-key}}
     paths: [metadata, content_migrations]
 - name: docker-image-tile
