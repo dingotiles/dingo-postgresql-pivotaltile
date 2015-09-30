@@ -58,6 +58,8 @@ if [[ "${installation_guid}X" != "X" ]]; then
   fi
 fi
 
+set -x # print commands
+
 curl -sf ${skip_ssl} -u ${opsmgr_username}:${opsmgr_password} \
   "${opsmgr_url}/api/products"
 echo
