@@ -39,14 +39,24 @@ if [[ "${installation_guid}X" != "X" ]]; then
     sleep 10
     status_json=$(curl -sf ${skip_ssl} -u ${opsmgr_username}:${opsmgr_password} \
       "${opsmgr_url}/api/installation/${installation_id}")
-    echo $status_json
     status=$(echo $status_json | jq -r .status)
     if [[ "${status}X" == "X" || "${status}" == "failed" ]]; then
-      exit 1
+      installation_exit=1
+    fi
+
+    logs=$(curl -sf ${skip_ssl} -u ${opsmgr_username}:${opsmgr_password} \
+      ${opsmgr_url}/api/installation/${installation_id}/logs | jq -r .logs)
+    if [[ "${logs:${prevlogslength}}" != "" ]]; then
+      echo -e ${logs:${prevlogslength}}
+      prevlogslength=${#logs}
     fi
   done
-  set -x # print commands
-fi
+  echo $status_json
+
+  if [[ "${installation_exit}X" != "X" ]]; then
+    exit ${installation_exit}
+  fi
+done
 
 curl -sf ${skip_ssl} -u ${opsmgr_username}:${opsmgr_password} \
   "${opsmgr_url}/api/products"
