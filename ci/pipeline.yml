@@ -99,7 +99,7 @@ resources:
   type: git
   source:
     uri: git@github.com:drnic/postgresql-docker-pivotal.git
-    branch: master
+    branch: {{tile-branch}}
     private_key: {{github-key}}
     paths: [ci/ci_image/*]
 - name: docker-image
