@@ -73,7 +73,6 @@ until [[ "${status}" != "running" ]]; do
   sleep 10
   status_json=$(curl -sf ${skip_ssl} -u ${opsmgr_username}:${opsmgr_password} \
     "${opsmgr_url}/api/installation/${installation_id}")
-  echo $status_json
   status=$(echo $status_json | jq -r .status)
   if [[ "${status}X" == "X" || "${status}" == "failed" ]]; then
     installation_exit=1
@@ -84,6 +83,7 @@ until [[ "${status}" != "running" ]]; do
   echo ${logs:${prevlogslength}}
   prevlogslength=${#logs}
 done
+echo $status_json
 
 if [[ "${installation_exit}X" != "X" ]]; then
   exit ${installation_exit}
