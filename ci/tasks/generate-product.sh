@@ -2,7 +2,8 @@
 
 set -e
 
-ls -al /usr/bin
+sudo mv /usr/bin/spruce/spruce /usr/bin/spruce
+sudo chmod 755 /usr/bin/spruce
 spruce -v
 
 DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
