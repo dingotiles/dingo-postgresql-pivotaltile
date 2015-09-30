@@ -13,7 +13,19 @@ cp -r docker-boshrelease/release.tgz tile/generated/releases/docker-boshrelease-
 pg_docker_version=$(cat postgresql-docker-boshrelease/version)
 cp -r postgresql-docker-boshrelease/release.tgz tile/generated/releases/postgresql-docker-boshrelease-${pg_docker_version}.tgz
 
-cat tile/templates/metadata/releases.yml
+cat >tile/templates/metadata/releases.yml <<EOF
+---
+releases:
+- name: docker
+  file: docker-boshrelease-${docker_version}.tgz
+  version: "${docker_version}"
+- name: cf-subway
+  file: cf-subway-boshrelease-${subway_version}.tgz
+  version: "${subway_version}"
+- name: postgresql-docker
+  file: postgresql-docker-boshrelease-${pg_docker_version}.tgz
+  version: "${pg_docker_version}"
+EOF
 
 # all remaining references are relative to root of this repo
 cd $DIR/../..
