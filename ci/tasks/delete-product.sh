@@ -56,7 +56,7 @@ if [[ "${installation_guid}X" != "X" ]]; then
   if [[ "${installation_exit}X" != "X" ]]; then
     exit ${installation_exit}
   fi
-done
+fi
 
 curl -sf ${skip_ssl} -u ${opsmgr_username}:${opsmgr_password} \
   "${opsmgr_url}/api/products"
