@@ -75,7 +75,14 @@ until [[ "${status}" != "running" ]]; do
   echo $status_json
   status=$(echo $status_json | jq -r .status)
   if [[ "${status}X" == "X" || "${status}" == "failed" ]]; then
-    exit 1
+    installation_exit=1
   fi
 done
 set -x # print commands
+
+curl -sf ${skip_ssl} -u ${opsmgr_username}:${opsmgr_password} \
+  ${opsmgr_url}/api/installation/${installation_id}/logs | jq -r .logs
+
+if [[ "${installation_exit}X" != "X" ]]; then
+  exit ${installation_exit}
+fi
