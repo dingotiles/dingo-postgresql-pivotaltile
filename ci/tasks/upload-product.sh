@@ -80,8 +80,10 @@ until [[ "${status}" != "running" ]]; do
 
   logs=$(curl -sf ${skip_ssl} -u ${opsmgr_username}:${opsmgr_password} \
     ${opsmgr_url}/api/installation/${installation_id}/logs | jq -r .logs)
-  echo ${logs:${prevlogslength}}
-  prevlogslength=${#logs}
+  if [[ "${logs:${prevlogslength}}" != "" ]]; then
+    echo ${logs:${prevlogslength}}
+    prevlogslength=${#logs}
+  fi
 done
 echo $status_json
 
