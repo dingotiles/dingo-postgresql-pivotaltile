@@ -4,6 +4,8 @@ DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 
 # this script is run assuming repo stored in folder 'tile'
 
+mkdir -p tile/generated/releases
+
 subway_version=$(cat cf-subway-boshrelease/version)
 cp -r cf-subway-boshrelease/release.tgz tile/generated/releases/cf-subway-boshrelease-${subway_version}.tgz
 
