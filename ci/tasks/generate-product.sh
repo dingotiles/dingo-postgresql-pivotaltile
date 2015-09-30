@@ -37,6 +37,9 @@ EOF
 cd $DIR/../..
 spruce merge \
   templates/metadata/releases.yml \
+  templates/metadata/form_types.yml \
+  templates/metadata/property_blueprints.yml \
+  templates/metadata/job_types.yml \
   templates/metadata/base.yml > generated/metadata/postgresql-docker.yml
 
 cd generated
