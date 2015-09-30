@@ -70,7 +70,7 @@ set +x # silence print commands
 status=running
 prevlogslength=0
 until [[ "${status}" != "running" ]]; do
-  sleep 10
+  sleep 1
   status_json=$(curl -sf ${skip_ssl} -u ${opsmgr_username}:${opsmgr_password} \
     "${opsmgr_url}/api/installation/${installation_id}")
   status=$(echo $status_json | jq -r .status)
