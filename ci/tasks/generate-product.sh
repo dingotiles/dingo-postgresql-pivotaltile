@@ -2,7 +2,8 @@
 
 set -e
 
-sudo mv /usr/bin/spruce/spruce /usr/bin/spruce
+sudo mv /usr/bin/spruce /usr/bin/spruce-dir
+sudo mv /usr/bin/spruce-dir/spruce /usr/bin/spruce
 sudo chmod 755 /usr/bin/spruce
 spruce -v
 
