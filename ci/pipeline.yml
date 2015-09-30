@@ -101,7 +101,7 @@ resources:
     uri: git@github.com:drnic/postgresql-docker-pivotal.git
     branch: {{tile-branch}}
     private_key: {{github-key}}
-    paths: [metadata, content_migrations]
+    paths: [templates]
 - name: docker-image-tile
   type: git
   source:
