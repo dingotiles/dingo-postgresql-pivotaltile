@@ -80,6 +80,7 @@ until [[ "${status}" != "running" ]]; do
 done
 set -x # print commands
 
+# TODO: progressively show installation logs in until loop
 curl -sf ${skip_ssl} -u ${opsmgr_username}:${opsmgr_password} \
   ${opsmgr_url}/api/installation/${installation_id}/logs | jq -r .logs
 
