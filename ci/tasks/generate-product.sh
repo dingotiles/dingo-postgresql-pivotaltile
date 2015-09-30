@@ -55,5 +55,5 @@ git config --global user.name "Concourse Bot"
 echo "Checking for changes in $(pwd)..."
 if [[ "$(git status -s)X" != "X" ]]; then
   git add . --all
-  git commit -m "${message}"
+  git commit -m "New bosh release versions"
 fi
