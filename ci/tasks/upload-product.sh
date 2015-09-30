@@ -15,7 +15,7 @@ if [[ "${opsmgr_skip_ssl_verification}X" != "X" ]]; then
 fi
 
 echo Uploading the product
-curl -f -v ${skip_ssl} -u ${opsmgr_username}:${opsmgr_password} \
+curl -f ${skip_ssl} -u ${opsmgr_username}:${opsmgr_password} \
   "${opsmgr_url}/api/products" -X POST -F "product[file]=@${tile_path}"
 echo
 
@@ -28,7 +28,7 @@ product_version=$(curl -sf ${skip_ssl} -u ${opsmgr_username}:${opsmgr_password} 
 echo
 
 echo Adding the product to the installation
-curl -f -v ${skip_ssl} -u ${opsmgr_username}:${opsmgr_password} \
+curl -f ${skip_ssl} -u ${opsmgr_username}:${opsmgr_password} \
   ${opsmgr_url}/api/installation_settings/products -X POST \
     -d "name=postgresql-docker&product_version=${product_version}"
 echo
@@ -54,7 +54,7 @@ curl -sf ${skip_ssl} -u ${opsmgr_username}:${opsmgr_password} \
   > installation_settings.json
 echo
 
-curl -sf -v ${skip_ssl} -u ${opsmgr_username}:${opsmgr_password} \
+curl -sf ${skip_ssl} -u ${opsmgr_username}:${opsmgr_password} \
   ${opsmgr_url}/api/installation_settings -X POST \
     -F 'installation[file]=@installation_settings.json'
 echo
