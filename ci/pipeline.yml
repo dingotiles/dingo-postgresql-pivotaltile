@@ -39,6 +39,7 @@ jobs:
       rebase: true
 
 - name: upload-product
+  serial: true
   plan:
   - aggregate:
     - get: tile
