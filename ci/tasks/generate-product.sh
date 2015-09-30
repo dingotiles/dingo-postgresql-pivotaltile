@@ -41,3 +41,14 @@ cd generated
 
 echo "creating .pivotal file"
 zip -r postgresql-docker.pivotal content_migrations metadata releases
+
+cd $DIR/../..
+
+git config --global user.email "concourse-bot@ge.com"
+git config --global user.name "Concourse Bot"
+
+echo "Checking for changes in $(pwd)..."
+if [[ "$(git status -s)X" != "X" ]]; then
+  git add . --all
+  git commit -m "${message}"
+fi
