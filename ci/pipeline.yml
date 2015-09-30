@@ -33,6 +33,10 @@ jobs:
   - put: generated-tile
     params:
       from: generate-product/tile/generated/postgresql-docker.pivotal
+  - put: tile
+    params:
+      repository: generate-product/tile
+      rebase: true
 
 - name: upload-product
   plan:
