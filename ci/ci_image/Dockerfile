@@ -7,9 +7,9 @@ ADD https://github.com/stedolan/jq/releases/download/jq-1.5/jq-linux64 /usr/bin/
 RUN chmod 775 /usr/bin/jq
 
 ADD https://github.com/geofffranks/spruce/releases/download/v0.9.0/spruce_0.9.0_linux_amd64.tar.gz /tmp/
-RUN cd /tmp/ &&
-  tar xfz spruce_0.9.0_linux_amd64.tar.gz &&
-  mv spruce_0.9.0_linux_amd64 /usr/bin/spruce &&
+RUN cd /tmp/ && \
+  tar xfz spruce_0.9.0_linux_amd64.tar.gz && \
+  mv spruce_0.9.0_linux_amd64 /usr/bin/spruce && \
   chmod 755 /usr/bin/spruce
 
 # Install Go
