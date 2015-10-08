@@ -160,15 +160,15 @@ product_version: 0.1.0
 property_blueprints: {}
 rank: 1
 releases:
-- file: docker-boshrelease-21.tgz
+- file: docker-boshrelease-22.tgz
   name: docker
-  version: "21"
+  version: "22"
 - file: cf-subway-boshrelease-2.tgz
   name: cf-subway
   version: "2"
-- file: postgresql-docker-boshrelease-2.tgz
+- file: postgresql-docker-boshrelease-3.tgz
   name: postgresql-docker
-  version: "2"
+  version: "3"
 stemcell_criteria:
   os: ubuntu-trusty
   requires_cpi: false
