@@ -166,9 +166,9 @@ releases:
 - file: cf-subway-boshrelease-2.tgz
   name: cf-subway
   version: "2"
-- file: postgresql-docker-boshrelease-3.tgz
+- file: postgresql-docker-boshrelease-4.tgz
   name: postgresql-docker
-  version: "3"
+  version: "4"
 stemcell_criteria:
   os: ubuntu-trusty
   requires_cpi: false
