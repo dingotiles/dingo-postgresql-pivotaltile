@@ -13,4 +13,4 @@ inputs:
   path: tmp/releases/postgresql-docker-boshrelease
 
 run:
-  path: tile/ci/tasks/generate-product.sh
+  path: ci/tasks/generate-product.sh
