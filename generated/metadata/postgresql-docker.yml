@@ -32,11 +32,13 @@ job_types:
       name: postgresql-docker-broker
       cookie_secret: e7247dae-a252-4393-afa3-2219c1c02efd
       fetch_images: false
-      host: cf-containers-broker-backend.(( $runtime.system_domain ))
+      host: postgresql-docker-broker.(( $runtime.system_domain ))
       max_containers: 20
       username: containers
       password: containers
-      port: 8001
+      port: 8000
+      unicorn:
+        port: 8001
       protocol: http
       services:
       - id: '0f5c1670-6dc3-11e5-bc08-6c4008a663f0'
@@ -160,6 +162,8 @@ job_types:
     release: docker
   - name: subway-broker
     release: cf-subway
+  - name: route-registrar
+    release: route-registrar
 - dynamic_ip: 1
   instance_definitions:
   - configurable: true
@@ -187,15 +191,118 @@ job_types:
     type: integer
   resource_label: compilation
   static_ip: 0
+- dynamic_ip: 1
+  errand: true
+  instance_definitions:
+  - configurable: false
+    default: 1
+    name: instances
+    type: integer
+  manifest: |
+    cf:
+      api_url: (( $runtime.system_api_url ))
+      admin_username: (( ..cf.uaa.admin_credentials.identity ))
+      admin_password: (( ..cf.uaa.admin_credentials.password ))
+      skip_ssl_validation: (( ..cf.ha_proxy.skip_cert_verify.value ))
+    broker:
+      name: starkandwayne-postgresql
+      protocol: http
+      host: postgresql-docker-broker.(( $runtime.system_domain ))
+      port: 80
+      username: containers
+      password: containers
+  max_in_flight: 1
+  name: broker-registrar
+  property_blueprints:
+  - default:
+      identity: vcap
+    name: vm_credentials
+    type: salted_credentials
+  resource_definitions:
+  - configurable: false
+    default: 512
+    name: ram
+    type: integer
+  - configurable: false
+    default: 1024
+    name: ephemeral_disk
+    type: integer
+  - configurable: false
+    default: 0
+    name: persistent_disk
+    type: integer
+  - configurable: false
+    default: 1
+    name: cpu
+    type: integer
+  resource_label: Register broker
+  static_ip: 0
+  templates:
+  - name: broker-registrar
+    release: cf-subway
+- dynamic_ip: 1
+  errand: true
+  instance_definitions:
+  - configurable: false
+    default: 1
+    name: instances
+    type: integer
+  manifest: |
+    cf:
+      api_url: (( $runtime.system_api_url ))
+      admin_username: (( ..cf.uaa.admin_credentials.identity ))
+      admin_password: (( ..cf.uaa.admin_credentials.password ))
+      skip_ssl_validation: (( ..cf.ha_proxy.skip_cert_verify.value ))
+    broker:
+      name: starkandwayne-postgresql
+      protocol: http
+      host: postgresql-docker-broker.(( $runtime.system_domain ))
+      port: 80
+      username: containers
+      password: containers
+  max_in_flight: 1
+  name: broker-deregistrar
+  property_blueprints:
+  - default:
+      identity: vcap
+    name: vm_credentials
+    type: salted_credentials
+  resource_definitions:
+  - configurable: false
+    default: 512
+    name: ram
+    type: integer
+  - configurable: false
+    default: 1024
+    name: ephemeral_disk
+    type: integer
+  - configurable: false
+    default: 0
+    name: persistent_disk
+    type: integer
+  - configurable: false
+    default: 1
+    name: cpu
+    type: integer
+  resource_label: De-register broker
+  static_ip: 0
+  templates:
+  - name: broker-registrar
+    release: cf-subway
 label: 'PostgreSQL in Docker: by Stark & Wayne'
 metadata_version: "1.5"
 name: postgresql-docker
-post_deploy_errands: []
-pre_delete_errands: []
+post_deploy_errands:
+- name: broker-registrar
+pre_delete_errands:
+- name: broker-deregistrar
 product_version: 0.1.0
 property_blueprints: {}
 rank: 1
 releases:
+- file: route-registrar-boshrelease-2.tgz
+  name: route-registrar
+  version: "2"
 - file: docker-boshrelease-22.tgz
   name: docker
   version: "22"
