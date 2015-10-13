@@ -46,6 +46,7 @@ jobs:
     - get: tile
     - get: generated-tile
       passed: [create-product]
+      trigger: true
   - task: delete-product
     file: tile/ci/tasks/delete-product.yml
     config:

@@ -2,14 +2,14 @@ job_types:
   - name: cell
     resource_label: Docker Cell
     templates:
-    - name: docker
-      release: docker
-    - name: frodenas_postgresql_image
-      release: postgresql-docker
-    - name: cf-containers-broker
-      release: docker
-    - name: subway-broker
-      release: cf-subway
+    # run docker daemon
+    - {name: docker, release: docker}
+    # warm docker image cache from bosh package
+    - {name: postgresql_images, release: postgresql-docker}
+    # run service broker
+    - {name: cf-containers-broker, release: docker}
+    # scale out service cluster with subway
+    - {name: subway-broker, release: cf-subway}
     static_ip: 1
     dynamic_ip: 0
     max_in_flight: 500
