@@ -7,9 +7,9 @@ job_types:
       cf:
         api_url: (( $runtime.system_api_url ))
       nats:
-        host: (( ..cf.nats.first_ip ))
+        machines: (( ..cf.nats.ips ))
         port: 4222
-        username: (( ..cf.nats.credentials.identity ))
+        user: (( ..cf.nats.credentials.identity ))
         password: (( ..cf.nats.credentials.password ))
       subway_broker:
         backends:
