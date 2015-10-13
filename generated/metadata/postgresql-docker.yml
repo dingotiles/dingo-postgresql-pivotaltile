@@ -159,7 +159,7 @@ job_types:
   templates:
   - name: docker
     release: docker
-  - name: frodenas_postgresql_image
+  - name: postgresql_images
     release: postgresql-docker
   - name: cf-containers-broker
     release: docker
