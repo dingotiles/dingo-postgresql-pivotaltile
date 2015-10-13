@@ -5,21 +5,28 @@ set -e
 spruce -v
 
 DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
+cd ${DIR}/../..
 
 # this script is run assuming repo stored in folder 'tile'
 
-mkdir -p tile/generated/releases
+mkdir -p generated/releases
 
-subway_version=$(cat cf-subway-boshrelease/version)
-cp -r cf-subway-boshrelease/release.tgz tile/generated/releases/cf-subway-boshrelease-${subway_version}.tgz
+if [[ "${local_dev}X" != "X" ]]; then
+  subway_version=1
+  docker_version=2
+  pg_docker_version=3
+else
+  subway_version=$(cat cf-subway-boshrelease/version)
+  cp -r cf-subway-boshrelease/release.tgz generated/releases/cf-subway-boshrelease-${subway_version}.tgz
 
-docker_version=$(cat docker-boshrelease/version)
-cp -r docker-boshrelease/release.tgz tile/generated/releases/docker-boshrelease-${docker_version}.tgz
+  docker_version=$(cat docker-boshrelease/version)
+  cp -r docker-boshrelease/release.tgz generated/releases/docker-boshrelease-${docker_version}.tgz
 
-pg_docker_version=$(cat postgresql-docker-boshrelease/version)
-cp -r postgresql-docker-boshrelease/release.tgz tile/generated/releases/postgresql-docker-boshrelease-${pg_docker_version}.tgz
+  pg_docker_version=$(cat postgresql-docker-boshrelease/version)
+  cp -r postgresql-docker-boshrelease/release.tgz generated/releases/postgresql-docker-boshrelease-${pg_docker_version}.tgz
+fi
 
-cat >tile/templates/metadata/releases.yml <<EOF
+cat >templates/metadata/releases.yml <<EOF
 ---
 releases:
 - name: docker
@@ -40,6 +47,7 @@ spruce merge \
   templates/metadata/form_types.yml \
   templates/metadata/property_blueprints.yml \
   templates/metadata/job_types.yml \
+  templates/metadata/service_plans.yml \
   templates/metadata/base.yml > generated/metadata/postgresql-docker.yml
 
 cd generated
@@ -49,11 +57,13 @@ zip -r postgresql-docker.pivotal content_migrations metadata releases
 
 cd $DIR/../..
 
-git config --global user.email "drnic+bot@starkandwayne.com"
-git config --global user.name "Concourse Bot"
+if [[ "${local_dev}X" == "X" ]]; then
+  git config --global user.email "drnic+bot@starkandwayne.com"
+  git config --global user.name "Concourse Bot"
 
-echo "Checking for changes in $(pwd)..."
-if [[ "$(git status -s)X" != "X" ]]; then
-  git add . --all
-  git commit -m "New bosh release versions"
+  echo "Checking for changes in $(pwd)..."
+  if [[ "$(git status -s)X" != "X" ]]; then
+    git add . --all
+    git commit -m "New bosh release versions"
+  fi
 fi
