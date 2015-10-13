@@ -1,11 +1,11 @@
 ---
 releases:
 - name: docker
-  file: docker-boshrelease-22.tgz
-  version: "22"
-- name: cf-subway
-  file: cf-subway-boshrelease-2.tgz
+  file: docker-boshrelease-2.tgz
   version: "2"
+- name: cf-subway
+  file: cf-subway-boshrelease-1.tgz
+  version: "1"
 - name: postgresql-docker
-  file: postgresql-docker-boshrelease-4.tgz
-  version: "4"
+  file: postgresql-docker-boshrelease-3.tgz
+  version: "3"

@@ -16,21 +16,23 @@ job_types:
           hosts: (( .cell.ips ))
           username: containers
           password: containers
-          port: 8001
+          port: 8000
           protocol: http
         password: containers
-        port: 8000
+        port: 80
         username: containers
       broker:
         component_name: postgresql-docker-broker
         name: postgresql-docker-broker
         cookie_secret: e7247dae-a252-4393-afa3-2219c1c02efd
         fetch_images: false
-        host: cf-containers-broker-backend.(( $runtime.system_domain ))
+        host: postgresql-docker-broker.(( $runtime.system_domain ))
         max_containers: 20
         username: containers
         password: containers
-        port: 8001
+        port: 80
+        unicorn:
+          port: 8000
         protocol: http
         services:
         - id: '0f5c1670-6dc3-11e5-bc08-6c4008a663f0'

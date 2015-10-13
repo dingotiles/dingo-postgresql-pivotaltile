@@ -48,6 +48,7 @@ spruce merge \
   templates/metadata/property_blueprints.yml \
   templates/metadata/job_types.yml \
   templates/metadata/service_plans.yml \
+  templates/metadata/errands_broker_registrar.yml \
   templates/metadata/base.yml > generated/metadata/postgresql-docker.yml
 
 cd generated

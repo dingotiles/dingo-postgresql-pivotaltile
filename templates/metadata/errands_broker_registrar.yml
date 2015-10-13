@@ -1,8 +1,6 @@
 post_deploy_errands:
-- (( append ))
 - name: broker-registrar
 pre_delete_errands:
-- (( append ))
 - name: broker-deregistrar
 
 job_types:
