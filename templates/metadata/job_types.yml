@@ -10,6 +10,8 @@ job_types:
     - {name: cf-containers-broker, release: docker}
     # scale out service cluster with subway
     - {name: subway-broker, release: cf-subway}
+    # advertise subway on router via nats
+    - {name: route-registrar, release: route-registrar}
     static_ip: 1
     dynamic_ip: 0
     max_in_flight: 500

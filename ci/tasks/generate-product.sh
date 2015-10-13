@@ -15,7 +15,11 @@ if [[ "${local_dev}X" != "X" ]]; then
   subway_version=1
   docker_version=2
   pg_docker_version=3
+  route_registrar_version=4
 else
+  route_registrar_version=$(cat tmp/releases/route-registrar-boshrelease/version)
+  cp -r tmp/releases/route-registrar-boshrelease/release.tgz generated/releases/route-registrar-boshrelease-${route_registrar_version}.tgz
+
   subway_version=$(cat tmp/releases/cf-subway-boshrelease/version)
   cp -r tmp/releases/cf-subway-boshrelease/release.tgz generated/releases/cf-subway-boshrelease-${subway_version}.tgz
 
@@ -29,6 +33,9 @@ fi
 cat >templates/metadata/releases.yml <<EOF
 ---
 releases:
+- name: route-registrar
+  file: route-registrar-boshrelease-${route_registrar_version}.tgz
+  version: "${route_registrar_version}"
 - name: docker
   file: docker-boshrelease-${docker_version}.tgz
   version: "${docker_version}"

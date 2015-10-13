@@ -24,6 +24,10 @@ jobs:
       trigger: true
       params:
         tarball: true
+    - get: route-registrar-boshrelease
+      trigger: true
+      params:
+        tarball: true
     - get: postgresql-docker-boshrelease
       trigger: true
       params:
@@ -118,6 +122,10 @@ resources:
     password: {{docker-hub-password}}
     repository: {{docker-create-hub-task-image}}
 
+- name: route-registrar-boshrelease
+  type: bosh-io-release
+  source:
+    repository: cloudfoundry-community/route-registrar-boshrelease
 - name: docker-boshrelease
   type: bosh-io-release
   source:
