@@ -17,13 +17,13 @@ if [[ "${local_dev}X" != "X" ]]; then
   pg_docker_version=3
 else
   subway_version=$(cat tmp/releases/cf-subway-boshrelease/version)
-  cp -r cf-subway-boshrelease/release.tgz generated/releases/cf-subway-boshrelease-${subway_version}.tgz
+  cp -r tmp/releases/cf-subway-boshrelease/release.tgz generated/releases/cf-subway-boshrelease-${subway_version}.tgz
 
   docker_version=$(cat tmp/releases/docker-boshrelease/version)
-  cp -r docker-boshrelease/release.tgz generated/releases/docker-boshrelease-${docker_version}.tgz
+  cp -r tmp/releases/docker-boshrelease/release.tgz generated/releases/docker-boshrelease-${docker_version}.tgz
 
   pg_docker_version=$(cat tmp/releases/postgresql-docker-boshrelease/version)
-  cp -r postgresql-docker-boshrelease/release.tgz generated/releases/postgresql-docker-boshrelease-${pg_docker_version}.tgz
+  cp -r tmp/releases/postgresql-docker-boshrelease/release.tgz generated/releases/postgresql-docker-boshrelease-${pg_docker_version}.tgz
 fi
 
 cat >templates/metadata/releases.yml <<EOF
