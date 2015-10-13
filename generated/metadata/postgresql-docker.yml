@@ -13,9 +13,9 @@ job_types:
     cf:
       api_url: (( $runtime.system_api_url ))
     nats:
-      host: (( ..cf.nats.first_ip ))
+      machines: (( ..cf.nats.ips ))
       port: 4222
-      username: (( ..cf.nats.credentials.identity ))
+      user: (( ..cf.nats.credentials.identity ))
       password: (( ..cf.nats.credentials.password ))
     subway_broker:
       backends:
@@ -190,6 +190,8 @@ job_types:
 label: 'PostgreSQL in Docker: by Stark & Wayne'
 metadata_version: "1.5"
 name: postgresql-docker
+post_deploy_errands: []
+pre_delete_errands: []
 product_version: 0.1.0
 property_blueprints: {}
 rank: 1
