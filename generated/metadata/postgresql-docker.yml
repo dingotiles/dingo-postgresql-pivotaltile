@@ -10,13 +10,16 @@ job_types:
     name: instances
     type: integer
   manifest: |
+    cf:
+      api_url: (( $runtime.system_api_url ))
+    nats:
+      host: (( ..cf.nats.first_ip ))
+      port: 4222
+      username: (( ..cf.nats.credentials.identity ))
+      password: (( ..cf.nats.credentials.password ))
     subway_broker:
       backends:
-        hosts:
-        - 10.244.20.2
-        - 10.244.20.3
-        - 10.244.20.4
-        - 10.244.20.5
+        hosts: (( .cell.ips ))
         username: containers
         password: containers
         port: 8001
@@ -29,7 +32,7 @@ job_types:
       name: postgresql-docker-broker
       cookie_secret: e7247dae-a252-4393-afa3-2219c1c02efd
       fetch_images: false
-      host: cf-containers-broker.10.244.0.34.xip.io
+      host: cf-containers-broker-backend.(( $runtime.system_domain ))
       max_containers: 20
       username: containers
       password: containers
@@ -116,14 +119,6 @@ job_types:
               bullets:
                 - 'Dedicated postgresql 9.5 (beta1) server'
                 - 'Postgresql 9.5 (beta1) running inside a Docker container'
-    cf:
-      api_url: https://api.10.244.0.34.xip.io
-    nats:
-      machines:
-      - 10.244.0.6
-      password: nats
-      port: 4222
-      user: nats
   max_in_flight: 500
   name: cell
   property_blueprints:
@@ -208,6 +203,9 @@ releases:
 - file: postgresql-docker-boshrelease-4.tgz
   name: postgresql-docker
   version: "4"
+requires_product_versions:
+- name: cf
+  version: ~> 1.4
 stemcell_criteria:
   os: ubuntu-trusty
   requires_cpi: false
