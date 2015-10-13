@@ -47,7 +47,7 @@ job_types:
           dashboard_client:
             id: 'docker-client-postgresql94'
             secret: 'docker-client-postgresql94-secret'
-            redirect_uri: (( meta.cfcontainersbroker.protocol "://" meta.cfcontainersbroker.external_host "/manage/auth/cloudfoundry/callback" ))
+            redirect_uri: https://cf-containers-broker.10.244.0.34.xip.io/manage/auth/cloudfoundry/callback
           plans:
             - id: '1545e30e-6dc3-11e5-826a-6c4008a663f0'
               name: 'free'
@@ -87,7 +87,7 @@ job_types:
           dashboard_client:
             id: 'docker-client-postgresql95'
             secret: 'docker-client-postgresql95-secret'
-            redirect_uri: (( meta.cfcontainersbroker.protocol "://" meta.cfcontainersbroker.external_host "/manage/auth/cloudfoundry/callback" ))
+            redirect_uri: https://cf-containers-broker.10.244.0.34.xip.io/manage/auth/cloudfoundry/callback
           plans:
             - id: '58dc3912-6e11-11e5-96cc-6c4008a663f0'
               name: 'free'
