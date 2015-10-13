@@ -49,7 +49,7 @@ zip -r postgresql-docker.pivotal content_migrations metadata releases
 
 cd $DIR/../..
 
-git config --global user.email "concourse-bot@ge.com"
+git config --global user.email "drnic+bot@starkandwayne.com"
 git config --global user.name "Concourse Bot"
 
 echo "Checking for changes in $(pwd)..."
