@@ -239,7 +239,7 @@ job_types:
   static_ip: 0
   templates:
   - name: broker-registrar
-    release: cf-subway
+    release: docker
 - dynamic_ip: 1
   errand: true
   instance_definitions:
@@ -288,7 +288,7 @@ job_types:
   static_ip: 0
   templates:
   - name: broker-registrar
-    release: cf-subway
+    release: docker
 label: 'PostgreSQL in Docker: by Stark & Wayne'
 metadata_version: "1.5"
 name: postgresql-docker
