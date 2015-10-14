@@ -162,8 +162,6 @@ job_types:
     release: docker
   - name: subway-broker
     release: cf-subway
-  - name: route-registrar
-    release: route-registrar
 - dynamic_ip: 1
   instance_definitions:
   - configurable: true
@@ -300,9 +298,6 @@ product_version: 0.1.0
 property_blueprints: {}
 rank: 1
 releases:
-- file: route-registrar-boshrelease-2.tgz
-  name: route-registrar
-  version: "2"
 - file: docker-boshrelease-22.tgz
   name: docker
   version: "22"
