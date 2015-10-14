@@ -7,7 +7,7 @@ job_types:
 - name: broker-registrar
   resource_label: Register broker
   templates:
-  - {name: broker-registrar, release: cf-subway}
+  - {name: broker-registrar, release: docker}
   errand: true
   resource_definitions:
   - name: ram
@@ -56,7 +56,7 @@ job_types:
 - name: broker-deregistrar
   resource_label: De-register broker
   templates:
-  - {name: broker-registrar, release: cf-subway}
+  - {name: broker-registrar, release: docker}
   errand: true
   resource_definitions:
   - name: ram
