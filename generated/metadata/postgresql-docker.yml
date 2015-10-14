@@ -285,7 +285,7 @@ job_types:
   resource_label: De-register broker
   static_ip: 0
   templates:
-  - name: broker-registrar
+  - name: broker-deregistrar
     release: docker
 label: 'PostgreSQL in Docker: by Stark & Wayne'
 metadata_version: "1.5"
