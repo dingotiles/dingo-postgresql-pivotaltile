@@ -24,10 +24,6 @@ jobs:
       trigger: true
       params:
         tarball: true
-    - get: route-registrar-boshrelease
-      trigger: true
-      params:
-        tarball: true
     - get: postgresql-docker-boshrelease
       trigger: true
       params:

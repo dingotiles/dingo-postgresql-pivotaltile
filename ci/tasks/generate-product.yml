@@ -4,8 +4,6 @@ image: docker:///starkandwayne/postgresql-docker-pivotal-pipeline
 
 inputs:
 - name: tile
-- name: route-registrar-boshrelease
-  path: tile/tmp/releases/route-registrar-boshrelease
 - name: cf-subway-boshrelease
   path: tile/tmp/releases/cf-subway-boshrelease
 - name: docker-boshrelease
