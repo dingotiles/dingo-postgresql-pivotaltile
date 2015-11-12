@@ -311,9 +311,9 @@ product_version: 0.1.0
 property_blueprints: {}
 rank: 1
 releases:
-- file: docker-boshrelease-22.tgz
+- file: docker-boshrelease-23.tgz
   name: docker
-  version: "22"
+  version: "23"
 - file: cf-subway-boshrelease-2.tgz
   name: cf-subway
   version: "2"
