@@ -5,12 +5,13 @@ image: docker:///dingotiles/dingo-postgresql-pivotaltile-pipeline
 inputs:
 - name: tile
 - name: tile-version
-- name: release-tarball
-- name: broker-registrar-boshrelease
+- name: patroni-docker
+- name: broker-registrar
+- name: etcd
+- name: remote-syslog
 
-params:
-  AWS_ACCESS_KEY:
-  AWS_SECRET_KEY:
+outputs:
+- name: product
 
 run:
   path: tile/ci/tasks/generate-product.sh
