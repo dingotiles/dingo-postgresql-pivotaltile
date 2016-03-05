@@ -1,13 +1,15 @@
 FROM concourse/concourse-ci
 # https://github.com/concourse/concourse/blob/master/ci/dockerfiles/concourse-ci/Dockerfile
 
-RUN apt-get update && apt-get install zip curl wget bzr -y
+RUN apt-get update && apt-get install zip unzip curl wget bzr python-pip -y && \
+    pip --no-input install awscli && \
+    apt-get clean
 
 ADD https://github.com/stedolan/jq/releases/download/jq-1.5/jq-linux64 /usr/bin/jq
 RUN chmod 775 /usr/bin/jq
 
-ADD https://github.com/geofffranks/spruce/releases/download/v1.0.1/spruce_1.0.1_linux_amd64.tar.gz /tmp/
-RUN cd /tmp/ && tar xfz spruce*.tar.gz && mv spruce_1.0.1_linux_amd64/spruce /usr/bin/spruce && chmod 755 /usr/bin/spruce
+ADD https://github.com/geofffranks/spruce/releases/download/v1.0.3/spruce-linux-amd64 /usr/bin/spruce
+RUN chmod 755 /usr/bin/spruce
 
 # Install Go
 RUN \
@@ -18,3 +20,6 @@ RUN \
 ENV GOROOT /goroot
 ENV GOPATH /gopath
 ENV PATH $GOROOT/bin:$GOPATH/bin:$PATH
+
+RUN go get github.com/bronze1man/yaml2json
+RUN gem install fog mime-types --no-ri --no-rdoc

@@ -1,9 +1,0 @@
----
-platform: linux
-image: docker:///starkandwayne/postgresql-docker-pivotal-pipeline
-
-inputs:
-- name: tile
-
-run:
-  path: tile/ci/tasks/delete-product.sh
