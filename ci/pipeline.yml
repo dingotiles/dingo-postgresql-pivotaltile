@@ -27,10 +27,6 @@ jobs:
       params: {pre: rc}
   - task: generate-product
     file: tile/ci/tasks/generate-product.yml
-    config:
-      params:
-        AWS_ACCESS_KEY: {{concourse-aws-access-key}}
-        AWS_SECRET_KEY: {{concourse-aws-secret-access-key}}
 
   # - put: generated-tile
   #   params:
@@ -83,6 +79,7 @@ resources:
     uri: git@github.com:dingotiles/dingo-postgresql-pivotaltile.git
     branch: version
     file: version
+    initial_version: 0.0.1
     private_key: {{github-key}}
 
 - name: patroni-docker
