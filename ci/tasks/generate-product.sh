@@ -21,7 +21,6 @@ do
     file: ${boshrelease}-${release_version}.tgz
     version: "${release_version}"
 YAML
-  ls -al ${boshrelease}/
   if [[ -f ${boshrelease}/release.tgz ]]; then
     cp ${boshrelease}/release.tgz product/releases/${boshrelease}-${release_version}.tgz
   fi
@@ -31,4 +30,4 @@ YAML
 done
 
 cat tile/templates/metadata/releases.yml
-ls product/releases/
+ls -l product/releases/
