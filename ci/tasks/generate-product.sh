@@ -25,6 +25,9 @@ YAML
   if [[ -f ${boshrelease}/release.tgz ]]; then
     cp ${boshrelease}/release.tgz product/releases/${boshrelease}-${release_version}.tgz
   fi
+  if [[ -f ${boshrelease}/${boshrelease}-${release_version}.tgz ]]; then
+    cp ${boshrelease}/${boshrelease}-${release_version}.tgz product/releases/
+  fi
 done
 
 cat tile/templates/metadata/releases.yml
