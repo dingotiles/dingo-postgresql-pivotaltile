@@ -1,0 +1,272 @@
+---
+groups:
+- name: pipeline
+  jobs:
+  - bump-patch
+  - bump-minor
+  - bump-major
+- name: image
+  jobs:
+  - build-task-image
+
+jobs:
+- name: create-product
+  plan:
+  - aggregate:
+    - get: tile
+    - get: product-tile
+      trigger: true
+    - get: patroni-docker-boshrelease
+      trigger: true
+      params:
+        tarball: true
+    - get: broker-registrar-boshrelease
+      params:
+        tarball: true
+    - get: tile-version
+      params: {pre: rc}
+  - task: release-tarball
+    file: tile/ci/tasks/generate-release-tarball.yml
+  - task: generate-product
+    file: tile/ci/tasks/generate-product.yml
+    config:
+      params:
+        AWS_ACCESS_KEY: {{concourse-aws-access-key}}
+        AWS_SECRET_KEY: {{concourse-aws-secret-access-key}}
+        OPSMGR_URL: {{opsmgr-url}}
+        OPSMGR_SKIP_SSL_VERIFICATION: {{opsmgr-skip-ssl-verification}}
+        OPSMGR_USERNAME: {{opsmgr-username}}
+        OPSMGR_PASSWORD: {{opsmgr-password}}
+
+  - put: generated-tile
+    params:
+      from: generate-product/tile/generated/dingo-postgresql-(.*).pivotal
+  - put: tile-version
+    params: {file: tile-version/number}
+
+- name: upload-product
+  serial: true
+  serial_groups: [opsmgr]
+  plan:
+  - aggregate:
+    - get: tile
+    - get: generated-tile
+      passed: [create-product]
+      trigger: true
+    - get: tile-version
+      passed: [create-product]
+  - task: upload-product
+    file: tile/ci/tasks/upload-product.yml
+    config:
+      params:
+        opsmgr_url: {{opsmgr-url}}
+        opsmgr_skip_ssl_verification: {{opsmgr-skip-ssl-verification}}
+        opsmgr_username: {{opsmgr-username}}
+        opsmgr_password: {{opsmgr-password}}
+
+- name: bump-patch
+  serial_groups: [opsmgr]
+  plan:
+  - aggregate:
+    - get: tile
+    - get: tile-version
+      passed: [upload-product]
+      params: {bump: patch}
+    - get: generated-tile
+      passed: [upload-product]
+  - task: re-version-product
+    file: tile/ci/tasks/re-version-product.yml
+    config:
+      params:
+        AWS_ACCESS_KEY: {{concourse-aws-access-key}}
+        AWS_SECRET_KEY: {{concourse-aws-secret-access-key}}
+  - put: tile-version
+    params: {file: tile-version/number}
+  - put: generated-tile
+    params:
+      from: re-version-product/reversioned-product/dingo-postgresql-(.*).pivotal
+  - task: upload-product
+    file: tile/ci/tasks/upload-product.yml
+    config:
+      params:
+        opsmgr_url: {{opsmgr-url}}
+        opsmgr_skip_ssl_verification: {{opsmgr-skip-ssl-verification}}
+        opsmgr_username: {{opsmgr-username}}
+        opsmgr_password: {{opsmgr-password}}
+
+- name: bump-minor
+  serial_groups: [opsmgr]
+  plan:
+  - aggregate:
+    - get: tile
+    - get: tile-version
+      passed: [upload-product]
+      params: {bump: minor}
+    - get: generated-tile
+      passed: [upload-product]
+  - task: re-version-product
+    file: tile/ci/tasks/re-version-product.yml
+    config:
+      params:
+        AWS_ACCESS_KEY: {{concourse-aws-access-key}}
+        AWS_SECRET_KEY: {{concourse-aws-secret-access-key}}
+  - put: tile-version
+    params: {file: tile-version/number}
+  - put: generated-tile
+    params:
+      from: re-version-product/reversioned-product/dingo-postgresql-(.*).pivotal
+  - task: upload-product
+    file: tile/ci/tasks/upload-product.yml
+    config:
+      params:
+        opsmgr_url: {{opsmgr-url}}
+        opsmgr_skip_ssl_verification: {{opsmgr-skip-ssl-verification}}
+        opsmgr_username: {{opsmgr-username}}
+        opsmgr_password: {{opsmgr-password}}
+
+- name: bump-major
+  serial_groups: [opsmgr]
+  plan:
+  - aggregate:
+    - get: tile
+    - get: tile-version
+      passed: [upload-product]
+      params: {bump: major}
+    - get: generated-tile
+      passed: [upload-product]
+  - task: re-version-product
+    file: tile/ci/tasks/re-version-product.yml
+    config:
+      params:
+        AWS_ACCESS_KEY: {{concourse-aws-access-key}}
+        AWS_SECRET_KEY: {{concourse-aws-secret-access-key}}
+  - put: tile-version
+    params: {file: tile-version/number}
+  - put: generated-tile
+    params:
+      from: re-version-product/reversioned-product/dingo-postgresql-(.*).pivotal
+  - task: upload-product
+    file: tile/ci/tasks/upload-product.yml
+    config:
+      params:
+        opsmgr_url: {{opsmgr-url}}
+        opsmgr_skip_ssl_verification: {{opsmgr-skip-ssl-verification}}
+        opsmgr_username: {{opsmgr-username}}
+        opsmgr_password: {{opsmgr-password}}
+
+- name: promote-patch
+  plan:
+  - aggregate:
+    - get: tile
+    - get: tile-version
+      passed: [bump-patch]
+  - task: promote-public
+    file: tile/ci/tasks/promote-public.yml
+    config:
+      params:
+        AWS_ACCESS_KEY_ID: {{concourse-aws-access-key}}
+        AWS_SECRET_ACCESS_KEY: {{concourse-aws-secret-access-key}}
+        AWS_DEFAULT_REGION: ap-southeast-1
+        from_bucket: dingo-postgresql-pivotaltile
+        to_bucket: dingo-postgresql-public-pivotaltile
+
+- name: promote-minor
+  plan:
+  - aggregate:
+    - get: tile
+    - get: tile-version
+      passed: [bump-minor]
+  - task: promote-public
+    file: tile/ci/tasks/promote-public.yml
+    config:
+      params:
+        AWS_ACCESS_KEY_ID: {{concourse-aws-access-key}}
+        AWS_SECRET_ACCESS_KEY: {{concourse-aws-secret-access-key}}
+        AWS_DEFAULT_REGION: ap-southeast-1
+        from_bucket: dingo-postgresql-pivotaltile
+        to_bucket: dingo-postgresql-public-pivotaltile
+
+- name: promote-major
+  plan:
+  - aggregate:
+    - get: tile
+    - get: tile-version
+      passed: [bump-major]
+  - task: promote-public
+    file: tile/ci/tasks/promote-public.yml
+    config:
+      params:
+        AWS_ACCESS_KEY_ID: {{concourse-aws-access-key}}
+        AWS_SECRET_ACCESS_KEY: {{concourse-aws-secret-access-key}}
+        AWS_DEFAULT_REGION: ap-southeast-1
+        from_bucket: dingo-postgresql-pivotaltile
+        to_bucket: dingo-postgresql-public-pivotaltile
+
+- name: build-task-image
+  serial: true
+  plan:
+  - get: docker-image-tile
+    trigger: true
+  - put: docker-image
+    params:
+      build: docker-image-tile/ci/ci_image
+
+resources:
+- name: tile
+  type: git
+  source:
+    uri: git@github.com:dingotiles/dingo-postgresql-pivotaltile.git
+    branch: {{tile-branch}}
+    private_key: {{github-key}}
+- name: product-tile
+  type: git
+  source:
+    uri: git@github.com:dingotiles/dingo-postgresql-pivotaltile.git
+    branch: {{tile-branch}}
+    private_key: {{github-key}}
+    paths: [templates]
+- name: docker-image-tile
+  type: git
+  source:
+    uri: git@github.com:dingotiles/dingo-postgresql-pivotaltile.git
+    branch: {{tile-branch}}
+    private_key: {{github-key}}
+    paths: [ci/ci_image/*]
+- name: docker-image
+  type: docker-image
+  source:
+    email: {{docker-hub-email}}
+    username: {{docker-hub-username}}
+    password: {{docker-hub-password}}
+    repository: dingotiles/dingo-postgresql-pivotaltile-pipeline
+
+- name: tile-version
+  type: semver
+  source:
+    driver: git
+    uri: git@github.com:dingotiles/dingo-postgresql-pivotaltile.git
+    branch: version
+    file: version
+    private_key: {{github-key}}
+
+- name: patroni-docker-boshrelease
+  type: git
+  source:
+    uri: git@github.com:dingotiles/patroni-docker-boshrelease.git
+    branch: master
+    private_key: {{github-key}}
+    tag_filter: "v"
+
+- name: broker-registrar-boshrelease
+  type: bosh-io-release
+  source:
+    repository: cloudfoundry-community/broker-registrar-boshrelease
+
+- name: generated-tile
+  type: s3
+  source:
+    access_key_id: {{concourse-aws-access-key}}
+    secret_access_key: {{concourse-aws-secret-access-key}}
+    bucket: dingo-postgresql-pivotaltile
+    regexp: dingo-postgresql-(.*).pivotal
+    region_name: ap-southeast-1

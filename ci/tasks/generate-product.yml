@@ -1,0 +1,16 @@
+---
+platform: linux
+image: docker:///dingotiles/dingo-postgresql-pivotaltile-pipeline
+
+inputs:
+- name: tile
+- name: tile-version
+- name: release-tarball
+- name: broker-registrar-boshrelease
+
+params:
+  AWS_ACCESS_KEY:
+  AWS_SECRET_KEY:
+
+run:
+  path: tile/ci/tasks/generate-product.sh

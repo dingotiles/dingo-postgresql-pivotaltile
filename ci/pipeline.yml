@@ -1,0 +1,114 @@
+---
+groups:
+- name: pipeline
+  jobs:
+  - create-product
+- name: image
+  jobs:
+  - build-task-image
+
+jobs:
+- name: create-product
+  plan:
+  - aggregate:
+    - get: tile
+    - get: product-tile
+      trigger: true
+    - get: patroni-docker
+      trigger: true
+      params: {tarball: true}
+    - get: broker-registrar
+      params: {tarball: true}
+    - get: etcd
+      params: {tarball: true}
+    - get: remote-syslog
+      params: {tarball: true}
+    - get: tile-version
+      params: {pre: rc}
+  # - task: generate-product
+  #   file: tile/ci/tasks/generate-product.yml
+  #   config:
+  #     params:
+  #       AWS_ACCESS_KEY: {{concourse-aws-access-key}}
+  #       AWS_SECRET_KEY: {{concourse-aws-secret-access-key}}
+  #       OPSMGR_URL: {{opsmgr-url}}
+  #       OPSMGR_SKIP_SSL_VERIFICATION: {{opsmgr-skip-ssl-verification}}
+  #       OPSMGR_USERNAME: {{opsmgr-username}}
+  #       OPSMGR_PASSWORD: {{opsmgr-password}}
+
+  # - put: generated-tile
+  #   params:
+  #     from: generate-product/tile/generated/dingo-postgresql-(.*).pivotal
+  # - put: tile-version
+  #   params: {file: tile-version/number}
+
+- name: build-task-image
+  serial: true
+  plan:
+  - get: docker-image-tile
+    trigger: true
+  - put: docker-image
+    params:
+      build: docker-image-tile/ci/ci_image
+
+resources:
+- name: tile
+  type: git
+  source:
+    uri: git@github.com:dingotiles/dingo-postgresql-pivotaltile.git
+    branch: {{tile-branch}}
+    private_key: {{github-key}}
+- name: product-tile
+  type: git
+  source:
+    uri: git@github.com:dingotiles/dingo-postgresql-pivotaltile.git
+    branch: {{tile-branch}}
+    private_key: {{github-key}}
+    paths: [templates]
+- name: docker-image-tile
+  type: git
+  source:
+    uri: git@github.com:dingotiles/dingo-postgresql-pivotaltile.git
+    branch: {{tile-branch}}
+    private_key: {{github-key}}
+    paths: [ci/ci_image/*]
+- name: docker-image
+  type: docker-image
+  source:
+    email: {{docker-hub-email}}
+    username: {{docker-hub-username}}
+    password: {{docker-hub-password}}
+    repository: dingotiles/dingo-postgresql-pivotaltile-pipeline
+
+- name: tile-version
+  type: semver
+  source:
+    driver: git
+    uri: git@github.com:dingotiles/dingo-postgresql-pivotaltile.git
+    branch: version
+    file: version
+    private_key: {{github-key}}
+
+- name: patroni-docker
+  type: github-release
+  source:
+    user: dingotiles
+    repository: patroni-docker-boshrelease
+- name: broker-registrar
+  type: bosh-io-release
+  source: {repository: cloudfoundry-community/broker-registrar-boshrelease}
+- name: etcd
+  type: bosh-io-release
+  source: {repository: cloudfoundry-incubator/etcd-release}
+- name: remote-syslog
+  type: bosh-io-release
+  source: {repository: cloudfoundry-community/simple-remote-syslog-boshrelease}
+
+- name: generated-tile
+  type: s3
+  source:
+    access_key_id: {{concourse-aws-access-key}}
+    secret_access_key: {{concourse-aws-secret-access-key}}
+    bucket: dingo-postgresql-pivotaltile
+    regexp: dingo-postgresql-(.*).pivotal
+    region_name: ap-southeast-1
