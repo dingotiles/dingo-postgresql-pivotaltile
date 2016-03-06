@@ -7,7 +7,7 @@ job_types:
 - name: broker-registrar
   resource_label: Register broker
   templates:
-  - {name: broker-registrar, release: docker}
+  - {name: broker-registrar, release: broker-registrar}
   errand: true
   resource_definitions:
   - name: ram
@@ -46,17 +46,17 @@ job_types:
       admin_password: (( ..cf.uaa.admin_credentials.password ))
       skip_ssl_validation: (( ..cf.ha_proxy.skip_cert_verify.value ))
     broker:
-      name: starkandwayne-postgresql
-      protocol: http
-      host: postgresql-docker-broker.(( $runtime.system_domain ))
-      port: 80
-      username: containers
-      password: containers
+      name: dingo-postgresql
+      protocol: https
+      port: 443
+      host: dingo-postgresql.(( $runtime.system_domain ))
+      username: user
+      password: (( .properties.security_user_password.value ))
 
 - name: broker-deregistrar
   resource_label: De-register broker
   templates:
-  - {name: broker-deregistrar, release: docker}
+  - {name: broker-deregistrar, release: broker-registrar}
   errand: true
   resource_definitions:
   - name: ram

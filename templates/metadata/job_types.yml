@@ -14,7 +14,7 @@ job_types:
       # TODO: - {name: container-env-vars, release: patroni-docker}
       # run service broker
       # TODO: - {name: cf-containers-broker, release: patroni-docker}
-    static_ip: 2
+    static_ip: 1
     dynamic_ip: 0
     max_in_flight: 500
     resource_definitions:
@@ -44,7 +44,7 @@ job_types:
       - name: instances
         type: integer
         configurable: true
-        default: 2
+        default: 1
     property_blueprints:
       - name: vm_credentials
         type: salted_credentials
