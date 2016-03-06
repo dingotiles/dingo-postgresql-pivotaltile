@@ -1,9 +1,9 @@
 ---
-name: postgresql-docker
+name: dingo-postgresql
 product_version: "0.1.0"
 metadata_version: "1.5"
-label: 'PostgreSQL in Docker: by Stark & Wayne'
-description: Cloud Foundry users can create, bind and destroy PostgreSQL services, backed by Docker containers
+label: 'Dingo PostgreSQL'
+description: Everyone can create, bind and destroy PostgreSQL services
 rank: 1
 stemcell_criteria:
   os: ubuntu-trusty
