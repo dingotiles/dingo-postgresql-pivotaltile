@@ -50,8 +50,8 @@ job_types:
       protocol: https
       port: 443
       host: dingo-postgresql.(( $runtime.system_domain ))
-      username: user
-      password: (( .properties.security_user_password.value ))
+      username: starkandwayne
+      password: starkandwayne
 
 - name: broker-deregistrar
   resource_label: De-register broker
@@ -95,9 +95,9 @@ job_types:
       admin_password: (( ..cf.uaa.admin_credentials.password ))
       skip_ssl_validation: (( ..cf.ha_proxy.skip_cert_verify.value ))
     broker:
-      name: starkandwayne-postgresql
-      protocol: http
-      host: postgresql-docker-broker.(( $runtime.system_domain ))
-      port: 80
-      username: containers
-      password: containers
+      name: dingo-postgresql
+      protocol: https
+      port: 443
+      host: dingo-postgresql.(( $runtime.system_domain ))
+      username: starkandwayne
+      password: starkandwayne
