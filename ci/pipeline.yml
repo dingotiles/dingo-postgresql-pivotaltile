@@ -3,6 +3,7 @@ groups:
 - name: pipeline
   jobs:
   - create-product
+  - upload-product
 - name: image
   jobs:
   - build-task-image
@@ -35,6 +36,26 @@ jobs:
     params: {from: product/dingo-postgresql-(.*).pivotal}
   - put: tile-version
     params: {file: tile-version/number}
+
+- name: upload-product
+  serial: true
+  serial_groups: [opsmgr]
+  plan:
+  - aggregate:
+    - get: tile
+    - get: generated-tile
+      passed: [create-product]
+      trigger: true
+    - get: tile-version
+      passed: [create-product]
+  - task: upload-product
+    file: tile/ci/tasks/upload-product.yml
+    config:
+      params:
+        opsmgr_url: {{opsmgr-url}}
+        opsmgr_skip_ssl_verification: {{opsmgr-skip-ssl-verification}}
+        opsmgr_username: {{opsmgr-username}}
+        opsmgr_password: {{opsmgr-password}}
 
 - name: build-task-image
   serial: true
