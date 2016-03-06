@@ -38,13 +38,14 @@ YAML
 done
 
 spruce merge \
+  tile/templates/metadata/base.yml \
   tile/tmp/metadata/version.yml \
   tile/tmp/metadata/releases.yml \
   tile/templates/metadata/form_types.yml \
   tile/templates/metadata/property_blueprints.yml \
   tile/templates/metadata/job_types.yml \
   tile/templates/metadata/errands_broker_registrar.yml \
-  tile/templates/metadata/base.yml > workspace/metadata/dingo-postgresql.yml
+    > workspace/metadata/dingo-postgresql.yml
 
 cat workspace/metadata/dingo-postgresql.yml
 
