@@ -1,0 +1,4 @@
+post_deploy_errands:
+- name: broker-registrar
+pre_delete_errands:
+- name: broker-deregistrar

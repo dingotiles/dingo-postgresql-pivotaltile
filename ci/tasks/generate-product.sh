@@ -44,16 +44,14 @@ spruce merge \
   tile/templates/metadata/property_blueprints.yml \
   tile/templates/metadata/job_types.yml \
   tile/templates/metadata/errands_broker_registrar.yml \
-  tile/templates/deploy_and_delete_errands.yml \
+  tile/templates/metadata/deploy_and_delete_errands.yml \
   tile/templates/metadata/base.yml > workspace/metadata/dingo-postgresql.yml
-echo
-echo metadata:
+
 cat workspace/metadata/dingo-postgresql.yml
-echo
+
 echo Looking up all previous versions to generate content_migrations/dingo-s3.yml
 ./tile/ci/tasks/generate_content_migration.rb ${TILE_VERSION} workspace/content_migrations/dingo-postgresql.yml
 
-echo Migrations:
 cat generated/content_migrations/dingo-s3.yml
 
 cd workspace
