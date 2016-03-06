@@ -44,8 +44,9 @@ spruce merge \
   tile/templates/metadata/form_types.yml \
   tile/templates/metadata/property_blueprints.yml \
   tile/templates/metadata/job_types.yml \
-  tile/templates/metadata/errands_broker_registrar.yml \
     > workspace/metadata/dingo-postgresql.yml
+
+# TODO:    tile/templates/metadata/errands_broker_registrar.yml \
 
 cat workspace/metadata/dingo-postgresql.yml
 
