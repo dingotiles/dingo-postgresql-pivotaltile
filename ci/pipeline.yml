@@ -32,11 +32,11 @@ jobs:
         AWS_ACCESS_KEY: {{concourse-aws-access-key}}
         AWS_SECRET_KEY: {{concourse-aws-secret-access-key}}
 
-  # - put: generated-tile
-  #   params:
-  #     from: generate-product/tile/generated/dingo-postgresql-(.*).pivotal
-  # - put: tile-version
-  #   params: {file: tile-version/number}
+  - put: generated-tile
+    params:
+      from: product/dingo-postgresql-(.*).pivotal
+  - put: tile-version
+    params: {file: tile-version/number}
 
 - name: build-task-image
   serial: true
