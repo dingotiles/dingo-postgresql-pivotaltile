@@ -31,10 +31,8 @@ jobs:
       params:
         AWS_ACCESS_KEY: {{concourse-aws-access-key}}
         AWS_SECRET_KEY: {{concourse-aws-secret-access-key}}
-
   - put: generated-tile
-    params:
-      from: product/dingo-postgresql-(.*).pivotal
+    params: {from: product/dingo-postgresql-(.*).pivotal}
   - put: tile-version
     params: {file: tile-version/number}
 
