@@ -1,0 +1,48 @@
+job_types:
+  - name: etcd
+    resource_label: ETCD
+    templates:
+      # ship all the logs
+      - {name: remote-syslog, release: simple-remote-syslog}
+      # run etcd
+      - {name: etcd, release: etcd}
+    static_ip: 1
+    dynamic_ip: 0
+    max_in_flight: 500
+    resource_definitions:
+      - name: ram
+        type: integer
+        configurable: true
+        default: 4096
+        constraints:
+          min: 1024
+      - name: ephemeral_disk
+        type: integer
+        configurable: true
+        default: 102400
+        constraints:
+          min: 10240
+      - name: persistent_disk
+        type: integer
+        configurable: true
+        default: 102400
+        constraints:
+          min: 10240
+      - name: cpu
+        type: integer
+        configurable: true
+        default: 4
+    instance_definitions:
+      - name: instances
+        type: integer
+        configurable: true
+        default: 1
+    property_blueprints:
+      - name: vm_credentials
+        type: salted_credentials
+        default:
+          identity: vcap
+    manifest: |
+      etcd:
+        peer_require_ssl: false
+        require_ssl: false
