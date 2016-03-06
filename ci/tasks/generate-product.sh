@@ -52,7 +52,7 @@ cat workspace/metadata/dingo-postgresql.yml
 echo Looking up all previous versions to generate content_migrations/dingo-s3.yml
 ./tile/ci/tasks/generate_content_migration.rb ${TILE_VERSION} workspace/content_migrations/dingo-postgresql.yml
 
-cat generated/content_migrations/dingo-s3.yml
+cat workspace/content_migrations/dingo-s3.yml
 
 cd workspace
 ls -laR .
