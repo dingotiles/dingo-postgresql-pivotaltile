@@ -22,7 +22,7 @@ jobs:
       params: {tarball: true}
     - get: etcd
       params: {tarball: true}
-    - get: remote-syslog
+    - get: simple-remote-syslog
       params: {tarball: true}
     - get: tile-version
       params: {pre: rc}
@@ -116,7 +116,7 @@ resources:
 - name: etcd
   type: bosh-io-release
   source: {repository: cloudfoundry-incubator/etcd-release}
-- name: remote-syslog
+- name: simple-remote-syslog
   type: bosh-io-release
   source: {repository: cloudfoundry-community/simple-remote-syslog-boshrelease}
 

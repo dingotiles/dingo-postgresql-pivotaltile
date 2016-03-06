@@ -7,7 +7,7 @@ inputs:
 - name: tile-version
 - name: patroni-docker
 - name: etcd
-- name: remote-syslog
+- name: simple-remote-syslog
 - name: broker-registrar
 
 outputs:

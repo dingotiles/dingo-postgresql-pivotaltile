@@ -20,7 +20,7 @@ cat >tile/tmp/metadata/releases.yml <<YAML
 releases:
 YAML
 
-boshreleases=("patroni-docker" "etcd" "remote-syslog" "broker-registrar")
+boshreleases=("patroni-docker" "etcd" "simple-remote-syslog" "broker-registrar")
 for boshrelease in "${boshreleases[@]}"
 do
   release_version=$(cat ${boshrelease}/version)
