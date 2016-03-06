@@ -30,10 +30,10 @@ do
     version: "${release_version}"
 YAML
   if [[ -f ${boshrelease}/release.tgz ]]; then
-    cp ${boshrelease}/release.tgz product/releases/${boshrelease}-${release_version}.tgz
+    cp ${boshrelease}/release.tgz workspace/releases/${boshrelease}-${release_version}.tgz
   fi
   if [[ -f ${boshrelease}/${boshrelease}-${release_version}.tgz ]]; then
-    cp ${boshrelease}/${boshrelease}-${release_version}.tgz product/releases/
+    cp ${boshrelease}/${boshrelease}-${release_version}.tgz workspace/releases/
   fi
 done
 
@@ -46,7 +46,15 @@ spruce merge \
   tile/templates/metadata/errands_broker_registrar.yml \
   tile/templates/deploy_and_delete_errands.yml \
   tile/templates/metadata/base.yml > workspace/metadata/dingo-postgresql.yml
+echo
+echo metadata:
+cat workspace/metadata/dingo-postgresql.yml
+echo
+echo Looking up all previous versions to generate content_migrations/dingo-s3.yml
+./tile/ci/tasks/generate_content_migration.rb ${TILE_VERSION} workspace/content_migrations/dingo-postgresql.yml
 
+echo Migrations:
+cat generated/content_migrations/dingo-s3.yml
 
 cd workspace
 ls -laR .
