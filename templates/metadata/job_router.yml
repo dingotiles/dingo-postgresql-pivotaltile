@@ -1,11 +1,13 @@
 job_types:
-- name: etcd
-  resource_label: ETCD
+- name: router
+  resource_label: Router / Load Balancer
   templates:
     # ship all the logs
     - {name: remote-syslog, release: simple-remote-syslog}
-    # run etcd
-    - {name: etcd, release: etcd}
+    # run service broker
+    - {name: broker, release: patroni-docker}
+    # run haproxy & co
+    - {name: router, release: patroni-docker}
   static_ip: 1
   dynamic_ip: 0
   max_in_flight: 500
@@ -37,6 +39,8 @@ job_types:
       type: integer
       configurable: true
       default: 1
+      min: 1
+      max: 1
   property_blueprints:
     - name: vm_credentials
       type: salted_credentials
@@ -44,6 +48,18 @@ job_types:
         identity: vcap
   manifest: |
     etcd:
-      machines: (( ips ))
-      peer_require_ssl: false
-      require_ssl: false
+      machines: (( .etcd.ips ))
+    servicebroker:
+      username: starkandwayne
+      password: starkandwayne
+      machines: [127.0.0.1]
+      public_port: 8888
+      port: 8889
+      router:
+        hostname: (( .first_ip ))
+      backends:
+        username: containers
+        password: containers
+        machines:
+          z1: (( .cell_z1.ips ))
+          z2: []

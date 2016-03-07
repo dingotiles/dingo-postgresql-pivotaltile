@@ -1,6 +1,6 @@
 job_types:
-  - name: cell
-    resource_label: Cell
+  - name: cell_z1
+    resource_label: Cell AZ1
     templates:
       # ship all the logs
       - {name: remote-syslog, release: simple-remote-syslog}
