@@ -32,6 +32,7 @@ property_blueprints:
   - name: syslog_address
     type: string
     configurable: true
+    optional: true
   - name: syslog_port
     type: integer
     configurable: true
