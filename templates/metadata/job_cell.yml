@@ -90,7 +90,7 @@ job_types:
           tags: [postgresql95, postgresql]
           plans:
           - name: solo
-            id: (( .properties.solo_service_plan_uuid.value ))
+            id: (( .properties.service_plan_uuid.value ))
             description: Solo instance of PostgreSQL
             metadata: {displayName: Solo}
             container:

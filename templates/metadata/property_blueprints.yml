@@ -2,7 +2,7 @@
 property_blueprints:
   - name: service_uuid
     type: uuid
-  - name: solo_service_plan_uuid
+  - name: service_plan_uuid
     type: uuid
   - name: cookie_secret
     type: secret
@@ -36,4 +36,5 @@ property_blueprints:
   - name: syslog_port
     type: integer
     configurable: true
+    optional: true
     default: 25374

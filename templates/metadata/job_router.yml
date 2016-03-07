@@ -88,7 +88,7 @@ job_types:
             - /data
             tag: "9.5"
           description: Solo instance of PostgreSQL
-          id: (( .properties.solo_service_plan_uuid.value ))
+          id: (( .properties.service_plan_uuid.value ))
           metadata:
             displayName: Solo
           name: solo
