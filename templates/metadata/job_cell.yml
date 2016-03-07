@@ -11,9 +11,9 @@ job_types:
       # docker images will be pulled down
       - {name: upstream-images, release: patroni-docker}
       # create uuid for each broker/daemon
-      # TODO: - {name: container-env-vars, release: patroni-docker}
+      - {name: container-env-vars, release: patroni-docker}
       # run service broker
-      # TODO: - {name: cf-containers-broker, release: patroni-docker}
+      - {name: cf-containers-broker, release: patroni-docker}
     static_ip: 1
     dynamic_ip: 0
     max_in_flight: 500
