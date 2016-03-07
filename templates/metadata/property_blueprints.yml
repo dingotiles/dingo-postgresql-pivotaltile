@@ -2,7 +2,7 @@
 property_blueprints:
   - name: service_uuid
     type: uuid
-  - name: service_plan_uuid
+  - name: solo_service_plan_uuid
     type: uuid
   - name: cookie_secret
     type: secret
