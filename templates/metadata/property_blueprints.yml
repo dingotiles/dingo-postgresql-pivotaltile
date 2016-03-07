@@ -32,9 +32,7 @@ property_blueprints:
   - name: syslog_address
     type: string
     configurable: true
-    default: 'logs.papertrailapp.com'
   - name: syslog_port
     type: integer
     configurable: true
     optional: true
-    default: 25374
