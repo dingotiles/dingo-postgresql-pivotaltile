@@ -1,13 +1,29 @@
-requires_product_versions:
-- name: cf
-  version: "~> 1.4"
-job_types:
-  - name: cell
-    manifest: |
-      cf:
-        api_url: (( $runtime.system_api_url ))
-      nats:
-        machines: (( ..cf.nats.ips ))
-        port: 4222
-        user: (( ..cf.nats.credentials.identity ))
-        password: (( ..cf.nats.credentials.password ))
+meta:
+  services:
+  - bindable: true
+    description: Solo instance of PostgreSQL 9.5
+    id: (( .properties.service_uuid.value ))
+    metadata:
+      displayName: postgresql 9.5
+      documentationUrl: https://pg.dingotiles.com
+      longDescription: Solo instance of PostgreSQL 9.5
+      providerDisplayName: Dingo Tiles
+      supportUrl: https://slack.dingotiles.com
+    name: postgresql95
+    plans:
+    - container:
+        backend: docker
+        environment:
+        - ETCD_HOST_PORT=(( .etcd.first_ip )):4001
+        image: cfcommunity/postgresql-patroni
+        persistent_volumes:
+        - /data
+        tag: "9.5"
+      description: Solo instance of PostgreSQL
+      id: (( .properties.service_plan_uuid.value ))
+      metadata:
+        displayName: Solo
+      name: solo
+    tags:
+    - postgresql95
+    - postgresql
