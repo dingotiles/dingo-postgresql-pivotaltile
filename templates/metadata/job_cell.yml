@@ -92,6 +92,7 @@ job_types:
           - name: solo
             id: (( .properties.solo_service_plan_uuid.value ))
             description: Solo instance of PostgreSQL
+            free: true
             metadata: {displayName: Solo}
             container:
               backend: docker
