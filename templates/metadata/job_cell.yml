@@ -104,7 +104,7 @@ job_types:
               - WALE_ENV_DIR=/data/wal-e/env
               - WALE_BACKUP_THRESHOLD_PERCENTAGE=30
               - WALE_BACKUP_THRESHOLD_MEGABYTES=10240
-              - AWS_ACCESS_KEY_ID=(( .properties.aws_access_key ))
-              - AWS_SECRET_ACCESS_KEY=(( .properties.aws_secret_key ))
-              - WAL_S3_BUCKET=(( .properties.s3_bucket ))
-              - WALE_S3_ENDPOINT=https+path://(( .properties.s3_endpoint ))
+              - AWS_ACCESS_KEY_ID=(( .properties.aws_access_key.value ))
+              - AWS_SECRET_ACCESS_KEY=(( .properties.aws_secret_key.value ))
+              - WAL_S3_BUCKET=(( .properties.s3_bucket.value ))
+              - WALE_S3_ENDPOINT=https+path://(( .properties.s3_endpoint.value ))
