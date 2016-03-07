@@ -51,6 +51,15 @@ job_types:
         default:
           identity: vcap
     manifest: |
+      remote_syslog:
+        address: logs.papertrailapp.com
+        port: 25374
+        short_hostname: true
+      docker:
+        log_driver: syslog
+        log_options:
+        - syslog-address=udp://logs.papertrailapp.com:25374
+        - tag="{{.Name}}"
       etcd:
         machines: (( .etcd.ips ))
       registrator:
