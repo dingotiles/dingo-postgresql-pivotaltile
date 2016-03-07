@@ -92,6 +92,7 @@ job_types:
           metadata:
             displayName: Solo
           name: solo
+          free: true
         tags:
         - postgresql95
         - postgresql
