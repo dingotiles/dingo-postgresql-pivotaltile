@@ -81,7 +81,7 @@ jobs:
     params: {file: tile-version/number}
   - put: generated-tile
     params:
-      from: re-version-product/reversioned-product/dingo-postgresql-(.*).pivotal
+      from: reversioned-product/dingo-postgresql-(.*).pivotal
   - task: upload-product
     file: tile/ci/tasks/upload-product.yml
     config:
@@ -111,7 +111,7 @@ jobs:
     params: {file: tile-version/number}
   - put: generated-tile
     params:
-      from: re-version-product/reversioned-product/dingo-postgresql-(.*).pivotal
+      from: reversioned-product/dingo-postgresql-(.*).pivotal
   - task: upload-product
     file: tile/ci/tasks/upload-product.yml
     config:

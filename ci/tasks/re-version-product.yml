@@ -7,6 +7,9 @@ inputs:
 - name: tile-version
 - name: generated-tile
 
+outputs:
+- name: reversioned-product
+
 params:
   AWS_ACCESS_KEY:
   AWS_SECRET_KEY:

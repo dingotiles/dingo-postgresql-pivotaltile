@@ -5,8 +5,6 @@ set -x # show commands
 
 next_tile_version=$(cat tile-version/number)
 
-mkdir -p reversioned-product
-
 tile_path=$(pwd)/$(ls generated-tile/dingo-postgresql*.pivotal)
 next_tile_path=$(pwd)/reversioned-product/dingo-postgresql-${next_tile_version}.pivotal
 
