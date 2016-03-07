@@ -72,3 +72,5 @@ job_types:
         machines:
           z1: (( .cell_z1.ips ))
           z2: []
+      # *services defined in job_cell.yml
+      services: *services
