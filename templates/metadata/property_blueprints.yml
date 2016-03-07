@@ -4,7 +4,13 @@ property_blueprints:
     type: uuid
   - name: service_plan_uuid
     type: uuid
+  - name: cookie_secret
+    type: secret
   - name: broker_username
     type: secret
   - name: broker_password
+    type: secret
+  - name: backend_broker_username
+    type: secret
+  - name: backend_broker_password
     type: secret

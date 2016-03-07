@@ -59,16 +59,16 @@ job_types:
     etcd:
       machines: (( .etcd.ips ))
     servicebroker:
-      username: starkandwayne
-      password: starkandwayne
+        username: (( .properties.broker_username.value ))
+        password: (( .properties.broker_password.value ))
       machines: [127.0.0.1]
       public_port: 8888
       port: 8889
       router:
         hostname: (( first_ip ))
       backends:
-        username: containers
-        password: containers
+        username: (( .properties.backend_broker_username.value ))
+        password: (( .properties.backend_broker_password.value ))
         machines:
           z1: (( .cell_z1.ips ))
           z2: []
