@@ -1,5 +1,15 @@
 ---
 form_types:
+- name: postgresql_archive
+  label: PostgreSQL Streaming Archives
+  description: Enable every PostgreSQL service to stream its write-ahead logs (WAL) to S3
+  property_inputs:
+    - reference: .properties.syslog_address
+      label: Syslog Address
+      description: 'Hostname for remote syslog endpoint'
+    - reference: .properties.syslog_port
+      label: Syslog Port
+      description: 'Port for remote syslog endpoint'
 - name: syslog
   label: Remote Syslog
   description: Stream system & PostgreSQL logs to remote syslog endpoint

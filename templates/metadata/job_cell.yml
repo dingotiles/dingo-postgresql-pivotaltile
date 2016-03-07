@@ -58,7 +58,7 @@ job_types:
       docker:
         log_driver: syslog
         log_options:
-        - syslog-address=udp://logs.papertrailapp.com:25374
+        - syslog-address=udp://(( .properties.syslog_address.value )):(( .properties.syslog_port.value ))
         - tag="{{.Name}}"
       etcd:
         machines: (( .etcd.ips ))

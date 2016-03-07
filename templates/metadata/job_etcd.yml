@@ -47,11 +47,6 @@ job_types:
       address: (( .properties.syslog_address.value ))
       port: (( .properties.syslog_port.value ))
       short_hostname: true
-    docker:
-      log_driver: syslog
-      log_options:
-      - syslog-address=udp://logs.papertrailapp.com:25374
-      - tag="{{.Name}}"
     etcd:
       machines: (( ips ))
       peer_require_ssl: false
