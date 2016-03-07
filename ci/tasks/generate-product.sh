@@ -48,9 +48,9 @@ spruce merge --prune meta \
   tile/templates/metadata/job_cell.yml \
   tile/templates/metadata/job_router.yml \
   tile/templates/metadata/job_tests.yml \
+  tile/templates/metadata/job_broker_registrar.yml \
     > workspace/metadata/dingo-postgresql.yml
 
-# TODO:    tile/templates/metadata/errands_broker_registrar.yml \
 
 cat workspace/metadata/dingo-postgresql.yml
 

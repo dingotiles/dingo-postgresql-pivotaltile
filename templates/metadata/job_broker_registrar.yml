@@ -47,11 +47,11 @@ job_types:
       skip_ssl_validation: (( ..cf.ha_proxy.skip_cert_verify.value ))
     broker:
       name: dingo-postgresql
-      protocol: https
-      port: 443
-      host: dingo-postgresql.(( $runtime.system_domain ))
-      username: starkandwayne
-      password: starkandwayne
+      protocol: http
+      port: 8889
+      host: (( .router.first_ip ))
+      username: (( .properties.broker_username.value ))
+      password: (( .properties.broker_password.value ))
 
 - name: broker-deregistrar
   resource_label: De-register broker
@@ -96,8 +96,8 @@ job_types:
       skip_ssl_validation: (( ..cf.ha_proxy.skip_cert_verify.value ))
     broker:
       name: dingo-postgresql
-      protocol: https
-      port: 443
-      host: dingo-postgresql.(( $runtime.system_domain ))
-      username: starkandwayne
-      password: starkandwayne
+      protocol: http
+      port: 8889
+      host: (( .router.first_ip ))
+      username: (( .properties.broker_username.value ))
+      password: (( .properties.broker_password.value ))
