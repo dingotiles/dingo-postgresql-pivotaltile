@@ -37,7 +37,7 @@ YAML
   fi
 done
 
-spruce merge \
+spruce merge --prune meta \
   tile/templates/metadata/base.yml \
   tile/tmp/metadata/version.yml \
   tile/tmp/metadata/releases.yml \
@@ -47,7 +47,6 @@ spruce merge \
   tile/templates/metadata/job_etcd.yml \
   tile/templates/metadata/job_cell.yml \
   tile/templates/metadata/job_router.yml \
-  tile/templates/metadata/service_plans.yml \
     > workspace/metadata/dingo-postgresql.yml
 
 # TODO:    tile/templates/metadata/errands_broker_registrar.yml \
