@@ -1,0 +1,15 @@
+---
+platform: linux
+image: docker:///dingotiles/dingo-s3-pivotaltile-pipeline
+
+inputs:
+- name: tile
+- name: tile-version
+- name: generated-tile
+
+params:
+  AWS_ACCESS_KEY:
+  AWS_SECRET_KEY:
+
+run:
+  path: tile/ci/tasks/re-version-product.sh
