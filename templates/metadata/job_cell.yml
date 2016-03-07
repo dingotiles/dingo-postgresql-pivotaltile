@@ -77,30 +77,34 @@ job_types:
         ssl_enabled: true
         protocol: https
         services:
-        - bindable: true
+        - name: postgresql95
           description: Solo instance of PostgreSQL 9.5
           id: (( .properties.service_uuid.value ))
+          bindable: true
           metadata:
             displayName: postgresql 9.5
             documentationUrl: https://pg.dingotiles.com
             longDescription: Solo instance of PostgreSQL 9.5
             providerDisplayName: Dingo Tiles
             supportUrl: https://slack.dingotiles.com
-          name: postgresql95
+          tags: [postgresql95, postgresql]
           plans:
-          - container:
+          - name: solo
+            id: (( .properties.solo_service_plan_uuid.value ))
+            description: Solo instance of PostgreSQL
+            metadata: {displayName: Solo}
+            container:
               backend: docker
-              environment:
-              - ETCD_HOST_PORT=(( .etcd.first_ip )):4001
               image: cfcommunity/postgresql-patroni
               persistent_volumes:
               - /data
               tag: "9.5"
-            description: Solo instance of PostgreSQL
-            id: (( .properties.service_plan_uuid.value ))
-            metadata:
-              displayName: Solo
-            name: solo
-          tags:
-          - postgresql95
-          - postgresql
+              environment:
+              - ETCD_HOST_PORT=(( .etcd.first_ip )):4001
+              - WALE_ENV_DIR=/data/wal-e/env
+              - WALE_BACKUP_THRESHOLD_PERCENTAGE=30
+              - WALE_BACKUP_THRESHOLD_MEGABYTES=10240
+              - AWS_ACCESS_KEY_ID=(( .properties.aws_access_key ))
+              - AWS_SECRET_ACCESS_KEY=(( .properties.aws_secret_key ))
+              - WAL_S3_BUCKET=(( .properties.s3_bucket ))
+              - WALE_S3_ENDPOINT=https+path://(( .properties.s3_endpoint ))

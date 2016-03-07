@@ -4,12 +4,18 @@ form_types:
   label: PostgreSQL Streaming Archives
   description: Enable every PostgreSQL service to stream its write-ahead logs (WAL) to S3
   property_inputs:
-    - reference: .properties.syslog_address
-      label: Syslog Address
-      description: 'Hostname for remote syslog endpoint'
-    - reference: .properties.syslog_port
-      label: Syslog Port
-      description: 'Port for remote syslog endpoint'
+    - reference: .properties.aws_access_key
+      label: AWS Access Key
+      description: Access Key for AWS S3
+    - reference: .properties.aws_secret_key
+      label: AWS Access Secret
+      description: Secret Key for AWS S3
+    - reference: .properties.s3_bucket
+      label: S3 Bucket Name
+      description: Shared AWS S3 bucket for all WAL archives
+    - reference: .properties.s3_endpoint
+      label: AWS S3 endpoint hostname
+      description: Hostname for AWS S3 endpoint, see http://docs.aws.amazon.com/general/latest/gr/rande.html#s3_region
 - name: syslog
   label: Remote Syslog
   description: Stream system & PostgreSQL logs to remote syslog endpoint

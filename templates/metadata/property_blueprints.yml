@@ -2,7 +2,7 @@
 property_blueprints:
   - name: service_uuid
     type: uuid
-  - name: service_plan_uuid
+  - name: solo_service_plan_uuid
     type: uuid
   - name: cookie_secret
     type: secret
@@ -14,11 +14,28 @@ property_blueprints:
     type: secret
   - name: backend_broker_password
     type: secret
+
+  - name: aws_access_key
+    type: string
+    configurable: true
+  - name: aws_secret_key
+    type: string
+    configurable: true
+  - name: s3_bucket
+    type: string
+    configurable: true
+  - name: s3_endpoint
+    type: string
+    configurable: true
+    default: s3.amazonaws.com
+
   - name: syslog_address
     type: string
     configurable: true
+    optional: true
     default: 'logs.papertrailapp.com'
   - name: syslog_port
     type: integer
     configurable: true
+    optional: true
     default: 25374
