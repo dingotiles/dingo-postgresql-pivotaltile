@@ -108,6 +108,7 @@ resources:
 - name: patroni-docker
   type: github-release
   source:
+    access_token: {{github-release-access-token}}
     user: dingotiles
     repository: patroni-docker-boshrelease
 - name: broker-registrar
