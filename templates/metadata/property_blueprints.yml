@@ -14,3 +14,11 @@ property_blueprints:
     type: secret
   - name: backend_broker_password
     type: secret
+  - name: syslog_address
+    type: string
+    configurable: true
+    default: 'logs.papertrailapp.com'
+  - name: syslog_port
+    type: integer
+    configurable: true
+    default: 25374

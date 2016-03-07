@@ -44,8 +44,8 @@ job_types:
         identity: vcap
   manifest: |
     remote_syslog:
-      address: logs.papertrailapp.com
-      port: 25374
+      address: (( .properties.syslog_address.value ))
+      port: (( .properties.syslog_port.value ))
       short_hostname: true
     docker:
       log_driver: syslog
