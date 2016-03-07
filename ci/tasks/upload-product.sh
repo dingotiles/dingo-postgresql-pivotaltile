@@ -15,10 +15,6 @@ if [[ "${opsmgr_skip_ssl_verification}X" != "X" ]]; then
   skip_ssl="-k "
 fi
 
-echo "Deleting existing version of product incase it was re-generated\n(Also gets rid of all unused products as a side effect)\n"
-curl -f ${skip_ssl} -u ${opsmgr_username}:${opsmgr_password} \
-  "${opsmgr_url}/api/products" -X DELETE; echo
-
 curl -f ${skip_ssl} -u ${opsmgr_username}:${opsmgr_password} \
   "${opsmgr_url}/api/products" -X POST -F "product[file]=@${tile_path}"; echo
 
