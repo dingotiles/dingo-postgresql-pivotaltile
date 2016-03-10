@@ -8,7 +8,7 @@ RUN apt-get update && apt-get install zip unzip curl wget bzr python-pip -y && \
 ADD https://github.com/stedolan/jq/releases/download/jq-1.5/jq-linux64 /usr/bin/jq
 RUN chmod 775 /usr/bin/jq
 
-ADD https://github.com/geofffranks/spruce/releases/download/v1.0.3/spruce-linux-amd64 /usr/bin/spruce
+ADD https://github.com/geofffranks/spruce/releases/download/v1.1.2/spruce-linux-amd64 /usr/bin/spruce
 RUN chmod 755 /usr/bin/spruce
 
 # Install Go
