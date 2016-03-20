@@ -97,10 +97,10 @@ job_types:
             metadata: {displayName: Solo}
             container:
               backend: docker
-              image: cfcommunity/postgresql-patroni
+              image: dingotiles/dingo-postgresql95
+              tag: "latest"
               persistent_volumes:
               - /data
-              tag: "9.5"
               environment:
               - ETCD_HOST_PORT=(( .etcd.first_ip )):4001
               - WALE_ENV_DIR=/data/wal-e/env

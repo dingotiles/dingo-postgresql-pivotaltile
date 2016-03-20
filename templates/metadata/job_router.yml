@@ -81,12 +81,12 @@ job_types:
         plans:
         - container:
             backend: docker
-            environment:
-            - ETCD_HOST_PORT=(( .etcd.first_ip )):4001
-            image: cfcommunity/postgresql-patroni
+            image: dingotiles/dingo-postgresql95
+            tag: "latest"
             persistent_volumes:
             - /data
-            tag: "9.5"
+            environment:
+            - ETCD_HOST_PORT=(( .etcd.first_ip )):4001
           description: Solo instance of PostgreSQL
           id: (( .properties.solo_service_plan_uuid.value ))
           metadata:
