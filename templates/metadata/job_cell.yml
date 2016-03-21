@@ -52,6 +52,7 @@ job_types:
         default:
           identity: vcap
     manifest: |
+      release_version: (( .properties.release_version.value ))
       remote_syslog:
         address: (( .properties.syslog_address.value ))
         port: (( .properties.syslog_port.value ))

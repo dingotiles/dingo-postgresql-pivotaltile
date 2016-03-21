@@ -13,6 +13,12 @@ mkdir -p workspace/content_migrations
 cat >tile/tmp/metadata/version.yml <<EOF
 ---
 product_version: "${TILE_VERSION}"
+
+property_blueprints:
+- name: release_version
+  type: string
+  configurable: false
+  default: "${TILE_VERSION}"
 EOF
 
 cat >tile/tmp/metadata/releases.yml <<YAML
