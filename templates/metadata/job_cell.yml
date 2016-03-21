@@ -5,16 +5,16 @@ job_types:
       # ship all the logs
       - {name: remote-syslog, release: simple-remote-syslog}
       # run docker daemon
-      - {name: docker, release: patroni-docker}
+      - {name: docker, release: dingo-postgresql}
       # docker images are embedded
-      # - {name: embedded-images, release: patroni-docker}
-      - {name: upstream-images, release: patroni-docker}
+      # - {name: embedded-images, release: dingo-postgresql}
+      - {name: upstream-images, release: dingo-postgresql}
       # run registrator daemon
-      - {name: registrator, release: patroni-docker}
+      - {name: registrator, release: dingo-postgresql}
       # create uuid for each broker/daemon
-      - {name: container-env-vars, release: patroni-docker}
+      - {name: container-env-vars, release: dingo-postgresql}
       # run service broker
-      - {name: cf-containers-broker, release: patroni-docker}
+      - {name: cf-containers-broker, release: dingo-postgresql}
     static_ip: 1
     dynamic_ip: 0
     max_in_flight: 500

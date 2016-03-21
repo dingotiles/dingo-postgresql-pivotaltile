@@ -5,7 +5,7 @@ image: docker:///dingotiles/dingo-postgresql-pivotaltile-pipeline
 inputs:
 - name: tile
 - name: tile-version
-- name: patroni-docker
+- name: dingo-postgresql
 - name: etcd
 - name: simple-remote-syslog
 - name: broker-registrar

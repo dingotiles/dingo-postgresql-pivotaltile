@@ -19,7 +19,7 @@ jobs:
     - get: tile
     - get: product-tile
       trigger: true
-    - get: patroni-docker
+    - get: dingo-postgresql
       trigger: true
       params: {tarball: true}
     - get: broker-registrar
@@ -202,12 +202,12 @@ resources:
     initial_version: 0.0.1
     private_key: {{github-key}}
 
-- name: patroni-docker
+- name: dingo-postgresql
   type: github-release
   source:
     access_token: {{github-release-access-token}}
     user: dingotiles
-    repository: patroni-docker-boshrelease
+    repository: dingo-postgresql-release
 - name: broker-registrar
   type: bosh-io-release
   source: {repository: cloudfoundry-community/broker-registrar-boshrelease}

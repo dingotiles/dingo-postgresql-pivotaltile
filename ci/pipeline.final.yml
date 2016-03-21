@@ -16,7 +16,7 @@ jobs:
     - get: tile
     - get: product-tile
       trigger: true
-    - get: patroni-docker-boshrelease
+    - get: dingo-postgresql-release
       trigger: true
       params:
         tarball: true
@@ -249,10 +249,10 @@ resources:
     file: version
     private_key: {{github-key}}
 
-- name: patroni-docker-boshrelease
+- name: dingo-postgresql-release
   type: git
   source:
-    uri: git@github.com:dingotiles/patroni-docker-boshrelease.git
+    uri: git@github.com:dingotiles/dingo-postgresql-release.git
     branch: master
     private_key: {{github-key}}
     tag_filter: "v"

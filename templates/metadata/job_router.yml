@@ -5,9 +5,9 @@ job_types:
     # ship all the logs
     - {name: remote-syslog, release: simple-remote-syslog}
     # run service broker
-    - {name: broker, release: patroni-docker}
+    - {name: broker, release: dingo-postgresql}
     # run haproxy & co
-    - {name: router, release: patroni-docker}
+    - {name: router, release: dingo-postgresql}
   static_ip: 1
   dynamic_ip: 0
   max_in_flight: 500
