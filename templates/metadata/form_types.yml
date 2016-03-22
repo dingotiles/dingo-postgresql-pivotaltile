@@ -16,6 +16,22 @@ form_types:
     - reference: .properties.s3_endpoint
       label: AWS S3 endpoint hostname
       description: "Hostname for AWS S3 endpoint, see http://docs.aws.amazon.com/general/latest/gr/rande.html#s3_region"
+- name: clusterdata_archive
+  label: Disaster Recovery Archives
+  description: "Allow disaster recovery by storing service instance configuration & credentials"
+  property_inputs:
+    - reference: .properties.clusterdata_aws_access_key
+      label: AWS Access Key
+      description: Access Key for AWS S3
+    - reference: .properties.clusterdata_aws_secret_key
+      label: AWS Access Secret
+      description: Secret Key for AWS S3
+    - reference: .properties.clusterdata_s3_bucket
+      label: S3 Bucket Name
+      description: Shared AWS S3 bucket for service instance configuration & credentials backups
+    - reference: .properties.clusterdata_s3_region
+      label: AWS S3 Region
+      description: "Region label for AWS S3 endpoint"
 - name: syslog
   label: Remote Syslog
   description: Stream system & PostgreSQL logs to remote syslog endpoint

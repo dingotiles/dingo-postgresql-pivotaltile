@@ -29,6 +29,20 @@ property_blueprints:
     configurable: true
     default: s3.amazonaws.com
 
+  - name: clusterdata_aws_access_key
+    type: string
+    configurable: true
+  - name: clusterdata_aws_secret_key
+    type: string
+    configurable: true
+  - name: clusterdata_s3_bucket
+    type: string
+    configurable: true
+  - name: clusterdata_s3_region
+    type: string
+    configurable: true
+    default: us-east-1
+
   - name: syslog_address
     type: string
     configurable: true
