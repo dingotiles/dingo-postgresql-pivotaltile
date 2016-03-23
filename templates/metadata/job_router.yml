@@ -55,10 +55,10 @@ job_types:
       machines: (( .etcd.ips ))
     backups:
       clusterdata:
-        aws_access_key_id: (( .properties.clusterdata_aws_access_key ))
-        aws_secret_access_key: (( .properties.clusterdata_aws_secret_key ))
-        bucket_name: (( .properties.clusterdata_s3_bucket ))
-        region: (( .properties.clusterdata_s3_region ))
+        aws_access_key_id: (( .properties.clusterdata_aws_access_key.value ))
+        aws_secret_access_key: (( .properties.clusterdata_aws_secret_key.value ))
+        bucket_name: (( .properties.clusterdata_s3_bucket.value ))
+        region: (( .properties.clusterdata_s3_region.value ))
     servicebroker:
       username: (( .properties.broker_username.value ))
       password: (( .properties.broker_password.value ))
