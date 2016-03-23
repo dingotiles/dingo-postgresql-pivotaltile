@@ -3,7 +3,6 @@ groups:
 - name: pipeline
   jobs:
   - create-product
-  - upload-product
   - bump-patch
   - bump-minor
   - promote-patch
@@ -40,18 +39,6 @@ jobs:
     params: {from: product/dingo-postgresql-(.*).pivotal}
   - put: tile-version
     params: {file: tile-version/number}
-
-- name: upload-product
-  serial: true
-  serial_groups: [opsmgr]
-  plan:
-  - aggregate:
-    - get: tile
-    - get: generated-tile
-      passed: [create-product]
-      trigger: true
-    - get: tile-version
-      passed: [create-product]
   - task: upload-product
     file: tile/ci/tasks/upload-product.yml
     config:
@@ -67,10 +54,10 @@ jobs:
   - aggregate:
     - get: tile
     - get: tile-version
-      passed: [upload-product]
+      passed: [create-product]
       params: {bump: patch}
     - get: generated-tile
-      passed: [upload-product]
+      passed: [create-product]
   - task: re-version-product
     file: tile/ci/tasks/re-version-product.yml
     config:
@@ -97,10 +84,10 @@ jobs:
   - aggregate:
     - get: tile
     - get: tile-version
-      passed: [upload-product]
+      passed: [create-product]
       params: {bump: minor}
     - get: generated-tile
-      passed: [upload-product]
+      passed: [create-product]
   - task: re-version-product
     file: tile/ci/tasks/re-version-product.yml
     config:
