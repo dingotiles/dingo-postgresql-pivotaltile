@@ -74,31 +74,20 @@ job_types:
           z1: (( .cell_z1.ips ))
           z2: []
       services:
-      - bindable: true
-        description: Solo instance of PostgreSQL 9.5
+      - name: dingo-postgresql
+        description: Dingo PostgreSQL
         id: (( .properties.service_uuid.value ))
+        bindable: true
         metadata:
-          displayName: postgresql 9.5
-          documentationUrl: https://pg.dingotiles.com
-          longDescription: Solo instance of PostgreSQL 9.5
+          displayName: Dingo PostgreSQL
+          documentationUrl: https://postgresql.dingotiles.com
+          longDescription: PostgreSQL 9.5, clusterable for high availability, continuously archived for disaster recovery, 10 minutes maximum data loss
           providerDisplayName: Dingo Tiles
           supportUrl: https://slack.dingotiles.com
-        name: postgresql95
+        tags: [postgresql95, postgresql, dingo-postgresql, dingo-postgresql95, sql, database_url]
         plans:
-        - container:
-            backend: docker
-            image: dingotiles/dingo-postgresql95
-            tag: "latest"
-            persistent_volumes:
-            - /data
-            environment:
-            - ETCD_HOST_PORT=(( .etcd.first_ip )):4001
+        - name: solo
           description: Solo instance of PostgreSQL
           id: (( .properties.solo_service_plan_uuid.value ))
-          metadata:
-            displayName: Solo
-          name: solo
           free: true
-        tags:
-        - postgresql95
-        - postgresql
+          metadata: {displayName: Solo}

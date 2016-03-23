@@ -79,27 +79,27 @@ job_types:
         ssl_enabled: true
         protocol: https
         services:
-        - name: postgresql95
-          description: Solo instance of PostgreSQL 9.5
+        - name: dingo-postgresql
+          description: Dingo PostgreSQL
           id: (( .properties.service_uuid.value ))
           bindable: true
           metadata:
-            displayName: postgresql 9.5
-            documentationUrl: https://pg.dingotiles.com
-            longDescription: Solo instance of PostgreSQL 9.5
+            displayName: Dingo PostgreSQL
+            documentationUrl: https://postgresql.dingotiles.com
+            longDescription: PostgreSQL 9.5, clusterable for high availability, continuously archived for disaster recovery, 10 minutes maximum data loss
             providerDisplayName: Dingo Tiles
             supportUrl: https://slack.dingotiles.com
-          tags: [postgresql95, postgresql]
+          tags: [postgresql95, postgresql, dingo-postgresql, dingo-postgresql95, sql, database_url]
           plans:
           - name: solo
-            id: (( .properties.solo_service_plan_uuid.value ))
             description: Solo instance of PostgreSQL
+            id: (( .properties.solo_service_plan_uuid.value ))
             free: true
             metadata: {displayName: Solo}
             container:
               backend: docker
               image: dingotiles/dingo-postgresql95
-              tag: "latest"
+              tag: latest
               persistent_volumes:
               - /data
               environment:
