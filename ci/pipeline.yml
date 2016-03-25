@@ -2,6 +2,7 @@
 groups:
 - name: pipeline
   jobs:
+  - play
   - create-product
   - bump-patch
   - bump-minor
@@ -12,6 +13,18 @@ groups:
   - build-task-image
 
 jobs:
+- name: play
+  plan:
+  - get: dingo-postgresql
+  - task: ls
+    config:
+      platform: linux
+      image: docker:///dingotiles/dingo-postgresql-pivotaltile-pipeline
+      inputs: [{name: dingo-postgresql}]
+      run:
+        path: ls
+        args: ['-lRt']
+
 - name: create-product
   plan:
   - aggregate:
@@ -22,10 +35,6 @@ jobs:
       trigger: true
       params: {tarball: true}
     - get: broker-registrar
-      params: {tarball: true}
-    - get: etcd
-      params: {tarball: true}
-    - get: simple-remote-syslog
       params: {tarball: true}
     - get: tile-version
       params: {pre: rc}

@@ -26,7 +26,8 @@ cat >tile/tmp/metadata/releases.yml <<YAML
 releases:
 YAML
 
-boshreleases=("dingo-postgresql" "etcd" "simple-remote-syslog" "broker-registrar")
+# versions available via inputs
+boshreleases=("dingo-postgresql" "broker-registrar")
 for boshrelease in "${boshreleases[@]}"
 do
   release_version=$(cat ${boshrelease}/version)
@@ -41,6 +42,26 @@ YAML
   if [[ -f ${boshrelease}/${boshrelease}-${release_version}.tgz ]]; then
     cp ${boshrelease}/${boshrelease}-${release_version}.tgz workspace/releases/
   fi
+done
+
+# versions available via dingo-postgresql github release files
+boshreleases=("etcd" "simple-remote-syslog")
+for boshrelease in "${boshreleases[@]}"
+do
+  regexp="${boshrelease}-(.*)\.tgz"
+  file=$(ls dingo-postgresql/${boshrelease}-*.tgz)
+  if [[ $file =~ $regexp ]]; then
+    release_version="${BASH_REMATCH[1]}"
+  else
+    echo "$file did not contain version"
+    exit 1
+  fi
+  cp $file workspace/releases/${boshrelease}-${release_version}.tgz
+  cat >>tile/tmp/metadata/releases.yml <<YAML
+  - name: ${boshrelease}
+    file: ${boshrelease}-${release_version}.tgz
+    version: "${release_version}"
+YAML
 done
 
 spruce merge --prune meta \
