@@ -44,12 +44,14 @@ YAML
   fi
 done
 
+ls -lRt dingo-postgresql/*
+
 # versions available via dingo-postgresql github release files
 boshreleases=("etcd" "simple-remote-syslog")
 for boshrelease in "${boshreleases[@]}"
 do
   regexp="${boshrelease}-(.*)\.tgz"
-  file=$(ls dingo-postgresql/${boshrelease}-*.tgz)
+  file=$(ls dingo-postgresql/${boshrelease}*)
   if [[ $file =~ $regexp ]]; then
     release_version="${BASH_REMATCH[1]}"
   else
