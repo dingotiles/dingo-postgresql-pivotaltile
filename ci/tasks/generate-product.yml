@@ -6,8 +6,6 @@ inputs:
 - name: tile
 - name: tile-version
 - name: dingo-postgresql
-- name: etcd
-- name: simple-remote-syslog
 - name: broker-registrar
 
 outputs:
