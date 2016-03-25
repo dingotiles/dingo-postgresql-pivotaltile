@@ -40,22 +40,20 @@ jobs:
       params: {pre: rc}
   - task: generate-product
     file: tile/ci/tasks/generate-product.yml
-    config:
-      params:
-        AWS_ACCESS_KEY: {{concourse-aws-access-key}}
-        AWS_SECRET_KEY: {{concourse-aws-secret-access-key}}
+    params:
+      AWS_ACCESS_KEY: {{concourse-aws-access-key}}
+      AWS_SECRET_KEY: {{concourse-aws-secret-access-key}}
   - put: generated-tile
     params: {from: product/dingo-postgresql-(.*).pivotal}
   - put: tile-version
     params: {file: tile-version/number}
   - task: upload-product
     file: tile/ci/tasks/upload-product.yml
-    config:
-      params:
-        opsmgr_url: {{opsmgr-url}}
-        opsmgr_skip_ssl_verification: {{opsmgr-skip-ssl-verification}}
-        opsmgr_username: {{opsmgr-username}}
-        opsmgr_password: {{opsmgr-password}}
+    params:
+      opsmgr_url: {{opsmgr-url}}
+      opsmgr_skip_ssl_verification: {{opsmgr-skip-ssl-verification}}
+      opsmgr_username: {{opsmgr-username}}
+      opsmgr_password: {{opsmgr-password}}
 
 - name: bump-patch
   serial_groups: [opsmgr]
@@ -69,10 +67,9 @@ jobs:
       passed: [create-product]
   - task: re-version-product
     file: tile/ci/tasks/re-version-product.yml
-    config:
-      params:
-        AWS_ACCESS_KEY: {{concourse-aws-access-key}}
-        AWS_SECRET_KEY: {{concourse-aws-secret-access-key}}
+    params:
+      AWS_ACCESS_KEY: {{concourse-aws-access-key}}
+      AWS_SECRET_KEY: {{concourse-aws-secret-access-key}}
   - put: tile-version
     params: {file: tile-version/number}
   - put: generated-tile
@@ -80,12 +77,11 @@ jobs:
       from: reversioned-product/dingo-postgresql-(.*).pivotal
   - task: upload-product
     file: tile/ci/tasks/upload-product.yml
-    config:
-      params:
-        opsmgr_url: {{opsmgr-url}}
-        opsmgr_skip_ssl_verification: {{opsmgr-skip-ssl-verification}}
-        opsmgr_username: {{opsmgr-username}}
-        opsmgr_password: {{opsmgr-password}}
+    params:
+      opsmgr_url: {{opsmgr-url}}
+      opsmgr_skip_ssl_verification: {{opsmgr-skip-ssl-verification}}
+      opsmgr_username: {{opsmgr-username}}
+      opsmgr_password: {{opsmgr-password}}
 
 - name: bump-minor
   serial_groups: [opsmgr]
@@ -99,10 +95,9 @@ jobs:
       passed: [create-product]
   - task: re-version-product
     file: tile/ci/tasks/re-version-product.yml
-    config:
-      params:
-        AWS_ACCESS_KEY: {{concourse-aws-access-key}}
-        AWS_SECRET_KEY: {{concourse-aws-secret-access-key}}
+    params:
+      AWS_ACCESS_KEY: {{concourse-aws-access-key}}
+      AWS_SECRET_KEY: {{concourse-aws-secret-access-key}}
   - put: tile-version
     params: {file: tile-version/number}
   - put: generated-tile
@@ -110,12 +105,11 @@ jobs:
       from: reversioned-product/dingo-postgresql-(.*).pivotal
   - task: upload-product
     file: tile/ci/tasks/upload-product.yml
-    config:
-      params:
-        opsmgr_url: {{opsmgr-url}}
-        opsmgr_skip_ssl_verification: {{opsmgr-skip-ssl-verification}}
-        opsmgr_username: {{opsmgr-username}}
-        opsmgr_password: {{opsmgr-password}}
+    params:
+      opsmgr_url: {{opsmgr-url}}
+      opsmgr_skip_ssl_verification: {{opsmgr-skip-ssl-verification}}
+      opsmgr_username: {{opsmgr-username}}
+      opsmgr_password: {{opsmgr-password}}
 
 - name: promote-patch
   plan:
@@ -125,13 +119,12 @@ jobs:
       passed: [bump-patch]
   - task: promote-public
     file: tile/ci/tasks/promote-public.yml
-    config:
-      params:
-        AWS_ACCESS_KEY_ID: {{concourse-aws-access-key}}
-        AWS_SECRET_ACCESS_KEY: {{concourse-aws-secret-access-key}}
-        AWS_DEFAULT_REGION: ap-southeast-1
-        from_bucket: dingo-postgresql-pivotaltile
-        to_bucket: dingo-postgresql-public-pivotaltile
+    params:
+      AWS_ACCESS_KEY_ID: {{concourse-aws-access-key}}
+      AWS_SECRET_ACCESS_KEY: {{concourse-aws-secret-access-key}}
+      AWS_DEFAULT_REGION: ap-southeast-1
+      from_bucket: dingo-postgresql-pivotaltile
+      to_bucket: dingo-postgresql-public-pivotaltile
 
 - name: promote-minor
   plan:
@@ -141,13 +134,12 @@ jobs:
       passed: [bump-minor]
   - task: promote-public
     file: tile/ci/tasks/promote-public.yml
-    config:
-      params:
-        AWS_ACCESS_KEY_ID: {{concourse-aws-access-key}}
-        AWS_SECRET_ACCESS_KEY: {{concourse-aws-secret-access-key}}
-        AWS_DEFAULT_REGION: ap-southeast-1
-        from_bucket: dingo-postgresql-pivotaltile
-        to_bucket: dingo-postgresql-public-pivotaltile
+    params:
+      AWS_ACCESS_KEY_ID: {{concourse-aws-access-key}}
+      AWS_SECRET_ACCESS_KEY: {{concourse-aws-secret-access-key}}
+      AWS_DEFAULT_REGION: ap-southeast-1
+      from_bucket: dingo-postgresql-pivotaltile
+      to_bucket: dingo-postgresql-public-pivotaltile
 
 
 - name: build-task-image
