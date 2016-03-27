@@ -72,7 +72,7 @@ job_types:
         password: (( .properties.backend_broker_password.value ))
         machines:
           z1: (( .cell_z1.ips ))
-          z2: []
+          z2: (( .cell_z2.ips ))
       services:
       - name: dingo-postgresql
         description: Dingo PostgreSQL

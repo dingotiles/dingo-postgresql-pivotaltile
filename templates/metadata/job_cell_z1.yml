@@ -1,0 +1,110 @@
+job_types:
+- name: cell_z1
+  resource_label: Cell - Availability Zone 1 for High Availability PostgreSQL clusters
+  templates:
+    # ship all the logs
+    - {name: remote-syslog, release: simple-remote-syslog}
+    # run docker daemon
+    - {name: docker, release: dingo-postgresql}
+    # docker images are embedded
+    # - {name: embedded-images, release: dingo-postgresql}
+    - {name: upstream-images, release: dingo-postgresql}
+    # run registrator daemon
+    - {name: registrator, release: dingo-postgresql}
+    # create uuid for each broker/daemon
+    - {name: container-env-vars, release: dingo-postgresql}
+    # run service broker
+    - {name: cf-containers-broker, release: dingo-postgresql}
+  static_ip: 1
+  dynamic_ip: 0
+  max_in_flight: 500
+  resource_definitions:
+    - name: ram
+      type: integer
+      configurable: true
+      default: 4096
+      constraints: {min: 1024}
+    - name: ephemeral_disk
+      type: integer
+      configurable: true
+      default: 102400
+      constraints: {min: 10240}
+    - name: persistent_disk
+      type: integer
+      configurable: true
+      default: 102400
+      constraints: {min: 10240}
+    - name: cpu
+      type: integer
+      configurable: true
+      default: 4
+  instance_definitions:
+    - name: instances
+      type: integer
+      configurable: true
+      default: 1
+  property_blueprints:
+    - name: vm_credentials
+      type: salted_credentials
+      default: {identity: vcap}
+  manifest: |
+    zone: z1
+    release_version: (( .properties.release_version.value ))
+    remote_syslog:
+      address: (( .properties.syslog_address.value ))
+      port: (( .properties.syslog_port.value ))
+      short_hostname: true
+    docker:
+      log_driver: syslog
+      log_options:
+      - syslog-address=udp://(( .properties.syslog_address.value )):(( .properties.syslog_port.value ))
+      - tag="{{.Name}}"
+    etcd:
+      machines: (( .etcd.ips ))
+    registrator:
+      backend_uri: etcd://(( .etcd.first_ip )):4001
+    cf:
+      api_url: (( $runtime.system_api_url ))
+    broker:
+      cookie_secret: (( .properties.cookie_secret.value ))
+      fetch_images: true
+      max_containers: 20
+      username: (( .properties.backend_broker_username.value ))
+      password: (( .properties.backend_broker_password.value ))
+      host: cf-containers-broker.10.244.0.34.xip.io
+      port: 80
+      ssl_enabled: true
+      protocol: https
+      services:
+      - name: dingo-postgresql
+        description: Dingo PostgreSQL
+        id: (( .properties.service_uuid.value ))
+        bindable: true
+        metadata:
+          displayName: Dingo PostgreSQL
+          documentationUrl: https://postgresql.dingotiles.com
+          longDescription: PostgreSQL 9.5, clusterable for high availability, continuously archived for disaster recovery, 10 minutes maximum data loss
+          providerDisplayName: Dingo Tiles
+          supportUrl: https://slack.dingotiles.com
+        tags: [postgresql95, postgresql, dingo-postgresql, dingo-postgresql95, sql, database_url]
+        plans:
+        - name: solo
+          description: Solo instance of PostgreSQL
+          id: (( .properties.solo_service_plan_uuid.value ))
+          free: true
+          metadata: {displayName: Solo}
+          container:
+            backend: docker
+            image: dingotiles/dingo-postgresql95
+            tag: latest
+            persistent_volumes:
+            - /data
+            environment:
+            - ETCD_HOST_PORT=(( .etcd.first_ip )):4001
+            - WALE_ENV_DIR=/data/wal-e/env
+            - WALE_BACKUP_THRESHOLD_PERCENTAGE=30
+            - WALE_BACKUP_THRESHOLD_MEGABYTES=10240
+            - AWS_ACCESS_KEY_ID=(( .properties.aws_access_key.value ))
+            - AWS_SECRET_ACCESS_KEY=(( .properties.aws_secret_key.value ))
+            - WAL_S3_BUCKET=(( .properties.s3_bucket.value ))
+            - WALE_S3_ENDPOINT=https+path://(( .properties.s3_endpoint.value ))

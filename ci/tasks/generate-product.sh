@@ -74,7 +74,8 @@ spruce merge --prune meta \
   tile/templates/metadata/property_blueprints.yml \
   tile/templates/metadata/job_compilation.yml \
   tile/templates/metadata/job_etcd.yml \
-  tile/templates/metadata/job_cell.yml \
+  tile/templates/metadata/job_cell_z1.yml \
+  tile/templates/metadata/job_cell_z2.yml \
   tile/templates/metadata/job_router.yml \
   tile/templates/metadata/job_tests.yml \
   tile/templates/metadata/job_broker_registrar.yml \
