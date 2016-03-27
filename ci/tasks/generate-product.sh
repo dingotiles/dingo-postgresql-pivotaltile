@@ -78,6 +78,7 @@ spruce merge --prune meta \
   tile/templates/metadata/job_router.yml \
   tile/templates/metadata/job_tests.yml \
   tile/templates/metadata/job_broker_registrar.yml \
+  tile/templates/metadata/job_disaster_recovery.yml \
     > workspace/metadata/dingo-postgresql.yml
 
 

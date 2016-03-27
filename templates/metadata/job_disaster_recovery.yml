@@ -1,0 +1,27 @@
+job_types:
+- name: disaster-recovery
+  resource_label: Recreate (deleting first if necessary) all Dingo PostgreSQL service instances from archives
+  templates: [{name: disaster-recovery, release: dingo-postgresql}]
+  errand: true
+  static_ip: 0
+  dynamic_ip: 1
+  max_in_flight: 1
+  resource_definitions:
+  - {name: ram, type: integer, configurable: false, default: 512}
+  - {name: ephemeral_disk, type: integer, configurable: false, default: 1024}
+  - {name: persistent_disk, type: integer, configurable: false, default: 0}
+  - {name: cpu, type: integer, configurable: false, default: 1}
+  instance_definitions: [{name: instances, type: integer, configurable: false, default: 1}]
+  property_blueprints: [{name: vm_credentials, type: salted_credentials, default: {identity: vcap}}]
+  manifest: |
+    servicebroker:
+      host: (( .router.first_ip ))
+      port: 8889
+      username: (( .properties.broker_username.value ))
+      password: (( .properties.broker_password.value ))
+      service_id: (( .properties.service_uuid.value ))
+    cf:
+      api_endpoint: (( $runtime.system_api_url ))
+      skip_ssl_verification: (( ..cf.ha_proxy.skip_cert_verify.value ))
+      user: (( ..cf.uaa.admin_credentials.identity ))
+      password: (( ..cf.uaa.admin_credentials.password ))
