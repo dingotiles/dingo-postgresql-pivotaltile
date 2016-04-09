@@ -80,19 +80,12 @@ job_types:
         description: Dingo PostgreSQL
         id: (( .properties.service_uuid.value ))
         bindable: true
-        metadata:
-          displayName: Dingo PostgreSQL
-          documentationUrl: https://postgresql.dingotiles.com
-          longDescription: PostgreSQL 9.5, clusterable for high availability, continuously archived for disaster recovery, 10 minutes maximum data loss
-          providerDisplayName: Dingo Tiles
-          supportUrl: https://slack.dingotiles.com
         tags: [postgresql95, postgresql, dingo-postgresql, dingo-postgresql95, sql, database_url]
         plans:
         - name: solo
           description: Solo instance of PostgreSQL
           id: (( .properties.solo_service_plan_uuid.value ))
           free: true
-          metadata: {displayName: Solo}
           container:
             backend: docker
             image: dingotiles/dingo-postgresql95
