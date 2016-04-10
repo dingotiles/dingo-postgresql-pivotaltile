@@ -79,11 +79,11 @@ job_types:
         id: (( .properties.service_uuid.value ))
         bindable: true
         metadata:
-          providerDisplayName: services.metadata.providerDisplayName
-          displayName: services.metadata.displayName
-          longDescription: services.metadata.longDescription
-          documentationUrl: https://alpha.dingotiles.com/dingo-postgresql
-          supportUrl: https://slack.dingotiles.com
+          providerdisplayname: services.metadata.providerDisplayName
+          displayname: services.metadata.displayName
+          longdescription: services.metadata.longDescription
+          documentationurl: https://alpha.dingotiles.com/dingo-postgresql
+          supporturl: https://slack.dingotiles.com
         tags: [postgresql95, postgresql, dingo-postgresql, dingo-postgresql95, sql, database_url]
         plans:
         - name: cluster
@@ -91,7 +91,7 @@ job_types:
           id: (( .properties.solo_service_plan_uuid.value ))
           free: true
           metadata:
-            displayName: services.plans.metadata.displayNamel
+            displayname: services.plans.metadata.displayNamel
             bullets:
             - PostgreSQL 9.5
             - Dedicated secure containers
