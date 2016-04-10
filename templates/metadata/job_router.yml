@@ -75,19 +75,25 @@ job_types:
           z2: (( .cell_z2.ips ))
       services:
       - name: dingo-postgresql
-        description: services.description
+        description: PostgreSQL 9.5 in a dedicated, highly-available cluster that is continously archived to allow future for disaster recovery.
         id: (( .properties.service_uuid.value ))
         bindable: true
         metadata:
           providerDisplayName: services.metadata.providerDisplayName
           displayName: services.metadata.displayName
           longDescription: services.metadata.longDescription
-          documentationUrl: https://postgresql.dingotiles.com
+          documentationUrl: https://alpha.dingotiles.com/dingo-postgresql
           supportUrl: https://slack.dingotiles.com
         tags: [postgresql95, postgresql, dingo-postgresql, dingo-postgresql95, sql, database_url]
         plans:
         - name: cluster
-          description: services.plans.description
+          description: Dedicated, highly-available cluster that is continously archived
           id: (( .properties.solo_service_plan_uuid.value ))
           free: true
-          metadata: {displayName: services.plans.metadata.displayName}
+          metadata:
+            displayName: services.plans.metadata.displayNamel
+            bullets:
+            - PostgreSQL 9.5
+            - Dedicated secure containers
+            - Highly-available cluster across availability zones
+            - Continuously archived for potential disaster recovery
