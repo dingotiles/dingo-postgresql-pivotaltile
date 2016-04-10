@@ -68,6 +68,7 @@ done
 
 spruce merge --prune meta \
   tile/templates/metadata/base.yml \
+  tile/templates/metadata/stemcell_criteria.yml \
   tile/tmp/metadata/version.yml \
   tile/tmp/metadata/releases.yml \
   tile/templates/metadata/form_types.yml \
