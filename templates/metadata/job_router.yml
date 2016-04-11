@@ -1,6 +1,6 @@
 job_types:
 - name: router
-  resource_label: Router / Load Balancer
+  resource_label: Router / Broker
   templates:
     # ship all the logs
     - {name: remote-syslog, release: simple-remote-syslog}
