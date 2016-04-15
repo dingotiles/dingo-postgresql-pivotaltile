@@ -78,12 +78,12 @@ job_types:
       services:
       - name: dingo-postgresql
         description: services.description
-        id: (( .properties.service_uuid.value ))
+        id: beb5973c-e1b2-11e5-a736-c7c0b526363d
         bindable: true
         plans:
         - name: cluster
           description: services.plans.description
-          id: (( .properties.solo_service_plan_uuid.value ))
+          id: 1545e30e-6dc3-11e5-826a-6c4008a663f0
           free: true
           container:
             backend: docker
