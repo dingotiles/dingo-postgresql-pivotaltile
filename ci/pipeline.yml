@@ -13,6 +13,7 @@ groups:
 
 jobs:
 - name: create-product
+  serial_groups: [opsmgr]
   plan:
   - aggregate:
     - get: tile
