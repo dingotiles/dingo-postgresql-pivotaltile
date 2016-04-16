@@ -13,7 +13,7 @@ property_blueprints:
 
   - name: license_text_v1_plain
     type: string
-    default: ""
+    optional: true
     configurable: true
 
   - name: aws_access_key
