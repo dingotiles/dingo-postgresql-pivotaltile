@@ -11,6 +11,10 @@ property_blueprints:
   - name: backend_broker_password
     type: secret
 
+  - name: license_text_v1_plain
+    type: string
+    default: ""
+
   - name: aws_access_key
     type: string
     configurable: true

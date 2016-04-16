@@ -73,6 +73,7 @@ job_types:
         machines:
           z1: (( .cell_z1.ips ))
           z2: (( .cell_z2.ips ))
+      license_text: (( .properties.license_text_v1_plain))
       services:
       - name: dingo-postgresql
         description: Dedicated PostgreSQL 9.5
