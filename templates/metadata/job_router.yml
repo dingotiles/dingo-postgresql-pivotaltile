@@ -47,7 +47,7 @@ job_types:
       default:
         identity: vcap
   manifest: |
-    license_text: (( .properties.license_text_v1_plain.value ))
+    license_text: (( .properties.license_text_v2_base64.value ))
     cf:
       api: (( $runtime.system_api_url ))
       username: (( ..cf.uaa.admin_credentials.identity ))

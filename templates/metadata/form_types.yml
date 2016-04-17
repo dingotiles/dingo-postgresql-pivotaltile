@@ -4,7 +4,7 @@ form_types:
   label: License
   description: Provide your license file to upgrade from the free trial
   property_inputs:
-    - reference: .properties.license_text_v1_plain
+    - reference: .properties.license_text_v2_base64
       label: License Text
       description: Upgrade your quotas with a paid license to Dingo PostgreSQL
 - name: postgresql_archive

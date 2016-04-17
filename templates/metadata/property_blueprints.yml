@@ -11,7 +11,7 @@ property_blueprints:
   - name: backend_broker_password
     type: secret
 
-  - name: license_text_v1_plain
+  - name: license_text_v2_base64
     type: string
     optional: true
     configurable: true
