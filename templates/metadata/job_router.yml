@@ -60,6 +60,8 @@ job_types:
       address: (( .properties.syslog_address.value ))
       port: (( .properties.syslog_port.value ))
       short_hostname: true
+    haproxy:
+      syslog: (( .properties.syslog_address.value )):(( .properties.syslog_port.value ))
     etcd:
       machines: (( .etcd.ips ))
     backups:
