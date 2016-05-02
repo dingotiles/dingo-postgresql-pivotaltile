@@ -49,3 +49,10 @@ form_types:
     - reference: .properties.syslog_port
       label: Syslog Port
       description: 'Port for remote syslog endpoint'
+- name: disaster_recovery
+  label: Disaster Recovery
+  description: Stuff
+  property_inputs:
+    - reference: .properties.service_guid
+      label: service_guid
+      description: 'The service_guid as referenced in cf'
