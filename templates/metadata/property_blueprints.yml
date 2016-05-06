@@ -52,8 +52,3 @@ property_blueprints:
     type: integer
     configurable: true
     optional: true
-
-  - name: service_guid
-    type: string
-    configurable: true
-    optional: true

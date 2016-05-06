@@ -19,7 +19,7 @@ job_types:
       port: 8889
       username: (( .properties.broker_username.value ))
       password: (( .properties.broker_password.value ))
-      service_guid: (( .properties.service_guid.value ))
+      service_id: beb5973c-e1b2-11e5-a736-c7c0b526363d
     cf:
       api_endpoint: (( $runtime.system_api_url ))
       skip_ssl_verification: (( ..cf.ha_proxy.skip_cert_verify.value ))
