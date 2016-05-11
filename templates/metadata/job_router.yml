@@ -48,14 +48,6 @@ job_types:
         identity: vcap
   manifest: |
     license_text: (( .properties.license_text_v2_base64.value ))
-    cf:
-      api: (( $runtime.system_api_url ))
-      username: (( ..cf.uaa.admin_credentials.identity ))
-      password: (( ..cf.uaa.admin_credentials.password ))
-      api_url: (( $runtime.system_api_url ))
-      admin_username: (( ..cf.uaa.admin_credentials.identity ))
-      admin_password: (( ..cf.uaa.admin_credentials.password ))
-      skip_ssl_validation: (( ..cf.ha_proxy.skip_cert_verify.value ))
     remote_syslog:
       address: (( .properties.syslog_address.value ))
       port: (( .properties.syslog_port.value ))
