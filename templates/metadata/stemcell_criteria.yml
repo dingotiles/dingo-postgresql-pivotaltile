@@ -2,4 +2,4 @@
 stemcell_criteria:
   os: ubuntu-trusty
   requires_cpi: false
-  version: "3146.9" # Bosh stemcell should match Ops Manager with same version
+  version: "3146.10" # Bosh stemcell should match Ops Manager with same version
