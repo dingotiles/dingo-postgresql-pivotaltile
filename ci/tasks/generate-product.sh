@@ -3,33 +3,10 @@
 set -e # fail fast
 set -x # print commands
 
-TILE_VERSION=$(cat tile-version/number)
-
 mkdir -p tile/tmp/metadata
 mkdir -p workspace/metadata
 mkdir -p workspace/releases
 mkdir -p workspace/content_migrations
-
-cat >tile/tmp/metadata/version.yml <<EOF
----
-product_version: "${TILE_VERSION}"
-
-property_blueprints:
-- name: release_version
-  type: string
-  configurable: false
-  default: "${TILE_VERSION}"
-EOF
-
-image_tag=$(cat dingo-postgresql/version)
-cat >tile/tmp/metadata/image_tag.yml <<EOF
----
-property_blueprints:
-- name: image_tag
-  type: string
-  configurable: false
-  default: "${image_tag}"
-EOF
 
 cat >tile/tmp/metadata/releases.yml <<YAML
 ---
@@ -94,6 +71,11 @@ spruce merge --prune meta \
   tile/templates/metadata/job_disaster_recovery.yml \
     > workspace/metadata/dingo-postgresql.yml
 
+
+TILE_VERSION=$(cat tile-version/number)
+sed -i "s/RELEASE_VERSION_MARKER/${TILE_VERSION}" workspace/metadata/dingo-postgresql.yml
+image_tag=$(cat dingo-postgresql/version)
+sed -i "s/IMAGE_TAG_MARKER/${image_tag}" workspace/metadata/dingo-postgresql.yml
 
 cat workspace/metadata/dingo-postgresql.yml
 

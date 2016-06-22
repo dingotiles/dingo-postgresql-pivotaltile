@@ -49,7 +49,7 @@ job_types:
       default: {identity: vcap}
   manifest: |
     zone: z2
-    release_version: (( .properties.release_version.value ))
+    release_version: RELEASE_VERSION_MARKER
     remote_syslog:
       address: (( .properties.syslog_address.value ))
       port: (( .properties.syslog_port.value ))
@@ -64,7 +64,7 @@ job_types:
     registrator:
       backend_uri: etcd://(( .etcd.first_ip )):4001
     upstream_images:
-      tag: (( .properties.image_tag.value ))
+      tag: IMAGE_TAG_MARKER
     broker:
       cookie_secret: (( .properties.cookie_secret.value ))
       fetch_images: true
@@ -89,7 +89,7 @@ job_types:
           container:
             backend: docker
             image: dingotiles/dingo-postgresql95
-            tag: (( .properties.image_tag.value ))
+            tag: IMAGE_TAG_MARKER
             persistent_volumes:
             - /data
             environment:
