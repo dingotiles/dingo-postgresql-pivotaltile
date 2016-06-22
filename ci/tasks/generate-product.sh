@@ -56,9 +56,7 @@ done
 spruce merge --prune meta \
   tile/templates/metadata/base.yml \
   tile/templates/metadata/stemcell_criteria.yml \
-  tile/tmp/metadata/version.yml \
   tile/tmp/metadata/releases.yml \
-  tile/tmp/metadata/image_tag.yml \
   tile/templates/metadata/form_types.yml \
   tile/templates/metadata/property_blueprints.yml \
   tile/templates/metadata/job_compilation.yml \
@@ -73,9 +71,9 @@ spruce merge --prune meta \
 
 
 TILE_VERSION=$(cat tile-version/number)
-sed -i "s/RELEASE_VERSION_MARKER/${TILE_VERSION}" workspace/metadata/dingo-postgresql.yml
+sed -i "s/RELEASE_VERSION_MARKER/${TILE_VERSION}/" workspace/metadata/dingo-postgresql.yml
 image_tag=$(cat dingo-postgresql/version)
-sed -i "s/IMAGE_TAG_MARKER/${image_tag}" workspace/metadata/dingo-postgresql.yml
+sed -i "s/IMAGE_TAG_MARKER/${image_tag}/" workspace/metadata/dingo-postgresql.yml
 
 cat workspace/metadata/dingo-postgresql.yml
 
