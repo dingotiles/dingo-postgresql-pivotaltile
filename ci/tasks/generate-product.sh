@@ -8,6 +8,13 @@ mkdir -p workspace/metadata
 mkdir -p workspace/releases
 mkdir -p workspace/content_migrations
 
+TILE_VERSION=$(cat tile-version/number)
+
+cat >tile/tmp/metadata/version.yml <<EOF
+---
+product_version: "${TILE_VERSION}"
+EOF
+
 cat >tile/tmp/metadata/releases.yml <<YAML
 ---
 releases:
@@ -56,6 +63,7 @@ done
 spruce merge --prune meta \
   tile/templates/metadata/base.yml \
   tile/templates/metadata/stemcell_criteria.yml \
+  tile/tmp/metadata/version.yml \
   tile/tmp/metadata/releases.yml \
   tile/templates/metadata/form_types.yml \
   tile/templates/metadata/property_blueprints.yml \
@@ -69,8 +77,6 @@ spruce merge --prune meta \
   tile/templates/metadata/job_disaster_recovery.yml \
     > workspace/metadata/dingo-postgresql.yml
 
-
-TILE_VERSION=$(cat tile-version/number)
 sed -i "s/RELEASE_VERSION_MARKER/${TILE_VERSION}/" workspace/metadata/dingo-postgresql.yml
 image_tag=$(cat dingo-postgresql/version)
 sed -i "s/IMAGE_TAG_MARKER/${image_tag}/" workspace/metadata/dingo-postgresql.yml
