@@ -63,6 +63,8 @@ job_types:
       machines: (( .etcd.ips ))
     registrator:
       backend_uri: etcd://(( .etcd.first_ip )):4001
+    upstream_images:
+      tag: (( .properties.image_tag.value ))
     broker:
       cookie_secret: (( .properties.cookie_secret.value ))
       fetch_images: true
@@ -87,7 +89,7 @@ job_types:
           container:
             backend: docker
             image: dingotiles/dingo-postgresql95
-            tag: latest
+            tag: (( .properties.image_tag.value ))
             persistent_volumes:
             - /data
             environment:

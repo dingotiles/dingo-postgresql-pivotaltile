@@ -21,6 +21,16 @@ property_blueprints:
   default: "${TILE_VERSION}"
 EOF
 
+image_tag=$(cat dingo-postgresql/version)
+cat >tile/tmp/metadata/image_tag.yml <<EOF
+---
+property_blueprints:
+- name: image_tag
+  type: string
+  configurable: false
+  default: "${image_tag}"
+EOF
+
 cat >tile/tmp/metadata/releases.yml <<YAML
 ---
 releases:
@@ -71,6 +81,7 @@ spruce merge --prune meta \
   tile/templates/metadata/stemcell_criteria.yml \
   tile/tmp/metadata/version.yml \
   tile/tmp/metadata/releases.yml \
+  tile/tmp/metadata/image_tag.yml \
   tile/templates/metadata/form_types.yml \
   tile/templates/metadata/property_blueprints.yml \
   tile/templates/metadata/job_compilation.yml \
