@@ -47,7 +47,6 @@ job_types:
       default:
         identity: vcap
   manifest: |
-    license_text: (( .properties.license_text_v2_base64.value ))
     remote_syslog:
       address: (( .properties.syslog_address.value ))
       port: (( .properties.syslog_port.value ))

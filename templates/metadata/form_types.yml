@@ -1,12 +1,5 @@
 ---
 form_types:
-- name: license
-  label: License
-  description: Provide your license file to upgrade from the free trial
-  property_inputs:
-    - reference: .properties.license_text_v2_base64
-      label: License Text
-      description: Upgrade your quotas with a paid license to Dingo PostgreSQL
 - name: postgresql_archive
   label: PostgreSQL Streaming Archives
   description: "Enable every PostgreSQL service to stream its write-ahead logs (WAL) to S3"
