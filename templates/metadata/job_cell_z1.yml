@@ -93,7 +93,6 @@ job_types:
             - /data
             environment:
             - ETCD_HOST_PORT=(( .etcd.first_ip )):4001
-            - WALE_ENV_DIR=/data/wal-e/env
             - WALE_BACKUP_THRESHOLD_PERCENTAGE=30
             - WALE_BACKUP_THRESHOLD_MEGABYTES=10240
             - AWS_ACCESS_KEY_ID=(( .properties.aws_access_key.value ))
