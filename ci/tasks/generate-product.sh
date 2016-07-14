@@ -95,3 +95,4 @@ echo "creating dingo-postgresql-${TILE_VERSION}.pivotal file"
 zip -r dingo-postgresql-${TILE_VERSION}.pivotal content_migrations metadata releases
 
 mv dingo-postgresql-${TILE_VERSION}.pivotal ../product
+ls ../product
