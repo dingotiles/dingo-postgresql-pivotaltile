@@ -16,7 +16,7 @@ job_types:
     # run service broker
     - {name: cf-containers-broker, release: dingo-postgresql}
   static_ip: 1 # TODO 1.7 true
-  dynamic_ip: 0 1 # TODO 1.7 false
+  dynamic_ip: 0 # TODO 1.7 false
   max_in_flight: 500
   resource_definitions:
     - name: ram
