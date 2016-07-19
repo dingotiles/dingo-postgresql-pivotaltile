@@ -15,8 +15,8 @@ job_types:
     - {name: container-env-vars, release: dingo-postgresql}
     # run service broker
     - {name: cf-containers-broker, release: dingo-postgresql}
-  static_ip: 1
-  dynamic_ip: 0
+  static_ip: true
+  dynamic_ip: false
   max_in_flight: 500
   resource_definitions:
     - name: ram
@@ -42,7 +42,8 @@ job_types:
     - name: instances
       type: integer
       configurable: true
-      default: 1
+      default: 2
+      constraints: {min: 2}
   property_blueprints:
     - name: vm_credentials
       type: salted_credentials
