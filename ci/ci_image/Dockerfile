@@ -4,8 +4,10 @@ RUN apt-get update && \
     apt-get -y install git zip unzip \
         libxml2-dev libxslt-dev libcurl4-openssl-dev \
         build-essential zlib1g-dev libssl-dev libreadline6-dev libyaml-dev \
-    && apt-get install file curl wget bzr jq postgresql postgresql-contrib -y \
-    && apt-get install tree \
+        tree file curl wget bzr jq \
+        postgresql postgresql-contrib \
+        python-pip \
+    && pip --no-input install awscli \
     && apt-get clean
 
 # install ruby
