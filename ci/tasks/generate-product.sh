@@ -11,9 +11,14 @@ cp -r tile/migrations workspace/ # opsmgr v1.7
 
 TILE_VERSION=$(cat tile-version/number)
 
+cat pivnet-stemcell/metadata.json
+STEMCELL_VERSION=$(cat pivnet-stemcell/metadata.json | jq -r ".Release.Version")
+
 cat >tile/tmp/metadata/version.yml <<EOF
 ---
 product_version: "${TILE_VERSION}"
+stemcell_criteria:
+  version: "${STEMCELL_VERSION}"
 EOF
 
 cat >tile/tmp/metadata/releases.yml <<YAML

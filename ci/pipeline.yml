@@ -51,6 +51,9 @@ jobs:
       params: {tarball: true}
     - get: broker-registrar
       params: {tarball: true}
+    - get: pivnet-stemcell
+      trigger: true
+      passed: [upload-stemcell]
     - get: tile-version
       params: {pre: rc}
   - task: generate-product

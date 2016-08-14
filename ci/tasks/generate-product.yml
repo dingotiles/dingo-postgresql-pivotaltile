@@ -7,6 +7,7 @@ inputs:
 - name: tile-version
 - name: dingo-postgresql
 - name: broker-registrar
+- name: pivnet-stemcell
 
 outputs:
 - name: product
