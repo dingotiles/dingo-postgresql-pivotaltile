@@ -10,7 +10,7 @@ RUN apt-get update && \
     && pip --no-input install awscli \
     && apt-get clean
 
-# install ruby
+# install ruby & required gems/CLIs
 RUN cd \
       && wget http://ftp.ruby-lang.org/pub/ruby/2.2/ruby-2.2.5.tar.gz \
       && tar -xzvf ruby-2.2.5.tar.gz \
@@ -18,12 +18,14 @@ RUN cd \
       && ./configure \
       && make \
       && make install \
-      && ruby -v
+      && ruby -v \
+      && gem install bundler bosh_cli cf-uaac license_finder fog mime-types --no-rdoc --no-ri
 
-# install required gems
-RUN gem install bundler --no-rdoc --no-ri \
-      && gem install bosh_cli -v 1.3177.0 --no-rdoc --no-ri \
-      && gem install license_finder --no-ri --no-rdoc
+ADD https://github.com/geofffranks/spruce/releases/download/v1.6.0/spruce-linux-amd64 /usr/bin/spruce
+RUN chmod 755 /usr/bin/spruce
+
+ADD https://cli.run.pivotal.io/stable?release=linux64-binary&version=6.21.1 /tmp/cf.tgz
+RUN tar xzf /tmp/cf.tgz -C /usr/bin && rm /tmp/cf.tgz
 
 # Install Go
 RUN \
@@ -34,12 +36,6 @@ RUN \
 ENV GOROOT /goroot
 ENV GOPATH /gopath
 ENV PATH $GOROOT/bin:$GOPATH/bin:$PATH
-
-ADD https://github.com/geofffranks/spruce/releases/download/v1.1.2/spruce-linux-amd64 /usr/bin/spruce
-RUN chmod 755 /usr/bin/spruce
-
-ADD https://cli.run.pivotal.io/stable?release=linux64-binary&version=6.17.0 /tmp/cf.tgz
-RUN tar xzf /tmp/cf.tgz -C /usr/bin && rm /tmp/cf.tgz
 
 RUN go get github.com/bronze1man/yaml2json
 RUN gem install fog mime-types --no-ri --no-rdoc

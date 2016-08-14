@@ -10,6 +10,8 @@ if [[ "${opsmgr_skip_ssl_verification}X" != "X" ]]; then
   skip_ssl="-k "
 fi
 
+gem install cf-uaac
+
 curl -f ${skip_ssl} -u ${opsmgr_username}:${opsmgr_password} \
   "${opsmgr_url}/api/products" -X POST -F "product[file]=@${tile_path}"; echo
 
