@@ -48,9 +48,9 @@ mv ${tile_path} ${zip_tile_path}
   echo Installing product version $product_version
 mv ${zip_tile_path} ${tile_path}
 
-prev_version=$(curl_auth -s "${opsmgr_url}/api/v0/deployed/products" | jq -r ".[] | select(.type == \"dingo-postgresql\")")
+staged_product_guid=$(curl_auth -s "${opsmgr_url}/api/v0/staged/products" | jq -r ".[] | select(.type == \"dingo-postgresql\")" | .guid)
 
-if [[ "${prev_version}X" == "X" ]]; then
+if [[ "${already_staged}X" == "X" ]]; then
   echo Adding product ${product_version} to the installation
   curl -f ${insecure} -H "Authorization: Bearer ${access_token}" \
     "${opsmgr_url}/api/v0/staged/products" -X POST \
@@ -58,8 +58,7 @@ if [[ "${prev_version}X" == "X" ]]; then
 else
   echo Upgrading product to ${product_version}
 
-  product_install_uuid=$(curl_auth -s "${opsmgr_url}/api/v0/staged/products" | jq -r ".[] | select(.type == \"dingo-postgresql\") | .guid")
-  curl_auth "${opsmgr_url}/api/v0/staged/products/${product_install_uuid}" -X PUT \
+  curl_auth "${opsmgr_url}/api/v0/staged/products/${staged_product_guid}" -X PUT \
       -d "to_version=${product_version}"
 fi
 echo
