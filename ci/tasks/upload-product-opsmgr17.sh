@@ -50,7 +50,7 @@ mv ${zip_tile_path} ${tile_path}
 
 staged_product_guid=$(curl_auth -s "${opsmgr_url}/api/v0/staged/products" | jq -r ".[] | select(.type == \"dingo-postgresql\") | .guid")
 
-if [[ "${already_staged}X" == "X" ]]; then
+if [[ "${staged_product_guid}X" == "X" ]]; then
   echo Adding product ${product_version} to the installation
   curl -f ${insecure} -H "Authorization: Bearer ${access_token}" \
     "${opsmgr_url}/api/v0/staged/products" -X POST \
