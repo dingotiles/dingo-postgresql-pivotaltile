@@ -19,7 +19,7 @@ sed -i -e "s/^product_version:.*$/product_version: \"${next_tile_version}\"/" un
 cat unpack/metadata/dingo-postgresql.yml
 
 echo Looking up all previous versions to generate content_migrations/dingo-postgresql.yml
-./tile/ci/tasks/generate_content_migration.rb ${next_tile_version} unpack/content_migrations/dingo-postgresql.yml
+./tile/ci/tasks/opsmgr16_content_migration.rb ${next_tile_version} unpack/content_migrations/dingo-postgresql.yml
 cat unpack/content_migrations/dingo-postgresql.yml
 
 cd unpack

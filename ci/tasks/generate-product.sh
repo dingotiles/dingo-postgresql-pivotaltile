@@ -6,7 +6,8 @@ set -x # print commands
 mkdir -p tile/tmp/metadata
 mkdir -p workspace/metadata
 mkdir -p workspace/releases
-mkdir -p workspace/content_migrations
+mkdir -p workspace/content_migrations # opsmgr v1.6
+cp -r tile/migrations workspace/ # opsmgr v1.7
 
 TILE_VERSION=$(cat tile-version/number)
 
@@ -84,7 +85,7 @@ sed -i "s/IMAGE_TAG_MARKER/${image_tag}/" workspace/metadata/dingo-postgresql.ym
 cat workspace/metadata/dingo-postgresql.yml
 
 echo Looking up all previous versions to generate content_migrations/dingo-postgresql.yml
-./tile/ci/tasks/generate_content_migration.rb ${TILE_VERSION} workspace/content_migrations/dingo-postgresql.yml
+./tile/ci/tasks/opsmgr16_content_migration.rb ${TILE_VERSION} workspace/content_migrations/dingo-postgresql.yml
 
 cat workspace/content_migrations/dingo-postgresql.yml
 
@@ -92,7 +93,7 @@ cd workspace
 ls -laR .
 
 echo "creating dingo-postgresql-${TILE_VERSION}.pivotal file"
-zip -r dingo-postgresql-${TILE_VERSION}.pivotal content_migrations metadata releases
+zip -r dingo-postgresql-${TILE_VERSION}.pivotal content_migrations migrations metadata releases
 
 mv dingo-postgresql-${TILE_VERSION}.pivotal ../product
 ls ../product

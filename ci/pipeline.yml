@@ -3,10 +3,7 @@ groups:
 - name: pipeline
   jobs:
   - create-product
-  - bump-patch
-  - bump-minor
-  - promote-patch
-  - promote-minor
+  - upload-opsmgr16
 - name: image
   jobs:
   - build-task-image
@@ -43,6 +40,22 @@ jobs:
       opsmgr_username: {{opsmgr17-username}}
       opsmgr_password: {{opsmgr17-password}}
       opsmgr_version: 1.7
+
+- name: upload-opsmgr16
+  serial_groups: [opsmgr16]
+  plan:
+  - aggregate:
+    - { get: tile }
+    - { get: generated-tile, passed: [create-product], trigger: true }
+    - { get: tile-version, passed: [create-product] }
+  - task: upload-product-opsmgr16
+    file: tile/ci/tasks/upload-product.yml
+    params:
+      opsmgr_url: {{opsmgr16-url}}
+      opsmgr_skip_ssl_verification: {{opsmgr16-skip-ssl-verification}}
+      opsmgr_username: {{opsmgr16-username}}
+      opsmgr_password: {{opsmgr16-password}}
+      opsmgr_version: 1.6
 
 - name: bump-patch
   serial_groups: [opsmgr]

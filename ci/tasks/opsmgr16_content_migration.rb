@@ -6,7 +6,7 @@ require "yaml"
 tile_version = ARGV[0]
 filepath = ARGV[1]
 unless tile_version && filepath
-  puts "USAGE: ./ci/tasks/generate_content_migration.rb 1.2.3 /path/to/content_migrations.yml"
+  puts "USAGE: ./ci/tasks/opsmgr16_content_migration.rb 1.2.3 /path/to/content_migrations.yml"
   exit 1
 end
 
