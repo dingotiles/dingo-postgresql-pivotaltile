@@ -214,3 +214,16 @@ resources:
     bucket: dingo-postgresql-pivotaltile
     regexp: dingo-postgresql-(.*).pivotal
     region_name: ap-southeast-1
+
+- name: pivnet-stemcell
+  type: pivnet
+  source:
+    api_token: {{pivnet-api-token}}
+    product_slug: stemcells
+
+resource_types:
+- name: pivnet
+  type: docker-image
+  source:
+    repository: pivotalcf/pivnet-resource
+    tag: latest-final
