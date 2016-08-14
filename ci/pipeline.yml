@@ -13,7 +13,7 @@ groups:
 
 jobs:
 - name: create-product
-  serial_groups: [opsmgr]
+  serial_groups: [opsmgr17]
   plan:
   - aggregate:
     - get: tile
@@ -35,13 +35,14 @@ jobs:
     params: {file: product/dingo-postgresql-*.pivotal}
   - put: tile-version
     params: {file: tile-version/number}
-  - task: upload-product
+  - task: upload-product-opsmgr17
     file: tile/ci/tasks/upload-product.yml
     params:
-      opsmgr_url: {{opsmgr-url}}
-      opsmgr_skip_ssl_verification: {{opsmgr-skip-ssl-verification}}
-      opsmgr_username: {{opsmgr-username}}
-      opsmgr_password: {{opsmgr-password}}
+      opsmgr_url: {{opsmgr17-url}}
+      opsmgr_skip_ssl_verification: {{opsmgr17-skip-ssl-verification}}
+      opsmgr_username: {{opsmgr17-username}}
+      opsmgr_password: {{opsmgr17-password}}
+      opsmgr_version: 1.7
 
 - name: bump-patch
   serial_groups: [opsmgr]
@@ -65,10 +66,10 @@ jobs:
   - task: upload-product
     file: tile/ci/tasks/upload-product.yml
     params:
-      opsmgr_url: {{opsmgr-url}}
-      opsmgr_skip_ssl_verification: {{opsmgr-skip-ssl-verification}}
-      opsmgr_username: {{opsmgr-username}}
-      opsmgr_password: {{opsmgr-password}}
+      opsmgr_url: {{opsmgr16-url}}
+      opsmgr_skip_ssl_verification: {{opsmgr16-skip-ssl-verification}}
+      opsmgr_username: {{opsmgr16-username}}
+      opsmgr_password: {{opsmgr16-password}}
 
 - name: bump-minor
   serial_groups: [opsmgr]
@@ -92,10 +93,10 @@ jobs:
   - task: upload-product
     file: tile/ci/tasks/upload-product.yml
     params:
-      opsmgr_url: {{opsmgr-url}}
-      opsmgr_skip_ssl_verification: {{opsmgr-skip-ssl-verification}}
-      opsmgr_username: {{opsmgr-username}}
-      opsmgr_password: {{opsmgr-password}}
+      opsmgr_url: {{opsmgr16-url}}
+      opsmgr_skip_ssl_verification: {{opsmgr16-skip-ssl-verification}}
+      opsmgr_username: {{opsmgr16-username}}
+      opsmgr_password: {{opsmgr16-password}}
 
 - name: promote-patch
   plan:
