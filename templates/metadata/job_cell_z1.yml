@@ -67,6 +67,7 @@ job_types:
     upstream_images:
       tag: IMAGE_TAG_MARKER
     broker:
+      drain_endpoint: (( .properties.broker_username.value)):(( .properties.broker_password.value))@(( .router.first_ip )):8889
       cookie_secret: (( .properties.cookie_secret.value ))
       fetch_images: true
       max_containers: 20
