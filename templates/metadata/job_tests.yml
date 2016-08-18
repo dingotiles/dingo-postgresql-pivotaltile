@@ -47,9 +47,13 @@ job_types:
       etcd:
         machines: (( .etcd.ips ))
       backups:
-        backend: s3
-        s3:
-          aws_access_key: (( .properties.aws_access_key.value ))
-          aws_secret_key: (( .properties.aws_secret_key.value ))
-          s3_bucket: (( .properties.s3_bucket.value ))
+        clusterdata:
+          aws_access_key_id: (( .properties.clusterdata_aws_access_key.value ))
+          aws_secret_access_key: (( .properties.clusterdata_aws_secret_key.value ))
+          bucket_name: (( .properties.clusterdata_s3_bucket.value ))
+          region: (( .properties.clusterdata_s3_region.value ))
+        database_storage:
+          aws_access_key_id: (( .properties.aws_access_key.value ))
+          aws_secret_access_key: (( .properties.aws_secret_key.value ))
+          bucket_name: (( .properties.s3_bucket.value ))
           s3_endpoint: (( .properties.s3_endpoint.value ))
