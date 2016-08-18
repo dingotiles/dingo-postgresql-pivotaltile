@@ -21,9 +21,17 @@ property_blueprints:
     type: string
     configurable: true
   - name: s3_endpoint
-    type: string
+    type: dropdown_select
     configurable: true
-    default: s3.amazonaws.com
+    options:
+      - name: s3.amazonaws.com
+        label: "Virgina (us-east-1)"
+      - name: s3-us-west-1.amazonaws.com
+        label: "California (us-west-1)"
+      - name: s3-us-west-2.amazonaws.com
+        label: "Oregon (us-west-2)"
+      - name: s3-ap-southeast-1.amazonaws.com
+        label: "Singapore (ap-southeast-1)"
 
   - name: clusterdata_aws_access_key
     type: string
@@ -35,9 +43,17 @@ property_blueprints:
     type: string
     configurable: true
   - name: clusterdata_s3_region
-    type: string
+    type: dropdown_select
     configurable: true
-    default: us-east-1
+    options:
+      - name: us-east-1
+        label: "Virgina (us-east-1)"
+      - name: us-west-1
+        label: "California (us-west-1)"
+      - name: us-west-2
+        label: "Oregon (us-west-2)"
+      - name: ap-southeast-1
+        label: "Singapore (ap-southeast-1)"
 
   - name: syslog_address
     type: string
