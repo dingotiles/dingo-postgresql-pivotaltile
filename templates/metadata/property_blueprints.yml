@@ -25,13 +25,27 @@ property_blueprints:
     configurable: true
     options:
       - name: s3.amazonaws.com
-        label: "Virgina (us-east-1)"
+        label: "US East, N. Virginia (us-east-1)"
       - name: s3-us-west-1.amazonaws.com
-        label: "California (us-west-1)"
+        label: "US West, N. California (us-west-1)"
       - name: s3-us-west-2.amazonaws.com
-        label: "Oregon (us-west-2)"
+        label: "US West, Oregon (us-west-2)"
+      - name: s3-ap-south-1.amazonaws.com
+        label: "Asia Pacific, Mumbai (ap-south-1)"
+      - name: s3-ap-northeast-2.amazonaws.com
+        label: "Asia Pacific, Seoul (ap-northeast-2)"
       - name: s3-ap-southeast-1.amazonaws.com
-        label: "Singapore (ap-southeast-1)"
+        label: "Asia Pacific, Singapore (ap-southeast-1)"
+      - name: s3-ap-southeast-2.amazonaws.com
+        label: "Asia Pacific, Sydney (ap-southeast-2)"
+      - name: s3-ap-northeast-1.amazonaws.com
+        label: "Asia Pacific, Tokyo (ap-northeast-1)"
+      - name: s3-eu-central-1.amazonaws.com
+        label: "EU, Frankfurt (eu-central-1)"
+      - name: s3-eu-west-1.amazonaws.com
+        label: "EU, Ireland (eu-west-1)"
+      - name: s3-sa-east-1.amazonaws.com
+        label: "South America, São Paulo (sa-east-1)"
 
   - name: clusterdata_aws_access_key
     type: string
@@ -47,13 +61,27 @@ property_blueprints:
     configurable: true
     options:
       - name: us-east-1
-        label: "Virgina (us-east-1)"
+        label: "US East, N. Virginia (us-east-1)"
       - name: us-west-1
-        label: "California (us-west-1)"
+        label: "US West, N. California (us-west-1)"
       - name: us-west-2
-        label: "Oregon (us-west-2)"
+        label: "US West, Oregon (us-west-2)"
+      - name: ap-south-1
+        label: "Asia Pacific, Mumbai (ap-south-1)"
+      - name: ap-northeast-2
+        label: "Asia Pacific, Seoul (ap-northeast-2)"
       - name: ap-southeast-1
-        label: "Singapore (ap-southeast-1)"
+        label: "Asia Pacific, Singapore (ap-southeast-1)"
+      - name: ap-southeast-2
+        label: "Asia Pacific, Sydney (ap-southeast-2)"
+      - name: ap-northeast-1
+        label: "Asia Pacific, Tokyo (ap-northeast-1)"
+      - name: eu-central-1
+        label: "EU, Frankfurt (eu-central-1)"
+      - name: eu-west-1
+        label: "EU, Ireland (eu-west-1)"
+      - name: sa-east-1
+        label: "South America, São Paulo (sa-east-1)"
 
   - name: syslog_address
     type: string
