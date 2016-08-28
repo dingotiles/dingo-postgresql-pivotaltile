@@ -94,5 +94,5 @@ job_types:
       cf:
         api_url: (( $runtime.system_api_url ))
         skip_ssl_validation: (( ..cf.ha_proxy.skip_cert_verify.value ))
-        user: (( ..cf.uaa.admin_credentials.identity ))
+        username: (( ..cf.uaa.admin_credentials.identity ))
         password: (( ..cf.uaa.admin_credentials.password ))
