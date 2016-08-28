@@ -7,6 +7,8 @@ groups:
   - shipit
   - patch
   - promote
+  - minor
+  - major
 - name: stemcells
   jobs: [upload-stemcell]
 - name: image
@@ -125,10 +127,26 @@ jobs:
         opsmgr_version: 1.7
 
 - name: patch
-  serial_groups: [opsmgr]
+  public: true
   plan:
   - { get: tile-version, passed: [shipit], trigger: true, params: { bump: patch, pre: rc } }
   - { put: tile-version, params: { file: tile-version/number } }
+
+- name: major
+  public: true
+  plan:
+  - get: tile-version
+    params: {bump: major, pre: rc}
+  - put: tile-version
+    params: {file: tile-version/number}
+
+- name: minor
+  public: true
+  plan:
+  - get: tile-version
+    params: {bump: minor, pre: rc}
+  - put: tile-version
+    params: {file: tile-version/number}
 
 - name: promote
   plan:
