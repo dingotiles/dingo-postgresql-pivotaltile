@@ -21,7 +21,7 @@ job_types:
       password: (( .properties.broker_password.value ))
       service_id: beb5973c-e1b2-11e5-a736-c7c0b526363d
     cf:
-      api_endpoint: (( $runtime.system_api_url ))
-      skip_ssl_verification: (( ..cf.ha_proxy.skip_cert_verify.value ))
+      api_url: (( $runtime.system_api_url ))
+      skip_ssl_validation: (( ..cf.ha_proxy.skip_cert_verify.value ))
       user: (( ..cf.uaa.admin_credentials.identity ))
       password: (( ..cf.uaa.admin_credentials.password ))

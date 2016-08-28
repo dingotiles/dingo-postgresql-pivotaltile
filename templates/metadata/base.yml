@@ -17,5 +17,10 @@ stemcell_criteria:
 
 releases: []
 
-post_deploy_errands: []
-pre_delete_errands: []
+post_deploy_errands:
+- name: sanity-test
+- name: broker-registrar
+- name: integration-test
+
+pre_delete_errands:
+- name: broker-deregistrar

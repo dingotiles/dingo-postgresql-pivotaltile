@@ -1,7 +1,4 @@
 ---
-post_deploy_errands:
-- name: sanity-test
-
 job_types:
   - name: sanity-test
     resource_label: Internal sanity test of broker
@@ -57,3 +54,45 @@ job_types:
           aws_secret_access_key: (( .properties.aws_secret_key.value ))
           bucket_name: (( .properties.s3_bucket.value ))
           s3_endpoint: (( .properties.s3_endpoint.value ))
+
+  - name: integration-test
+    resource_label: Integration test between Cloud Foundry and Dingo PostgreSQL
+    templates:
+    - {name: integration-test, release: dingo-postgresql}
+    errand: true
+    resource_definitions:
+    - name: ram
+      type: integer
+      configurable: false
+      default: 512
+    - name: ephemeral_disk
+      type: integer
+      configurable: false
+      default: 1024
+    - name: persistent_disk
+      type: integer
+      configurable: false
+      default: 0
+    - name: cpu
+      type: integer
+      configurable: false
+      default: 1
+    static_ip: 0
+    dynamic_ip: 1
+    max_in_flight: 1
+    instance_definitions:
+    - name: instances
+      type: integer
+      configurable: false
+      default: 1
+    property_blueprints:
+    - name: vm_credentials
+      type: salted_credentials
+      default:
+        identity: vcap
+    manifest: |
+      cf:
+        api_url: (( $runtime.system_api_url ))
+        skip_ssl_validation: (( ..cf.ha_proxy.skip_cert_verify.value ))
+        user: (( ..cf.uaa.admin_credentials.identity ))
+        password: (( ..cf.uaa.admin_credentials.password ))
