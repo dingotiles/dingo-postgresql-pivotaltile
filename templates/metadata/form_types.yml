@@ -13,9 +13,9 @@ form_types:
     - reference: .properties.s3_bucket
       label: S3 Bucket Name
       description: Shared AWS S3 bucket for all WAL archives
-    - reference: .properties.s3_endpoint
+    - reference: .properties.s3_region
       label: AWS S3 Region
-      description: If you used a region other than the US East (N. Virginia) endpoint to create a bucket, you must specify region here
+      description: Specify the region in which the bucket was created
 - name: clusterdata_archive
   label: Disaster Recovery Archives
   description: "Allow disaster recovery by storing service instance configuration & credentials"
@@ -31,7 +31,7 @@ form_types:
       description: Shared AWS S3 bucket for service instance configuration & credentials backups
     - reference: .properties.clusterdata_s3_region
       label: AWS S3 Region
-      description: If you used a region other than the US East (N. Virginia) endpoint to create a bucket, you must specify region here
+      description: Specify the region in which the bucket was created
 - name: syslog
   label: Remote Syslog
   description: Stream system & PostgreSQL logs to remote syslog endpoint

@@ -53,7 +53,7 @@ job_types:
           aws_access_key_id: (( .properties.aws_access_key.value ))
           aws_secret_access_key: (( .properties.aws_secret_key.value ))
           bucket_name: (( .properties.s3_bucket.value ))
-          s3_endpoint: (( .properties.s3_endpoint.value ))
+          region: (( .properties.s3_region.value ))
 
   - name: integration-test
     resource_label: Integration test between Cloud Foundry and Dingo PostgreSQL

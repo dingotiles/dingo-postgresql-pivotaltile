@@ -101,4 +101,4 @@ job_types:
             - AWS_ACCESS_KEY_ID=(( .properties.aws_access_key.value ))
             - AWS_SECRET_ACCESS_KEY=(( .properties.aws_secret_key.value ))
             - WAL_S3_BUCKET=(( .properties.s3_bucket.value ))
-            - WALE_S3_ENDPOINT=https+path://(( .properties.s3_endpoint.value ))
+            - AWS_REGION=(( .properties.s3_region.value ))
