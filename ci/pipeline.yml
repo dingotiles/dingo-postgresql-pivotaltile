@@ -49,7 +49,6 @@ jobs:
     - get: product-tile
       trigger: true
     - get: dingo-postgresql
-      trigger: true
       params: {tarball: true}
     - get: broker-registrar
       params: {tarball: true}
