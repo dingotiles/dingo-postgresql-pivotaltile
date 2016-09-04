@@ -3,7 +3,6 @@ groups:
 - name: pipeline
   jobs:
   - create-product
-  - upload-opsmgr16
   - shipit
   - patch
   - promote
@@ -40,9 +39,17 @@ jobs:
         opsmgr_username: {{opsmgr17-username}}
         opsmgr_password: {{opsmgr17-password}}
         opsmgr_version: 1.7
+    - task: upload-stemcell-opsmgr18
+      file: tile/ci/tasks/upload-stemcell.yml
+      params:
+        opsmgr_url: {{opsmgr18-url}}
+        opsmgr_skip_ssl_verification: {{opsmgr18-skip-ssl-verification}}
+        opsmgr_username: {{opsmgr18-username}}
+        opsmgr_password: {{opsmgr18-password}}
+        opsmgr_version: 1.7
 
 - name: create-product
-  serial_groups: [opsmgr17]
+  serial_groups: [opsmgr16, opsmgr17, opsmgr18]
   plan:
   - aggregate:
     - get: tile
@@ -66,38 +73,39 @@ jobs:
     params: {file: product/dingo-postgresql-*.pivotal}
   - put: tile-version
     params: {file: tile-version/number}
-  - task: upload-product-opsmgr17
-    file: tile/ci/tasks/upload-product.yml
-    params:
-      opsmgr_url: {{opsmgr17-url}}
-      opsmgr_skip_ssl_verification: {{opsmgr17-skip-ssl-verification}}
-      opsmgr_username: {{opsmgr17-username}}
-      opsmgr_password: {{opsmgr17-password}}
-      opsmgr_version: 1.7
-
-- name: upload-opsmgr16
-  serial_groups: [opsmgr16]
-  plan:
   - aggregate:
-    - { get: tile }
-    - { get: generated-tile, passed: [create-product], trigger: true }
-    - { get: tile-version, passed: [create-product] }
-  - task: upload-product-opsmgr16
-    file: tile/ci/tasks/upload-product.yml
-    params:
-      opsmgr_url: {{opsmgr16-url}}
-      opsmgr_skip_ssl_verification: {{opsmgr16-skip-ssl-verification}}
-      opsmgr_username: {{opsmgr16-username}}
-      opsmgr_password: {{opsmgr16-password}}
-      opsmgr_version: 1.6
+    - task: upload-product-opsmgr16
+      file: tile/ci/tasks/upload-product.yml
+      params:
+        opsmgr_url: {{opsmgr16-url}}
+        opsmgr_skip_ssl_verification: {{opsmgr16-skip-ssl-verification}}
+        opsmgr_username: {{opsmgr16-username}}
+        opsmgr_password: {{opsmgr16-password}}
+        opsmgr_version: 1.6
+    - task: upload-product-opsmgr17
+      file: tile/ci/tasks/upload-product.yml
+      params:
+        opsmgr_url: {{opsmgr17-url}}
+        opsmgr_skip_ssl_verification: {{opsmgr17-skip-ssl-verification}}
+        opsmgr_username: {{opsmgr17-username}}
+        opsmgr_password: {{opsmgr17-password}}
+        opsmgr_version: 1.7
+    - task: upload-product-opsmgr17=8
+      file: tile/ci/tasks/upload-product.yml
+      params:
+        opsmgr_url: {{opsmgr18-url}}
+        opsmgr_skip_ssl_verification: {{opsmgr18-skip-ssl-verification}}
+        opsmgr_username: {{opsmgr18-username}}
+        opsmgr_password: {{opsmgr18-password}}
+        opsmgr_version: 1.7
 
 - name: shipit
-  serial_groups: [opsmgr16, opsmgr17]
+  serial_groups: [opsmgr16, opsmgr17, opsmgr18]
   plan:
   - aggregate:
     - { get: tile }
-    - { get: generated-tile, passed: [upload-opsmgr16] }
-    - { get: tile-version,   passed: [upload-opsmgr16], params: { bump: final } }
+    - { get: generated-tile, passed: [create-product] }
+    - { get: tile-version,   passed: [create-product], params: { bump: final } }
   - task: re-version-product
     file: tile/ci/tasks/re-version-product.yml
     params:
@@ -123,6 +131,14 @@ jobs:
         opsmgr_skip_ssl_verification: {{opsmgr17-skip-ssl-verification}}
         opsmgr_username: {{opsmgr17-username}}
         opsmgr_password: {{opsmgr17-password}}
+        opsmgr_version: 1.7
+    - task: upload-product-opsmgr18
+      file: tile/ci/tasks/upload-product.yml
+      params:
+        opsmgr_url: {{opsmgr18-url}}
+        opsmgr_skip_ssl_verification: {{opsmgr18-skip-ssl-verification}}
+        opsmgr_username: {{opsmgr18-username}}
+        opsmgr_password: {{opsmgr18-password}}
         opsmgr_version: 1.7
 
 - name: patch
