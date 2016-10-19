@@ -47,12 +47,8 @@ job_types:
       default:
         identity: vcap
   manifest: |
-    remote_syslog:
-      address: (( .properties.syslog_address.value ))
-      port: (( .properties.syslog_port.value ))
-      short_hostname: true
-    haproxy:
-      syslog: (( .properties.syslog_address.value )):(( .properties.syslog_port.value ))
+    remote_syslog: (( .properties.logging_selector.selected_option.parsed_manifest(remote_syslog) ))
+    haproxy: (( .properties.logging_selector.selected_option.parsed_manifest(haproxy) ))
     etcd:
       machines: (( .etcd.ips ))
     cf:

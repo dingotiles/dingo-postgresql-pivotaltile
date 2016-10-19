@@ -112,6 +112,9 @@ property_blueprints:
               address: (( .properties.logging_selector.syslog_option.syslog_address.value ))
               port: (( .properties.logging_selector.syslog_option.syslog_port.value ))
               short_hostname: true
+          - name: haproxy
+            manifest: |
+              syslog: (( .properties.logging_selector.syslog_option.syslog_address.value )):(( .properties.logging_selector.syslog_option.syslog_port.value ))
           - name: docker
             manifest: |
               log_driver: syslog
