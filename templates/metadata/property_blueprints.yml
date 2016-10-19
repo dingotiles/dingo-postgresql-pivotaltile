@@ -91,7 +91,7 @@ property_blueprints:
     type: selector
     configurable: true
     default: Local
-    freeze_on_deploy: true
+    freeze_on_deploy: false
     option_templates:
       - name: local_option
         select_value: Local
