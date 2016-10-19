@@ -26,6 +26,8 @@ property_blueprints:
     options:
       - name: us-east-1
         label: "US East, N. Virginia (us-east-1)"
+      - name: us-east-2
+        label: "US East, Ohio (us-east-2)"
       - name: us-west-1
         label: "US West, N. California (us-west-1)"
       - name: us-west-2
@@ -62,6 +64,8 @@ property_blueprints:
     options:
       - name: us-east-1
         label: "US East, N. Virginia (us-east-1)"
+      - name: us-east-2
+        label: "US East, Ohio (us-east-2)"
       - name: us-west-1
         label: "US West, N. California (us-west-1)"
       - name: us-west-2
@@ -83,11 +87,43 @@ property_blueprints:
       - name: sa-east-1
         label: "South America, São Paulo (sa-east-1)"
 
-  - name: syslog_address
-    type: string
+  - name: logging_selector
+    type: selector
     configurable: true
-    optional: true
-  - name: syslog_port
-    type: integer
-    configurable: true
-    optional: true
+    default: Local
+    freeze_on_deploy: true
+    option_templates:
+      - name: local_option
+        select_value: Local
+        named_manifests:
+          - name: remote_syslog
+            manifest: |
+              address: ~
+              port: ~
+              short_hostname: true
+          - name: docker
+            manifest: |
+              log_driver: ~
+      - name: syslog_option
+        select_value: Syslog
+        named_manifests:
+          - name: remote_syslog
+            manifest: |
+              address: (( .properties.logging_selector.syslog_option.syslog_address.value ))
+              port: (( .properties.logging_selector.syslog_option.syslog_port.value ))
+              short_hostname: true
+          - name: docker
+            manifest: |
+              log_driver: syslog
+              log_options:
+              - syslog-address=udp://(( .properties.logging_selector.syslog_option.syslog_address.value )):(( .properties.logging_selector.syslog_option.syslog_port.value ))
+              - tag="{{.Name}}"
+        property_blueprints:
+        - name: syslog_address
+          type: string
+          configurable: true
+          optional: true
+        - name: syslog_port
+          type: integer
+          configurable: true
+          optional: true

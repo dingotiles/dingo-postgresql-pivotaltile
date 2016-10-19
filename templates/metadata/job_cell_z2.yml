@@ -51,15 +51,8 @@ job_types:
   manifest: |
     zone: z2
     release_version: RELEASE_VERSION_MARKER
-    remote_syslog:
-      address: (( .properties.syslog_address.value ))
-      port: (( .properties.syslog_port.value ))
-      short_hostname: true
-    docker:
-      log_driver: syslog
-      log_options:
-      - syslog-address=udp://(( .properties.syslog_address.value )):(( .properties.syslog_port.value ))
-      - tag="{{.Name}}"
+    remote_syslog: (( .properties.logging_selector.selected_option.parsed_manifest(remote_syslog) ))
+    docker: (( .properties.logging_selector.selected_option.parsed_manifest(docker) ))
     etcd:
       machines: (( .etcd.ips ))
     registrator:

@@ -32,13 +32,22 @@ form_types:
     - reference: .properties.clusterdata_s3_region
       label: AWS S3 Region
       description: Specify the region in which the bucket was created
-- name: syslog
-  label: Remote Syslog
-  description: Stream system & PostgreSQL logs to remote syslog endpoint
+
+- name: logging_form
+  label: Logging
+  description: Stream component & PostgreSQL logs to remote syslog endpoint
   property_inputs:
-    - reference: .properties.syslog_address
-      label: Syslog Address
-      description: 'Hostname for remote syslog endpoint'
-    - reference: .properties.syslog_port
-      label: Syslog Port
-      description: 'Port for remote syslog endpoint'
+    - reference: .properties.logging_selector
+      label: Logging selection
+      selector_property_inputs:
+        - reference: .properties.logging_selector.local_option
+          label: 'Local'
+        - reference: .properties.logging_selector.syslog_option
+          label: 'Syslog'
+          property_inputs:
+          - reference: .properties.logging_selector.syslog_option.syslog_address
+            label: Syslog Address
+            description: 'Hostname for remote syslog endpoint'
+          - reference: .properties.logging_selector.syslog_option.syslog_port
+            label: Syslog Port
+            description: 'Port for remote syslog endpoint'
