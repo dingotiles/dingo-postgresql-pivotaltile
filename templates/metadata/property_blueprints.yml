@@ -97,13 +97,11 @@ property_blueprints:
         select_value: Local
         named_manifests:
           - name: remote_syslog
-            manifest: |
-              address: ~
-              port: ~
-              short_hostname: true
+            manifest: ~
+          - name: haproxy
+            manifest: ~
           - name: docker
-            manifest: |
-              log_driver: ~
+            manifest: ~
       - name: syslog_option
         select_value: Syslog
         named_manifests:
