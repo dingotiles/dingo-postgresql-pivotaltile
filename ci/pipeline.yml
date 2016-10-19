@@ -261,12 +261,6 @@ resources:
 - name: broker-registrar
   type: bosh-io-release
   source: {repository: cloudfoundry-community/broker-registrar-boshrelease}
-- name: etcd
-  type: bosh-io-release
-  source: {repository: cloudfoundry-incubator/etcd-release}
-- name: simple-remote-syslog
-  type: bosh-io-release
-  source: {repository: cloudfoundry-community/simple-remote-syslog-boshrelease}
 
 - name: generated-tile
   type: s3
