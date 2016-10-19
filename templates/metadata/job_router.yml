@@ -8,6 +8,8 @@ job_types:
     - {name: broker, release: dingo-postgresql}
     # run haproxy & co
     - {name: router, release: dingo-postgresql}
+    # dpg support cli
+    - {name: dpg-cli, release: dingo-postgresql}
   static_ip: 1
   dynamic_ip: 0
   max_in_flight: 500
