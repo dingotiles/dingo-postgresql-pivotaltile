@@ -85,22 +85,22 @@ jobs:
         opsmgr_username: {{opsmgr16-username}}
         opsmgr_password: {{opsmgr16-password}}
         opsmgr_version: 1.6
-    - task: upload-product-opsmgr17
-      file: tile/ci/tasks/upload-product.yml
-      params:
-        opsmgr_url: {{opsmgr17-url}}
-        opsmgr_skip_ssl_verification: {{opsmgr17-skip-ssl-verification}}
-        opsmgr_username: {{opsmgr17-username}}
-        opsmgr_password: {{opsmgr17-password}}
-        opsmgr_version: 1.7
-    - task: upload-product-opsmgr18
-      file: tile/ci/tasks/upload-product.yml
-      params:
-        opsmgr_url: {{opsmgr18-url}}
-        opsmgr_skip_ssl_verification: {{opsmgr18-skip-ssl-verification}}
-        opsmgr_username: {{opsmgr18-username}}
-        opsmgr_password: {{opsmgr18-password}}
-        opsmgr_version: 1.7
+    # - task: upload-product-opsmgr17
+    #   file: tile/ci/tasks/upload-product.yml
+    #   params:
+    #     opsmgr_url: {{opsmgr17-url}}
+    #     opsmgr_skip_ssl_verification: {{opsmgr17-skip-ssl-verification}}
+    #     opsmgr_username: {{opsmgr17-username}}
+    #     opsmgr_password: {{opsmgr17-password}}
+    #     opsmgr_version: 1.7
+    # - task: upload-product-opsmgr18
+    #   file: tile/ci/tasks/upload-product.yml
+    #   params:
+    #     opsmgr_url: {{opsmgr18-url}}
+    #     opsmgr_skip_ssl_verification: {{opsmgr18-skip-ssl-verification}}
+    #     opsmgr_username: {{opsmgr18-username}}
+    #     opsmgr_password: {{opsmgr18-password}}
+    #     opsmgr_version: 1.7
 
 - name: shipit
   serial_groups: [opsmgr16, opsmgr17, opsmgr18]
@@ -140,7 +140,7 @@ jobs:
   plan:
   - aggregate:
     - { get: tile }
-    - { get: generated-tile, passed: [shipit], trigger: true }
+    - { get: generated-tile, passed: [shipit] }
     - { get: tile-version, passed: [shipit] }
   - task: upload-product-opsmgr17
     file: tile/ci/tasks/upload-product.yml
@@ -156,7 +156,7 @@ jobs:
   plan:
   - aggregate:
     - { get: tile }
-    - { get: generated-tile, passed: [shipit], trigger: true }
+    - { get: generated-tile, passed: [shipit] }
     - { get: tile-version, passed: [shipit] }
   - task: upload-product-opsmgr18
     file: tile/ci/tasks/upload-product.yml

@@ -48,3 +48,4 @@ job_types:
       machines: (( ips ))
       peer_require_ssl: false
       require_ssl: false
+      enable_network_diagnostics: false
