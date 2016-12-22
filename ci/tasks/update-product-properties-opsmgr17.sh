@@ -24,11 +24,11 @@ function info() {
 
 function curl_auth() {
   info curl $@
-  curl -f ${insecure} -H "Authorization: Bearer ${access_token}" $@
+  curl -f ${insecure} -H "Content-Type: application/json" -H "Authorization: Bearer ${access_token}" $@
 }
 
 function curl_auth_quiet() {
-  curl -sf ${insecure} -H "Authorization: Bearer ${access_token}" $@
+  curl -sf ${insecure} -H "Content-Type: application/json" -H "Authorization: Bearer ${access_token}" $@
 }
 
 product_guid=$(curl_auth_quiet ${opsmgr_url}/api/v0/staged/products | \
@@ -38,7 +38,8 @@ if [[ "${product_guid}X" == "X" ]]; then
   exit 1
 fi
 
-configurable_properties=($(curl_auth_quiet ${opsmgr_url}/api/v0/staged/products/${product_guid}/properties \
+properties=$(curl_auth_quiet ${opsmgr_url}/api/v0/staged/products/${product_guid}/properties)
+configurable_properties=($(echo $properties \
   | jq -r ".properties | with_entries(select(.value.configurable)) | keys[]"))
 
 cat > tmp/install.yml <<EOS
@@ -46,12 +47,32 @@ cat > tmp/install.yml <<EOS
 properties:
 EOS
 
+cat > tmp/current_properties.yml <<EOS
+---
+configuration:
+EOS
+
 for property in "${configurable_properties[@]}"; do
-  echo $property
+  key=${property#.properties.}
+  value=$(echo $properties| jq -r ".properties[\"${property}\"].value")
+  cat >> tmp/current_properties.yml <<EOS
+  ${key}: ${value}
+EOS
+
   cat >> tmp/install.yml <<EOS
   "${property}":
-    value: (( grab ${property} ))
+    value: (( grab configuration.[${key}] ))
 EOS
 done
 
-cat tmp/install.yml
+# if no configuration.yml provided then reuse existing configuration
+if [[ ! -f tmp/configuration.yml ]]; then
+  cp tmp/current_properties.yml tmp/configuration.yml
+fi
+spruce merge --prune configuration tmp/install.yml tmp/configuration.yml > tmp/properties.yml
+
+api_data=$(cat tmp/properties.yml | yaml2json)
+
+echo "Updating staged tile properties..."
+curl_auth_quiet ${opsmgr_url}/api/v0/staged/products/${product_guid}/properties \
+  -X PUT -d ${api_data}
