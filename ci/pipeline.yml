@@ -4,7 +4,6 @@ groups:
   jobs:
   - create-product
   - shipit
-  - final-opsmgr16
   - final-opsmgr17
   - final-opsmgr18
   - patch
@@ -26,14 +25,6 @@ jobs:
       trigger: true
       params: {globs: ["*vsphere*"]}
   - aggregate:
-    - task: upload-stemcell-opsmgr16
-      file: tile/ci/tasks/upload-stemcell.yml
-      params:
-        opsmgr_url: {{opsmgr16-url}}
-        opsmgr_skip_ssl_verification: {{opsmgr16-skip-ssl-verification}}
-        opsmgr_username: {{opsmgr16-username}}
-        opsmgr_password: {{opsmgr16-password}}
-        opsmgr_version: 1.6
     - task: upload-stemcell-opsmgr17
       file: tile/ci/tasks/upload-stemcell.yml
       params:
@@ -52,7 +43,7 @@ jobs:
         opsmgr_version: 1.7
 
 - name: create-product
-  serial_groups: [opsmgr16, opsmgr17, opsmgr18]
+  serial_groups: [opsmgr17, opsmgr18]
   plan:
   - aggregate:
     - get: tile
@@ -77,14 +68,6 @@ jobs:
   - put: tile-version
     params: {file: tile-version/number}
   - aggregate:
-    - task: upload-product-opsmgr16
-      file: tile/ci/tasks/upload-product.yml
-      params:
-        opsmgr_url: {{opsmgr16-url}}
-        opsmgr_skip_ssl_verification: {{opsmgr16-skip-ssl-verification}}
-        opsmgr_username: {{opsmgr16-username}}
-        opsmgr_password: {{opsmgr16-password}}
-        opsmgr_version: 1.6
     # - task: upload-product-opsmgr17
     #   file: tile/ci/tasks/upload-product.yml
     #   params:
@@ -93,17 +76,17 @@ jobs:
     #     opsmgr_username: {{opsmgr17-username}}
     #     opsmgr_password: {{opsmgr17-password}}
     #     opsmgr_version: 1.7
-    # - task: upload-product-opsmgr18
-    #   file: tile/ci/tasks/upload-product.yml
-    #   params:
-    #     opsmgr_url: {{opsmgr18-url}}
-    #     opsmgr_skip_ssl_verification: {{opsmgr18-skip-ssl-verification}}
-    #     opsmgr_username: {{opsmgr18-username}}
-    #     opsmgr_password: {{opsmgr18-password}}
-    #     opsmgr_version: 1.7
+    - task: upload-product-opsmgr18
+      file: tile/ci/tasks/upload-product.yml
+      params:
+        opsmgr_url: {{opsmgr18-url}}
+        opsmgr_skip_ssl_verification: {{opsmgr18-skip-ssl-verification}}
+        opsmgr_username: {{opsmgr18-username}}
+        opsmgr_password: {{opsmgr18-password}}
+        opsmgr_version: 1.7
 
 - name: shipit
-  serial_groups: [opsmgr16, opsmgr17, opsmgr18]
+  serial_groups: [opsmgr17, opsmgr18]
   plan:
   - aggregate:
     - { get: tile }
@@ -118,22 +101,6 @@ jobs:
     params: {file: tile-version/number}
   - put: generated-tile
     params: {file: reversioned-product/dingo-postgresql-*.pivotal}
-
-- name: final-opsmgr16
-  serial_groups: [opsmgr16]
-  plan:
-  - aggregate:
-    - { get: tile }
-    - { get: generated-tile, passed: [shipit], trigger: true }
-    - { get: tile-version, passed: [shipit] }
-  - task: upload-product-opsmgr16
-    file: tile/ci/tasks/upload-product.yml
-    params:
-      opsmgr_url: {{opsmgr16-url}}
-      opsmgr_skip_ssl_verification: {{opsmgr16-skip-ssl-verification}}
-      opsmgr_username: {{opsmgr16-username}}
-      opsmgr_password: {{opsmgr16-password}}
-      opsmgr_version: 1.6
 
 - name: final-opsmgr17
   serial_groups: [opsmgr17]
