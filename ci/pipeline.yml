@@ -55,6 +55,7 @@ jobs:
       params: {tarball: true}
     - get: pivnet-stemcell
       trigger: true
+      params: {globs: ["*vsphere*"]}
       passed: [upload-stemcell]
     - get: tile-version
       params: {pre: rc}
