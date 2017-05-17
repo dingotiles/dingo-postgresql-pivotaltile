@@ -6,8 +6,8 @@ groups:
   - shipit
   - final-opsmgr17
   - final-opsmgr18
-  - patch
   - promote
+  - patch
   - minor
   - major
 - name: stemcells

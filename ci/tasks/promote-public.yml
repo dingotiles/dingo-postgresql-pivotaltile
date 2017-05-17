@@ -1,6 +1,9 @@
 ---
 platform: linux
-image: docker:///dingotiles/dingo-postgresql-pivotaltile-pipeline
+image_resource:
+  type: docker-image
+  source: {repository: dingotiles/dingo-postgresql-pivotaltile-pipeline}
+
 
 inputs:
 - name: tile
